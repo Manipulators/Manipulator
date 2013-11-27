@@ -6,12 +6,18 @@ Computing a solution for the "Manipulation Planning Problem".
 
 To-do list
 ----------
-* Generate obstacles (i.e. environment)
-* Choose the shape of the robot
-* Choose the shape of the movable object
-* Select the initial configuration (i.e. positions of the robot and the object)
-* Select the final configuration
-* Compute the solution for this manipulation planning problem
+* Select libraries
+* Generate an instance of the manipulation planning problem
+  * Generate obstacles (i.e. environment)
+  * Choose the shape of the robot
+  * Choose the shape of the movable object
+  * Select the initial configuration (i.e. positions of the robot and the object)
+  * Select the final configuration
+* Compute the solution for this instance
+  * Compute the configurations subsets
+  * Determine the topological properties of transit and transfer paths
+  * Determine the manipulation graph
+  * Find a manipulation path
 
 
 Libraries
