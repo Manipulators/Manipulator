@@ -30,6 +30,7 @@ Libraries
   * [Fast Light Toolkit (FLTK)](http://www.fltk.org)
   * [wxWidgets](http://www.wxwidgets.org)
   * [Jules' Utility Class Extensions (JUCE)](http://www.juce.com)
+  * [...](http://en.wikipedia.org/wiki/List_of_widget_toolkits)
 * Computational geometry
   * [Computational Geometry Algorithms Library (CGAL)](http://www.cgal.org)
   * [Open Motion Planning Library (OMPL)](http://ompl.kavrakilab.org)
