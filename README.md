@@ -6,7 +6,7 @@ Computing a solution for the "Manipulation Planning Problem".
 
 To-do list
 ----------
-* Select libraries
+* Select libraries (GTKmm et ?)
 * Generate an instance of the manipulation planning problem
   * Generate obstacles (i.e. environment)
   * Choose the shape of the robot
