@@ -24,8 +24,11 @@ Libraries
 ----------
 
 * Graphical user interface
-  * [GIMP Toolkit (GTK+)](http://www.gtk.org)
+  * [GIMP Toolkit + (GTK+)](http://www.gtk.org)
+  * [GIMP Tollkit -- (GTKmm)](http://www.gtkmm.org)
   * [Qt](http://qt-project.org)
+  * [Fast Light Toolkit (FLTK)](http://www.fltk.org)
+  * [wxWidgets](http://www.wxwidgets.org)
 * Computational geometry
   * [Compuational Geometry Algorithms Library (CGAL)](http://www.cgal.org)
   * [Open Motion Planning Library (OMPL)](http://ompl.kavrakilab.org)
