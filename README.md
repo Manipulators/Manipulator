@@ -29,8 +29,9 @@ Libraries
   * [Qt](http://qt-project.org)
   * [Fast Light Toolkit (FLTK)](http://www.fltk.org)
   * [wxWidgets](http://www.wxwidgets.org)
+  * [Jules' Utility Class Extensions (JUCE)](http://www.juce.com)
 * Computational geometry
-  * [Compuational Geometry Algorithms Library (CGAL)](http://www.cgal.org)
+  * [Computational Geometry Algorithms Library (CGAL)](http://www.cgal.org)
   * [Open Motion Planning Library (OMPL)](http://ompl.kavrakilab.org)
 
 
