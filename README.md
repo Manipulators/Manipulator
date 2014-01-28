@@ -4,6 +4,11 @@ Manipulator
 Computing a solution for the "Manipulation Planning Problem".
 
 
+Input
+----------
+Describe obstacles in "Obstacles".
+One line by polygon, described with pairs of points.
+
 To-do list
 ----------
 * Find the file format to describe the arguments (i.e. environment, robot,
@@ -12,6 +17,7 @@ To-do list
 * Create a command which takes the arguments and returns their graphical
   representation in a new window
 * ...
+
 
 
 Specification

@@ -1,2 +1,15 @@
-Problemes :
+Problèmes :
 
+###### Pour créer les courbes critiques de type I : ########
+- Je fais un offset (http://doc.cgal.org/latest/Minkowski_sum_2/index.html#title6) de rayon (r1 + 2*r2) autour des polygones. Ce qui est correcte.
+Cependant pour la suite quand on doit calculer les régions critiques et les étiqueter, nous n'avons pas accès à l'étiquetage des courbes critiques de type I.
+
+Solution ?
+Recalculer le offset à la main.
+Selon les deux règles :
+Pour un coin convexe → Cercle de rayon (r1 + 2*r2)
+Pour un mur → segment parallèle vers l'extérieur (en contact avec le offset de CGAL) à une distance (r1 + 2*r2)
+
+
+###### Pour calculer les régions : #######
+Une fois qu'on a calculé les courbes critiques je ne sais pas comment avec CGAL on peut représenter les surfaces.
