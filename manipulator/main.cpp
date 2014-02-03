@@ -1,15 +1,14 @@
 #include <QApplication>
-#include <QWidget>
+#include "mainwindow.h"
 
 
-int main(int argc, char *argv[]) {
-    QApplication application(argc, argv);
+int main(int argc, char *argv[])
+{
+    QApplication qApplication(argc, argv);
 
     // Create a window
-    QWidget window;
-    window.setFixedSize(600, 400);
-    window.setWindowTitle("Manipulator");
-    window.show();
+    MainWindow main_window;
+    main_window.show();
 
-    return application.exec();
+    return qApplication.exec();
 }
