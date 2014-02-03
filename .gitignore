@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+# Qt Creator files
+manipulator-build-desktop-Qt_4_8_1_in_PATH__System__Debug/
+manipulator-build-desktop-Qt_4_8_1_in_PATH__System__Release/
+
