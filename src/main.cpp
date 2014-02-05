@@ -62,7 +62,7 @@ int main (int argc, char **argv) {
 	 P.push_back (Point_2 (x, y));
 	 Pqt << QPointF(x,y);
   	} 
-	obstacles[i] = P; i++; scene.addPolygon(Pqt);
+	obstacles[i] = P; i++; scene.addPolygon(Pqt,QPen(Qt::black),QBrush(Qt::darkBlue));
     }
     myfile.close();
   }
