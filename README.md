@@ -3,9 +3,16 @@ Manipulator
 
 Computing a solution for the "Manipulation Planning Problem".
 
+Pour Compiler :
+----------
+cmake -DCGAL_DIR=$HOME/CGAL-4.3 .
+make
+Pour Executer : ./main
+(Ne pas mettre certains fichiers de compilation sur git car ils dépendent de ton architecture)
 
 Input
 ----------
+Describe screen size
 Describe obstacles in "Obstacles".
 One line by polygon, described with pairs of points.
 
