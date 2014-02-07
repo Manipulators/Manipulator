@@ -75,6 +75,17 @@ Describe obstacles in "Obstacles".
 One line by polygon, described with pairs of points.
 
 
+## Problems
+
+### Pour créer les courbes critiques de type I
+Solution ?
+Recalculer le offset à la main (je le fais cette fin de semaine)
+Se restreindre aux poly convexes.
+faire l'intersection des cercles de rayon r1+2*R2 de chaque sommet avec le Create_offset_polygons_2.cpp
+
+### Pour calculer les régions
+Une fois qu'on a calculé les courbes critiques je ne sais pas comment avec CGAL on peut représenter les surfaces.
+
 ## To-do list
 
 * Find the file format to describe the arguments (i.e. environment, robot,
