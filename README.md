@@ -7,7 +7,7 @@ Computing a solution for the "Manipulation Planning Problem".
 
 ### Linux (Debian-based)
 
-- Install the commands make, cmake and git, CGAL and Qt
+- Install the commands make, cmake and git
   
   ```console
   sudo apt-get install build-essential cmake git-core
@@ -22,7 +22,7 @@ Computing a solution for the "Manipulation Planning Problem".
 - Change your current directory to clone Manipulator
   
   ```console
-  cd \[dir\]
+  cd [dir]
   ```
 
 - Clone Manipulator
