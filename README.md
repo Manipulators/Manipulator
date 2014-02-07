@@ -1,23 +1,82 @@
-Manipulator
-===========
+# Manipulator
 
 Computing a solution for the "Manipulation Planning Problem".
 
-Pour Compiler :
-----------
-* cmake -DCGAL_DIR=$HOME/CGAL-4.3 .
-* make
-* Pour Executer : ./main
-* (Ne pas mettre certains fichiers de compilation sur git car ils dépendent de ton architecture)
 
-Input
-----------
+## Compilation
+
+### Linux (Debian-based)
+
+- Install the commands make, cmake and git, CGAL and Qt
+  
+  ```console
+  sudo apt-get install build-essential cmake git-core
+  ```
+
+- Install the Qt framework and the CGAL library
+  
+  ```console
+  sudo apt-get install qt-sdk libcgal-dev
+  ```
+
+- Change your current directory to clone Manipulator
+  
+  ```console
+  cd \[dir\]
+  ```
+
+- Clone Manipulator
+  
+  ```console
+  git clone https://github.com/Manipulators/Manipulator.git
+  ```
+
+- Go inside it
+  
+  ```console
+  cd Manipulator/
+  ```
+
+- Create a build directory
+  
+  ```console
+  mkdir build
+  ```
+
+- Go inside it
+  
+  ```console
+  cd build/
+  ```
+
+- Generate Makefiles
+  
+  ```console
+  cmake ../src/
+  ```
+
+- Build executable
+  
+  ```console
+  make
+  ```
+
+- Run executable
+  
+  ```console
+  ./main
+  ```
+
+
+## Input
+
 Describe screen size
 Describe obstacles in "Obstacles".
 One line by polygon, described with pairs of points.
 
-To-do list
-----------
+
+## To-do list
+
 * Find the file format to describe the arguments (i.e. environment, robot,
   movable object, initial configuration and final configuration), this file
   format must be CGAL-friendly
@@ -26,9 +85,8 @@ To-do list
 * ...
 
 
+## Specification
 
-Specification
-----------
 * Generate an instance of the manipulation planning problem
   * Generate obstacles (i.e. environment)
   * Choose the radius of the circle robot
@@ -48,8 +106,7 @@ Specification
 * ...
 
 
-Libraries
-----------
+## Libraries
 
 * Graphical user interface
   * [GIMP Toolkit + (GTK+)](http://www.gtk.org)
@@ -69,8 +126,7 @@ displaying CGAL objects and data structures in the
 [Qt Graphics View Framework](http://qt-project.org).
 
 
-References
-----------
+##References
 
 * B. Dacre Wright, J.P. Laumond and R.Alami<br>
   **Motion planning for a robot and a movable object amidst polygonal obstacles**<br>
