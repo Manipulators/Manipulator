@@ -28,7 +28,7 @@ set(HEADERS mainwindow.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
-add_to_cached_list(CGAL_EXECUTABLE_TARGETS ${PROJECT})
+add_to_cached_list(CGAL_EXECUTABLE_TARGETS ${EXECUTABLE})
 # Link with Qt libraries
 target_link_libraries(${EXECUTABLE} ${QT_LIBRARIES})
 # Link with CGAL
