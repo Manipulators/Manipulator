@@ -1,4 +1,8 @@
-#include "ms_rational_nt.h"
+#include <CGAL/MP_Float.h>
+#include <CGAL/Quotient.h>
+
+typedef CGAL::Quotient<CGAL::MP_Float>                Number_type;
+
 #include <CGAL/Cartesian.h>
 #include <CGAL/minkowski_sum_2.h>
 
