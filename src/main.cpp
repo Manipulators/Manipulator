@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ms_rational_nt.h"
 #include <CGAL/Cartesian.h>
 #include <CGAL/minkowski_sum_2.h>
@@ -7,19 +6,7 @@ typedef CGAL::Cartesian<Number_type>                Kernel;
 typedef Kernel::Point_2                             Point_2;
 typedef CGAL::Polygon_2<Kernel>                     Polygon_2;
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <fstream>
-#include <string.h>
-
-
-#include <boost/format.hpp>
 #include <QtGui>
-#include <CGAL/Qt/GraphicsViewNavigation.h>
-#include <QLineF>
-#include <QRectF>
-
 
 
 int main (int argc, char **argv)
@@ -30,9 +17,11 @@ int main (int argc, char **argv)
     std::string line;
     std::ifstream myfile("../data/obstacles.data");
     char *pch;
-    float x, y;
+    float x;
+    float y;
     int i = 0;
     Polygon_2 obstacles[500];
+    
     if (myfile.is_open())
     {
         getline (myfile, line); //Read size
@@ -73,11 +62,7 @@ int main (int argc, char **argv)
     }
     else std::cout << "Unable to open file\n"; 
     
-    QGraphicsView* view = new QGraphicsView(&scene);
-    CGAL::Qt::GraphicsViewNavigation navigation;
-    view->installEventFilter(&navigation);
-    view->viewport()->installEventFilter(&navigation);
-    view->setRenderHint(QPainter::Antialiasing);
+    QGraphicsView *view = new QGraphicsView(&scene);
     view->show();
     
     return app.exec();
