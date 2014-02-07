@@ -64,7 +64,7 @@ Computing a solution for the "Manipulation Planning Problem".
 - Run executable
   
   ```console
-  ./main
+  ./manipulator
   ```
 
 

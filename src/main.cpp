@@ -12,6 +12,10 @@ typedef CGAL::Polygon_2<Kernel>                     Polygon_2;
 
 #include <QtGui>
 
+#include <QApplication>
+#include <QWidget>
+#include "mainwindow.h"
+
 
 int main (int argc, char **argv)
 {
@@ -67,7 +71,10 @@ int main (int argc, char **argv)
     else std::cout << "Unable to open file\n"; 
     
     QGraphicsView *view = new QGraphicsView(&scene);
-    view->show();
+    //view->show();
+    
+    MainWindow window;
+    window.show();
     
     return app.exec();
 }
