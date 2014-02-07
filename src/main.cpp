@@ -28,7 +28,7 @@ int main (int argc, char **argv) {
 
   QGraphicsScene scene;
   std::string line;
-  std::ifstream myfile ("Obstacles");
+  std::ifstream myfile ("../data/obstacles.data");
   char * pch;
   float x,y;
   int i=0;
