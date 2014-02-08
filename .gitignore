@@ -15,5 +15,6 @@
 # Other files
 *~
 *.user
+*.copy
 build/
 qtcreator-build/
