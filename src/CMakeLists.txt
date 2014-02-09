@@ -23,7 +23,7 @@ set(QT_USE_QTOPENGL TRUE)
 find_package(Qt4)
 include(${QT_USE_FILE})
 
-set(SOURCES main.cpp mainwindow.cpp robot.cpp movableobject.cpp obstacles.cpp)
+set(SOURCES main.cpp mainwindow.cpp polygon.cpp robot.cpp movableobject.cpp obstacles.cpp)
 set(HEADERS mainwindow.h polygon.h robot.h movableobject.h obstacles.h)
 
 set(EXECUTABLE manipulator)

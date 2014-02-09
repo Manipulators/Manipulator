@@ -17,6 +17,6 @@ public:
     ~MovableObject();
 };
 
-std::istream & operator>>(std::istream &, MovableObject);
+std::istream & operator>>(std::istream &, MovableObject &);
 
 #endif // MOVABLEOBJECT_H

@@ -18,19 +18,20 @@ void MovableObject::setPolygon(Polygon polygon)
 void MovableObject::print()
 {
     std::cout << "Movable object:" << std::endl;
-    // TODO: complete.
+    print_polygon(this->getPolygon());
 }
 
 MovableObject::~MovableObject()
 {
 }
 
-std::istream & operator>>(std::istream & istream, MovableObject movable_object)
+std::istream & operator>>(std::istream & istream, MovableObject & movable_object)
 {
-    Polygon polygon;
     if (istream)
     {
+        Polygon polygon;
         istream >> polygon;
+        movable_object.setPolygon(polygon);
     }
     return istream;
 }

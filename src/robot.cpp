@@ -17,14 +17,14 @@ void Robot::setPolygon(Polygon polygon)
 void Robot::print()
 {
     std::cout << "Robot:" << std::endl;
-    // TODO: complete.
+    print_polygon(this->getPolygon());
 }
 
 Robot::~Robot()
 {
 }
 
-std::istream & operator>>(std::istream & istream, Robot robot)
+std::istream & operator>>(std::istream & istream, Robot & robot)
 {
     if (istream)
     {

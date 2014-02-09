@@ -9,4 +9,6 @@ struct Kernel : public CGAL::Exact_predicates_exact_constructions_kernel {};
 
 typedef CGAL::Polygon_2<Kernel> Polygon;
 
+void print_polygon(Polygon);
+
 #endif // POLYGON_H

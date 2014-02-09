@@ -18,6 +18,6 @@ public:
     ~Obstacles();
 };
 
-std::istream & operator>>(std::istream &, Obstacles);
+std::istream & operator>>(std::istream &, Obstacles &);
 
 #endif // OBSTACLES_H

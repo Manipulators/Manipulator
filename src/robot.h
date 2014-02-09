@@ -17,6 +17,6 @@ public:
     ~Robot();
 };
 
-std::istream & operator>>(std::istream &, Robot);
+std::istream & operator>>(std::istream &, Robot &);
 
 #endif // ROBOT_H
