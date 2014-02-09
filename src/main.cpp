@@ -29,6 +29,11 @@ int main (int argc, char **argv)
     in_file >> obstacles;
     in_file.close();
 
+    // Display the bodies.
+    robot.print();
+    movable_object.print();
+    obstacles.print();
+
     // Show main window.
     MainWindow window;
     window.show();

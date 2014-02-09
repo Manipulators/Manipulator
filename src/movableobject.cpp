@@ -15,6 +15,12 @@ void MovableObject::setPolygon(Polygon polygon)
     this->polygon = polygon;
 }
 
+void MovableObject::print()
+{
+    std::cout << "Movable object:" << std::endl;
+    // TODO: complete.
+}
+
 MovableObject::~MovableObject()
 {
 }

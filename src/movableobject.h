@@ -13,6 +13,7 @@ public:
     MovableObject();
     Polygon getPolygon();
     void setPolygon(Polygon);
+    void print();
     ~MovableObject();
 };
 

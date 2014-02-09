@@ -13,6 +13,7 @@ public:
     Robot();
     Polygon getPolygon();
     void setPolygon(Polygon);
+    void print();
     ~Robot();
 };
 

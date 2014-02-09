@@ -14,6 +14,12 @@ void Robot::setPolygon(Polygon polygon)
     this->polygon = polygon;
 }
 
+void Robot::print()
+{
+    std::cout << "Robot:" << std::endl;
+    // TODO: complete.
+}
+
 Robot::~Robot()
 {
 }

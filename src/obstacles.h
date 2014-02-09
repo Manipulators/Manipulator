@@ -14,6 +14,7 @@ public:
     Obstacles();
     std::list<Polygon> getPolygons();
     void setPolygons(std::list<Polygon> polygons);
+    void print();
     ~Obstacles();
 };
 

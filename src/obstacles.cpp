@@ -15,6 +15,12 @@ void Obstacles::setPolygons(std::list<Polygon> polygons)
     this->polygons = polygons;
 }
 
+void Obstacles::print()
+{
+    std::cout << "Obstacles:" << std::endl;
+    // TODO: complete.
+}
+
 Obstacles::~Obstacles()
 {
 }
