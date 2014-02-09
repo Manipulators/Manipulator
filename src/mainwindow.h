@@ -6,7 +6,7 @@
 
 class MainWindow : public QMainWindow
 {
-    public:
+public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 };
