@@ -4,12 +4,12 @@ Robot::Robot()
 {
 }
 
-Polygon_2 Robot::getPolygon()
+Polygon Robot::getPolygon()
 {
     return this->polygon;
 }
 
-void Robot::setPolygon(Polygon_2 polygon)
+void Robot::setPolygon(Polygon polygon)
 {
     this->polygon = polygon;
 }
@@ -18,13 +18,13 @@ Robot::~Robot()
 {
 }
 
-std::istream & operator>>(std::istream &is, Robot robot)
+std::istream & operator>>(std::istream & istream, Robot robot)
 {
-    if (is)
+    if (istream)
     {
-        Polygon_2 polygon;
-        is >> polygon;
+        Polygon polygon;
+        istream >> polygon;
         robot.setPolygon(polygon);
     }
-    return is;
+    return istream;
 }

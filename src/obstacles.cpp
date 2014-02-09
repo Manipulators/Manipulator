@@ -1,26 +1,34 @@
 #include "obstacles.h"
-#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
-#include <CGAL/Polygon_2.h>
 
-
-struct Kernel : public CGAL::Exact_predicates_exact_constructions_kernel {};
-
-typedef CGAL::Polygon_2<Kernel> Polygon_2;
 
 Obstacles::Obstacles()
 {
+}
+
+std::list<Polygon> Obstacles::getPolygons()
+{
+    return this->polygons;
+}
+
+void Obstacles::setPolygons(std::list<Polygon> polygons)
+{
+    this->polygons = polygons;
 }
 
 Obstacles::~Obstacles()
 {
 }
 
-std::istream & operator>>(std::istream &is, Obstacles obstacles)
+std::istream & operator>>(std::istream & istream, Obstacles obstacles)
 {
-    Polygon_2 polygon;
-    if (is)
+    std::list<Polygon> polygons;
+    while (istream)
     {
-        is >> polygon;
+        Polygon polygon;
+        istream >> polygon;
+        polygons.push_back(polygon);
     }
-    return is;
+    obstacles.setPolygons(polygons);
+
+    return istream;
 }

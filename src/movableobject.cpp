@@ -1,26 +1,30 @@
 #include "movableobject.h"
-#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
-#include <CGAL/Polygon_2.h>
 
-
-struct Kernel : public CGAL::Exact_predicates_exact_constructions_kernel {};
-
-typedef CGAL::Polygon_2<Kernel> Polygon_2;
 
 MovableObject::MovableObject()
 {
+}
+
+Polygon MovableObject::getPolygon()
+{
+    return this->polygon;
+}
+
+void MovableObject::setPolygon(Polygon polygon)
+{
+    this->polygon = polygon;
 }
 
 MovableObject::~MovableObject()
 {
 }
 
-std::istream & operator>>(std::istream &is, MovableObject movable_object)
+std::istream & operator>>(std::istream & istream, MovableObject movable_object)
 {
-    Polygon_2 polygon;
-    if (is)
+    Polygon polygon;
+    if (istream)
     {
-        is >> polygon;
+        istream >> polygon;
     }
-    return is;
+    return istream;
 }

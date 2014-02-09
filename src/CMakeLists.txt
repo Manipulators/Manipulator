@@ -24,7 +24,7 @@ find_package(Qt4)
 include(${QT_USE_FILE})
 
 set(SOURCES main.cpp mainwindow.cpp robot.cpp movableobject.cpp obstacles.cpp)
-set(HEADERS mainwindow.h robot.h movableobject.h obstacles.h)
+set(HEADERS mainwindow.h polygon.h robot.h movableobject.h obstacles.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
