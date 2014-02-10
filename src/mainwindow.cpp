@@ -2,6 +2,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QGraphicsView>
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,8 +23,37 @@ MainWindow::MainWindow(QWidget *parent)
     // Set the status bar.
     QStatusBar *statusBar = new QStatusBar();
     setStatusBar(statusBar);
+
+    scene = new QGraphicsScene(0, 0, 100, 100, this);
+    QGraphicsView *view = new QGraphicsView;
+    view->setScene(scene);
+    setCentralWidget(view);
+    addText("Bonjour");
+   /*
+   QGraphicsScene
+   scene->addText("Hello, world!");
+   scene->addLine(QLineF(0,0, 100, 100));
+   view->setScene(scene);
+   setCentralWidget(view);*/
+
+    /*scene.setSceneRect(0,0, 100, 100);
+    scene.addRect(QRectF(0,0, 100, 100));
+    scene.addLine(QLineF(0,0, 100, 100));
+    scene.addLine(QLineF(0,100, 100, 0));
+
+    QGraphicsView* view = new QGraphicsView(&scene);
+    view->show();*/
+
+        // etc...
+
+
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::addText(char * text)
+{
+    scene->addText(text);
 }
