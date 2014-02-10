@@ -13,12 +13,18 @@ int main (int argc, char **argv)
     QApplication app(argc, argv);
 
     // Open the input files.
-    std::ifstream in_file("../data/bodies.data");
+    std::ifstream in_file("../data/manipulator_0.data");
     if (!in_file.is_open())
     {
         std::cerr << "Failed to open the input file." << std::endl;
         return (1);
     }
+
+    // Read the width and height of the main window from the input file.
+    int width;
+    int height;
+    in_file >> width;
+    in_file >> height;
 
     // Read the bodies from the input file (i.e. robot, movable object and obstacles).
     Robot robot;
@@ -35,9 +41,12 @@ int main (int argc, char **argv)
     obstacles.print();
 
     // Show main window.
-    MainWindow window;
-    window.show();
+    MainWindow window(width, height);
     window.addPolygon(robot.getPolygon());
+    window.addPolygon(movable_object.getPolygon());
+    window.addPolygons(obstacles.getPolygons());
+    window.show();
+
     // Enter the main event loop and wait for return value.
     return app.exec();
 }

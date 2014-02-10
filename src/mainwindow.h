@@ -9,12 +9,17 @@
 
 class MainWindow : public QMainWindow
 {
-private : QGraphicsScene *scene;
+private:
+    QGraphicsScene * scene;
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void addText(char * text);
+    // Constructor.
+    MainWindow(int, int, QWidget * parent = 0);
+    // Add a polygon to the scene.
     void addPolygon(Polygon);
+    // Add a list of polygons to the scene.
+    void addPolygons(std::list<Polygon>);
+    // Destructor.
+    ~MainWindow();
 };
 
 #endif // MAINWINDOW_H

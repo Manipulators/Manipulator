@@ -3,12 +3,12 @@
 
 void print_polygon(Polygon polygon)
 {
-    typename Polygon::Vertex_iterator vertex_iterator;
+    typename Polygon::Vertex_iterator vertex;
 
     std::cout << "[" << polygon.size() << " vertices:";
-    for (vertex_iterator = polygon.vertices_begin(); vertex_iterator < polygon.vertices_end(); ++vertex_iterator)
+    for (vertex = polygon.vertices_begin(); vertex < polygon.vertices_end(); ++vertex)
     {
-        std::cout << " (" << *vertex_iterator << ")";
+        std::cout << " (" << * vertex << ")";
     }
     std::cout << "]" << std::endl;
 
@@ -17,13 +17,14 @@ void print_polygon(Polygon polygon)
 
 QPolygonF Polygon_CGAL_to_Qt(Polygon polygon)
 {
-    QPolygonF Pqt;
-    typename Polygon::Vertex_iterator vertex_iterator;
+    QPolygonF polygon_f;
+    typename Polygon::Vertex_iterator vertex;
 
-    for (vertex_iterator = polygon.vertices_begin(); vertex_iterator < polygon.vertices_end(); ++vertex_iterator)
+    for (vertex = polygon.vertices_begin(); vertex < polygon.vertices_end(); ++vertex)
     {
-        double x = CGAL::to_double((*vertex_iterator).x()), y = CGAL::to_double((*vertex_iterator).y());
-        Pqt << QPointF(x,y);
+        double x = CGAL::to_double(vertex->x());
+        double y = CGAL::to_double(vertex->y());
+        polygon_f << QPointF(x, y);
     }
-    return Pqt;
+    return polygon_f;
 }

@@ -22,7 +22,7 @@ void Obstacles::print()
     std::cout << "Obstacles:" << std::endl;
     for (iterator = polygons.begin(); iterator != polygons.end(); ++iterator)
     {
-        print_polygon(*iterator);
+        print_polygon(* iterator);
     }
 }
 
