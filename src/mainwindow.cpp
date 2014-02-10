@@ -28,24 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsView *view = new QGraphicsView;
     view->setScene(scene);
     setCentralWidget(view);
-    addText("Bonjour");
-   /*
-   QGraphicsScene
-   scene->addText("Hello, world!");
-   scene->addLine(QLineF(0,0, 100, 100));
-   view->setScene(scene);
-   setCentralWidget(view);*/
-
-    /*scene.setSceneRect(0,0, 100, 100);
-    scene.addRect(QRectF(0,0, 100, 100));
-    scene.addLine(QLineF(0,0, 100, 100));
-    scene.addLine(QLineF(0,100, 100, 0));
-
-    QGraphicsView* view = new QGraphicsView(&scene);
-    view->show();*/
-
-        // etc...
-
+    addText("Bonjour");// test
 
 }
 
