@@ -37,7 +37,7 @@ int main (int argc, char **argv)
     // Show main window.
     MainWindow window;
     window.show();
-
+    window.addPolygon(robot.getPolygon());
     // Enter the main event loop and wait for return value.
     return app.exec();
 }

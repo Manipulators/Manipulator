@@ -14,3 +14,16 @@ void print_polygon(Polygon polygon)
 
     return;
 }
+
+QPolygonF Polygon_CGAL_to_Qt(Polygon polygon)
+{
+    QPolygonF Pqt;
+    typename Polygon::Vertex_iterator vertex_iterator;
+
+    for (vertex_iterator = polygon.vertices_begin(); vertex_iterator < polygon.vertices_end(); ++vertex_iterator)
+    {
+        double x = CGAL::to_double((*vertex_iterator).x()), y = CGAL::to_double((*vertex_iterator).y());
+        Pqt << QPointF(x,y);
+    }
+    return Pqt;
+}

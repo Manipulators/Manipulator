@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include "mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
 {
     // Set some basic properties.
@@ -28,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsView *view = new QGraphicsView;
     view->setScene(scene);
     setCentralWidget(view);
-    addText("Bonjour");// test
 
 }
 
@@ -39,4 +39,9 @@ MainWindow::~MainWindow()
 void MainWindow::addText(char * text)
 {
     scene->addText(text);
+}
+
+void MainWindow::addPolygon(Polygon polygon)
+{
+    scene->addPolygon(Polygon_CGAL_to_Qt(polygon),QPen(Qt::black),QBrush(Qt::darkBlue));
 }

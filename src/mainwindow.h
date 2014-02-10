@@ -4,6 +4,8 @@
 #include <QtGui/QMainWindow>
 #include <QWidget>
 #include <QGraphicsScene>
+#include "polygon.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -12,6 +14,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void addText(char * text);
+    void addPolygon(Polygon);
 };
 
 #endif // MAINWINDOW_H
