@@ -48,6 +48,18 @@ void MainWindow::addPolygons(std::list<Polygon> polygons)
     return;
 }
 
+void MainWindow::addCircle(double x, double y, double r)
+{
+    this->scene->addEllipse(x,y,r,r,QPen(Qt::red));
+    return;
+}
+
+void MainWindow::addLine(double x1, double y1, double x2, double y2)
+{
+    this->scene->addLine(x1,y1,x2,y2,QPen(Qt::red));
+    return;
+}
+
 MainWindow::~MainWindow()
 {
 }

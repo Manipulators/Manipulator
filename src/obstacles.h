@@ -10,6 +10,8 @@ class Obstacles
 {
 private:
     std::list<Polygon> polygons;
+    std::list<double> displacedwalls;// for critical curves of types 1
+    std::list<double> displacedCorners;// for critical curves of types 1
 public:
     // Constructor.
     Obstacles();

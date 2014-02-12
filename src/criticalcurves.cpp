@@ -1,7 +1,7 @@
 #include "criticalcurves.h"
 
 
-/* TODO: avoid build error.
+/* TODO: avoid build error => Inclure CORE dans CMakeLists.txt
 
 Polygon offset (Polygon poly, double lOffset)
 {
