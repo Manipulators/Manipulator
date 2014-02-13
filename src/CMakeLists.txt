@@ -13,8 +13,9 @@ set(CMAKE_CXX_FLAGS "-Wall")
 
 
 find_package(CGAL COMPONENTS Qt4)
-include(${CGAL_USE_FILE})
+find_package(CGAL QUIET COMPONENTS Core)
 
+include(${CGAL_USE_FILE})
 set(QT_USE_QTXML TRUE)
 set(QT_USE_QTMAIN TRUE)
 set(QT_USE_QTSCRIPT TRUE)
