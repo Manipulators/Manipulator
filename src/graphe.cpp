@@ -9,8 +9,14 @@ int Graphe::index(double xi,double yi)
     int i;
     for (i = 0; i < (this->n); i++)
     {
+        std::cout << "i = " << i << std::endl;
+        std::cout << "this->n = " << this->n << std::endl;
+        std::cout << "Test point 1" << std::endl;
         Node m = (this->nodes)[i];
+        std::cout << "Test point 2" << std::endl;
         if (m.x == xi && m.y == yi) {return i;};
+        std::cout << "Test point 3" << std::endl;
+        // J'ai un i random au segmentation fault, un this->n abusif et perdu du temps avec une connerie...
     }
     //Add node
     Node node;
