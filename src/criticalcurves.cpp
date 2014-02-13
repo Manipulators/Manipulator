@@ -1,3 +1,4 @@
+#include <CGAL/enum.h>
 #include "criticalcurves.h"
 
 
@@ -18,3 +19,28 @@ std::list<Polygon> offsets(std::list<Polygon> polygons, double lOffset)
     }
     return l;
 }
+
+
+/*void convex(Polygon polygon)
+{
+    typename Polygon::Vertex_iterator vertex;
+    typename Polygon::Vertex_iterator vertex1;
+    typename Polygon::Vertex_iterator vertex2;
+    typename Polygon::Vertex_iterator vertex3;
+
+    vertex = polygon.vertices_begin();
+    vertex1 = vertex;
+    ++vertex;
+    vertex2 = vertex;
+    ++vertex;
+
+    for (; vertex < polygon.vertices_end(); ++vertex)
+    {
+        vertex3 = vertex;
+        std::cout << " #" << *vertex2 << "#";
+        vertex1 = vertex2;
+        vertex2 = vertex3;
+    };
+
+    return;
+}*/

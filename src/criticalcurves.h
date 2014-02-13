@@ -10,9 +10,12 @@
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;
 // Define the CGAL polygon.
 typedef CGAL::Polygon_2<K>           Polygon ;
+typedef CGAL::Vector_3<K>           Vector;
+typedef K::Point_2           Point;
 
 
 Polygon offset (Polygon, double);
 std::list<Polygon> offsets(std::list<Polygon>, double);
+void convex(Polygon);
 
 #endif

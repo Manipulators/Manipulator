@@ -93,7 +93,7 @@ void MainWindow::addGraph(Graphe g)
                     break;
                 }
                 case Arc:
-                {
+                {//TODO: ARC
                     Node ni = (g.nodes)[i];
                     Node nj = (g.nodes)[j];
                     this->addLine(ni.x,ni.y,nj.x,nj.y);
