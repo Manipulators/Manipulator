@@ -22,6 +22,7 @@ public:
     void addCircle(double, double, double);
     // Add Line to the scene.
     void addLine(double, double, double, double);
+    void addArc();
     // Destructor.
     ~MainWindow();
 };

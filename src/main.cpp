@@ -2,6 +2,7 @@
 #include "robot.h"
 #include "movableobject.h"
 #include "obstacles.h"
+#include "criticalcurves.h"
 #include <QApplication>
 #include <iostream>
 #include <fstream>

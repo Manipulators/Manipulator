@@ -3,6 +3,7 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QGraphicsView>
+#include <QPainterPath>
 #include "mainwindow.h"
 
 
@@ -34,7 +35,7 @@ MainWindow::MainWindow(int width, int height, QWidget * parent)
 void MainWindow::addPolygon(Polygon polygon)
 {
     QPolygonF polygon_f = Polygon_CGAL_to_Qt(polygon);
-    this->scene->addPolygon(polygon_f, QPen(Qt::black), QBrush(Qt::darkBlue));
+    this->scene->addPolygon(polygon_f, QPen(Qt::black), QBrush(Qt::blue));
     return;
 }
 
@@ -53,6 +54,16 @@ void MainWindow::addCircle(double x, double y, double r)
     this->scene->addEllipse(x,y,r,r,QPen(Qt::red));
     return;
 }
+
+/* TODO : void MainWindow::addArc()
+{
+    QPainterPath* path = new QPainterPath();
+    path->arcMoveTo(0,0,50,50,20);
+    path->arcTo(0,0,50,50,20, 90);
+
+    this->scene->addPath(*path,QPen(Qt::red));
+    return;
+}*/
 
 void MainWindow::addLine(double x1, double y1, double x2, double y2)
 {
