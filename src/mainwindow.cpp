@@ -71,7 +71,7 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
     return;
 }
 
-void MainWindow::addGraph(Graph g)
+void MainWindow::addGraph(Graphe g)
 {
     int i,j;
     for (i = 0; i < g.n - 1; i++)

@@ -13,6 +13,6 @@ typedef CGAL::Polygon_2<K>           Polygon ;
 
 
 Polygon offset (Polygon, double);
-
+std::list<Polygon> offsets(std::list<Polygon>, double);
 
 #endif
