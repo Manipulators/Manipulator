@@ -30,14 +30,16 @@ set(SOURCES
     robot.cpp
     movableobject.cpp
     obstacles.cpp
-    criticalcurves.cpp)
+    criticalcurves.cpp
+    graph.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
     robot.h
     movableobject.h
     obstacles.h
-    criticalcurves.h)
+    criticalcurves.h
+    graph.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
