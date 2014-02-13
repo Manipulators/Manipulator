@@ -2,11 +2,12 @@
 
 Graphe::Graphe()
 {
+    n = 0;
 }
 
 int Graphe::index(double xi,double yi)
 {
-    int i;
+    int i = 0;
     for (i = 0; i < (this->n); i++)
     {
         std::cout << "i = " << i << std::endl;
