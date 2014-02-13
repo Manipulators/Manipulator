@@ -71,3 +71,12 @@ void Graphe::addOffsets(std::list<Polygon> polygons)
     };
     return;
 }
+
+void Graphe::addOffsetScreen(int w,int h,double r)
+{
+    this->addVertice(r,r,w-r,r,Seg);
+    this->addVertice(w-r,r,w-r,h-r,Seg);
+    this->addVertice(w-r,h-r,r,h-r,Seg);
+    this->addVertice(r,h-r,r,r,Seg);
+    return;
+}

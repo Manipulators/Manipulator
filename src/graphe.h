@@ -42,6 +42,7 @@ public:
     int index(double,double);
     void addOffset(Polygon);
     void addOffsets(std::list<Polygon>);
+    void addOffsetScreen(int,int,double);
 };
 
 

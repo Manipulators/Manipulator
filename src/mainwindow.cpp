@@ -26,7 +26,7 @@ MainWindow::MainWindow(int width, int height, QWidget * parent)
 
     // Set the central widget with a scene.
     double scene_width = (double)width - 2.0;
-    double scene_height = (double)height - 24.0;
+    double scene_height = (double)height - 24.0;//Can't see everything !!!
     this->scene = new QGraphicsScene(0.0, 0.0, scene_width, scene_height);
     QGraphicsView * view = new QGraphicsView(this->scene);
     this->setCentralWidget(view);
