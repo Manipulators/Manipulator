@@ -8,9 +8,11 @@ struct Node
     double y;
 };
 
+enum VType {None,Seg,Arc};
+
 struct Vertice
 {
-    int isarc;
+    VType vtype;
     double xc;
     double yc;
     //Original wall or corner (cf. Labeling)
@@ -22,13 +24,12 @@ struct Vertice
 
 class Graph
 {
-private:
+public:
     Vertice matrix [1000][1000];
     Node nodes [1000];
-public:
     int n;
     Graph();
-    void addVertice(double,double,double,double,int, double,double);
+    void addVertice(double,double,double,double,VType, double,double);
     int index(double,double);
 };
 

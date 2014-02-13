@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include "polygon.h"
+#include "graph.h"
 
 
 class MainWindow : public QMainWindow
@@ -23,6 +24,7 @@ public:
     // Add Line to the scene.
     void addLine(double, double, double, double);
     void addArc();
+    void addGraph(Graph);
     // Destructor.
     ~MainWindow();
 };

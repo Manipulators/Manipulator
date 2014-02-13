@@ -71,6 +71,40 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
     return;
 }
 
+void MainWindow::addGraph(Graph g)
+{
+    int i,j;
+    for (i = 0; i < g.n - 1; i++)
+    {
+        for (j = i+1; j < g.n; j++)
+        {
+            Vertice v = ((g.matrix)[i][j]);
+            switch (v.vtype)
+            {
+                case None:
+                {
+                    break;
+                }
+                case Seg:
+                {
+                    Node ni = (g.nodes)[i];
+                    Node nj = (g.nodes)[j];
+                    this->addLine(ni.x,ni.y,nj.x,nj.y);
+                    break;
+                }
+                case Arc:
+                {
+                    Node ni = (g.nodes)[i];
+                    Node nj = (g.nodes)[j];
+                    this->addLine(ni.x,ni.y,nj.x,nj.y);
+                    break;
+                }
+            }
+        }
+    }
+    return;
+}
+
 MainWindow::~MainWindow()
 {
 }
