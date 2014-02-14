@@ -17,6 +17,7 @@ typedef K::Point_2           Point;
 Polygon offset (Polygon, double);
 std::list<Polygon> offsets(std::list<Polygon>, double);
 void convex(Polygon);
-double angle (double, double, double, double);
+double angle1 (double, double);
+double angle2 (double, double, double, double);
 
 #endif

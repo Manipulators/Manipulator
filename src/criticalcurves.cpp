@@ -24,8 +24,16 @@ std::list<Polygon> offsets(std::list<Polygon> polygons, double lOffset)
     return l;
 }
 
+double angle1 (double x1, double y1)
+{
+      double result1;
+      result1 = atan2 (y1,x1) * 180 / PI;
+      if (result1 < 0) {result1 = result1 + 360;};
+      return result1;
+}
+
 //Anticlockwise angle between two vectors.
-double angle (double x1, double y1, double x2, double y2 )
+double angle2 (double x1, double y1, double x2, double y2 )
 {
       double result1, result2;
       result1 = atan2 (y1,x1) * 180 / PI;

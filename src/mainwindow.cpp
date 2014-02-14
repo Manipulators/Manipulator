@@ -4,6 +4,7 @@
 #include <QStatusBar>
 #include <QGraphicsView>
 #include <QPainterPath>
+#include <QPointF>
 #include "mainwindow.h"
 
 
@@ -55,15 +56,16 @@ void MainWindow::addCircle(double x, double y, double r)
     return;
 }
 
-/* TODO : void MainWindow::addArc()
-{
-    QPainterPath* path = new QPainterPath();
-    path->arcMoveTo(0,0,50,50,20);
-    path->arcTo(0,0,50,50,20, 90);
+void MainWindow::addArc(Node n1,Node nc,Node n2,double r)
+{//nc center; from point n1 to point n2 (counter clockwise)
+    QPainterPath* myPath = new QPainterPath();
+    myPath->moveTo(QPointF(n1.x,n1.y));//Start point
+    myPath->arcTo(QRectF(nc.x - r,nc.y - r,2*r,2*r),360 - angle1(n1.x-nc.x,n1.y-nc.y),360 - angle2(n1.x-nc.x,n1.y-nc.y,n2.x-nc.x,n2.y-nc.y));
 
-    this->scene->addPath(*path,QPen(Qt::red));
+    this->scene->addPath(*myPath,QPen(Qt::red));
+
     return;
-}*/
+}
 
 void MainWindow::addLine(double x1, double y1, double x2, double y2)
 {

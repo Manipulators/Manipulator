@@ -56,9 +56,6 @@ int main (int argc, char **argv)
     window.addGraph(graph);
     window.show();
 
-    /*
-    convex(movable_object.getPolygon());*/
-
     // Enter the main event loop and wait for return value.
     return app.exec();
 }

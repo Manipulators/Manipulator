@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include "polygon.h"
 #include "graphe.h"
+#include "criticalcurves.h"
 
 
 class MainWindow : public QMainWindow
@@ -23,7 +24,7 @@ public:
     void addCircle(double, double, double);
     // Add Line to the scene.
     void addLine(double, double, double, double);
-    void addArc();
+    void addArc(Node,Node,Node,double);
     void addGraph(Graphe);
     // Destructor.
     ~MainWindow();
