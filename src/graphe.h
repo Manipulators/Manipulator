@@ -2,12 +2,16 @@
 #define GRAPHE_H
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polygon_2.h>
+#include <CGAL/Line_2.h>
+#include "criticalcurves.h"
 
 
 // Define the CGAL kernel.
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;
 // Define the CGAL polygon.
 typedef CGAL::Polygon_2<K>           Polygon ;
+typedef CGAL::Point_2<K>           Point ;
+typedef CGAL::Line_2<K>           Line ;
 typedef Polygon::Edge_const_iterator EdgeIterator;
 
 struct Node
@@ -40,7 +44,7 @@ public:
     Graphe();
     void addVertice(double,double,double,double,VType, double,double);
     int index(double,double);
-    void addOffset(Polygon);
+    void addOffset(Polygon,double);
     void addOffsets(std::list<Polygon>);
     void addOffsetScreen(int,int,double);
 };

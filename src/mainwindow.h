@@ -4,6 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QWidget>
 #include <QGraphicsScene>
+#include <cmath>
 #include "polygon.h"
 #include "graphe.h"
 #include "criticalcurves.h"
@@ -24,7 +25,7 @@ public:
     void addCircle(double, double, double);
     // Add Line to the scene.
     void addLine(double, double, double, double);
-    void addArc(Node,Node,Node,double);
+    void addArc(Node,Node,Node);
     void addGraph(Graphe);
     // Destructor.
     ~MainWindow();

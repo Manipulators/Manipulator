@@ -56,8 +56,9 @@ void MainWindow::addCircle(double x, double y, double r)
     return;
 }
 
-void MainWindow::addArc(Node n1,Node nc,Node n2,double r)
-{//nc center; from point n1 to point n2 (counter clockwise)
+void MainWindow::addArc(Node n1,Node nc,Node n2)
+{//nc center; from point n1 to point n2 (counter clockwise); n1 must be on the circle
+    double r =sqrt((n1.x - nc.x)*(n1.x - nc.x)+(n1.y - nc.y)*(n1.y - nc.y));
     QPainterPath* myPath = new QPainterPath();
     myPath->moveTo(QPointF(n1.x,n1.y));//Start point
     myPath->arcTo(QRectF(nc.x - r,nc.y - r,2*r,2*r),360 - angle1(n1.x-nc.x,n1.y-nc.y),360 - angle2(n1.x-nc.x,n1.y-nc.y,n2.x-nc.x,n2.y-nc.y));
@@ -98,7 +99,10 @@ void MainWindow::addGraph(Graphe g)
                 {//TODO: ARC
                     Node ni = (g.nodes)[i];
                     Node nj = (g.nodes)[j];
-                    this->addLine(ni.x,ni.y,nj.x,nj.y);
+                    Node nc;
+                    nc.x = v.xc;
+                    nc.y = v.yc;
+                    this->addArc(nj,nc,ni);
                     break;
                 }
             }

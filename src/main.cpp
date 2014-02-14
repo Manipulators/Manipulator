@@ -45,7 +45,6 @@ int main (int argc, char **argv)
     //Critical Graph(e).
     Graphe graph;
     double r = 5;
-    graph.addOffsets(offsets(obstacles.getPolygons(),r));
     graph.addOffsetScreen(width, height,r);
 
     // Show main window.
