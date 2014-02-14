@@ -31,7 +31,7 @@ double angle1 (double x1, double y1)
 }
 
 //Anticlockwise angle between two vectors.
-double angle2 (double x1, double y1, double x2, double y2 )
+double angle2 (double x1, double y1, double x2, double y2)
 {
       double result1, result2;
       result1 = atan2 (y1,x1) * 180 / PI;
@@ -41,4 +41,14 @@ double angle2 (double x1, double y1, double x2, double y2 )
       result1 = result2 - result1;
       if (result1 < 0) {result1 = result1 + 360;};
       return result1;
+}
+
+double dist(double x1,double y1,double x2,double y2)
+{
+    return sqrt((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2));
+}
+
+int inArc(double x,double y,double x1,double y1,double x2,double y2,double xc,double yc)
+{//return (x,y) in Arc ?
+    return (dist(x,y,xc,yc) <= dist(x1,y1,xc,yc)) && (angle2(x1-xc,y1-yc,x-xc,y-yc) <= angle2(x1-xc,y1-yc,x2-xc,y2-yc));
 }

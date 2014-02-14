@@ -17,5 +17,7 @@ Polygon offset (Polygon, double);
 std::list<Polygon> offsets(std::list<Polygon>, double);
 double angle1 (double, double);
 double angle2 (double, double, double, double);
+int inArc(double,double,double,double,double,double,double,double);
+double dist(double,double,double,double);
 
 #endif
