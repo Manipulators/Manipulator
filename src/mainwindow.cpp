@@ -11,8 +11,8 @@
 MainWindow::MainWindow(int width, int height, QWidget * parent)
 {
     // Set some basic properties.
-    this->setFixedWidth(width);
-    this->setFixedHeight(height);
+    this->setFixedWidth(width+20);
+    this->setFixedHeight(height+40);
     this->setWindowTitle("Manipulator");
 
     // Set the menu bar.
@@ -26,8 +26,8 @@ MainWindow::MainWindow(int width, int height, QWidget * parent)
     this->setStatusBar(statusBar);
 
     // Set the central widget with a scene.
-    double scene_width = (double)width - 2.0;
-    double scene_height = (double)height - 24.0;//Can't see everything !!!
+    double scene_width = (double)width;
+    double scene_height = (double)height;
     this->scene = new QGraphicsScene(0.0, 0.0, scene_width, scene_height);
     QGraphicsView * view = new QGraphicsView(this->scene);
     this->setCentralWidget(view);
