@@ -8,6 +8,7 @@
 #include "polygon.h"
 #include "graphe.h"
 #include "criticalcurves.h"
+#include "robot.h"
 
 
 class MainWindow : public QMainWindow
@@ -21,12 +22,11 @@ public:
     void addPolygon(Polygon);
     // Add a list of polygons to the scene.
     void addPolygons(std::list<Polygon>);
-    // Add circle to the scene.
-    void addCircle(double, double, double);
     // Add Line to the scene.
     void addLine(double, double, double, double);
     void addArc(Node,Node,Node);
     void addGraph(Graphe);
+    void addRobot(Robot r);
     // Destructor.
     ~MainWindow();
 };

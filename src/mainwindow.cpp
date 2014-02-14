@@ -50,9 +50,11 @@ void MainWindow::addPolygons(std::list<Polygon> polygons)
     return;
 }
 
-void MainWindow::addCircle(double x, double y, double r)
+void MainWindow::addRobot(Robot r)
 {
-    this->scene->addEllipse(x,y,r,r,QPen(Qt::red));
+    Circle circle = r.get();
+    Point c = circle.center();
+    this->scene->addEllipse(c.x(),c.y(),circle.squared_radius(),circle.squared_radius(),QPen(Qt::green), QBrush(Qt::green));
     return;
 }
 

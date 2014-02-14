@@ -10,7 +10,6 @@
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K ;
 // Define the CGAL polygon.
 typedef CGAL::Polygon_2<K>           Polygon ;
-typedef CGAL::Vector_3<K>           Vector;
 typedef K::Point_2           Point;
 
 

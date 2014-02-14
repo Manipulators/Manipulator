@@ -5,33 +5,37 @@ MovableObject::MovableObject()
 {
 }
 
-Polygon MovableObject::getPolygon()
+Circle MovableObject::get()
 {
-    return this->polygon;
+    return this->circle;
 }
 
-void MovableObject::setPolygon(Polygon polygon)
+void MovableObject::set(double x,double y,double r)
 {
-    this->polygon = polygon;
+    this->circle = Circle(Point(x,y),r);
 }
 
 void MovableObject::print()
 {
-    std::cout << "Movable object:" << std::endl;
-    print_polygon(this->getPolygon());
+    Circle circle = this->get();
+    Point c = circle.center();
+    std::cout << "MovableObject: center = ("<< c.x() << "," << c.y() << ") raduis= "<< circle.squared_radius() << std::endl;
 }
 
 MovableObject::~MovableObject()
 {
 }
 
-std::istream & operator>>(std::istream & istream, MovableObject & movable_object)
+std::istream & operator>>(std::istream & istream, MovableObject & movableobject)
 {
     if (istream)
     {
-        Polygon polygon;
-        istream >> polygon;
-        movable_object.setPolygon(polygon);
+        double x,y,r;
+        istream >> x;
+        istream >> y;
+        istream >> r;
+
+        movableobject.set(x,y,r);
     }
     return istream;
 }

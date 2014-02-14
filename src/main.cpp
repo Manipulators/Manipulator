@@ -29,17 +29,17 @@ int main (int argc, char **argv)
     in_file >> height;
 
     // Read the bodies from the input file (i.e. robot, movable object and obstacles).
-    Robot robot;
-    MovableObject movable_object;
+    Robot robot1;
+    Robot robot2;
     Obstacles obstacles;
-    in_file >> robot;
-    in_file >> movable_object;
+    in_file >> robot1;
+    in_file >> robot2;
     in_file >> obstacles;
     in_file.close();
 
     // Display the bodies.
-    robot.print();
-    movable_object.print();
+    robot1.print();
+    robot2.print();
     obstacles.print();
 
     //Critical Graph(e).
@@ -50,8 +50,8 @@ int main (int argc, char **argv)
 
     // Show main window.
     MainWindow window(width, height);
-    window.addPolygon(robot.getPolygon());
-    window.addPolygon(movable_object.getPolygon());
+    window.addRobot(robot1);
+    window.addRobot(robot2);
     window.addPolygons(obstacles.getPolygons());
     window.addGraph(graph);
     window.show();
