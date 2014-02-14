@@ -38,6 +38,7 @@ void Graphe::addVertice(double x1,double y1,double x2,double y2,VType vtype, dou
 void Graphe::addOffset(Polygon polygon,double r)
 {   //polygon.is_counterclockwise_oriented()
     //l mean offset
+    //
     typename Polygon::Vertex_iterator vertex;
     typename Polygon::Vertex_iterator lvertex;
 
@@ -46,8 +47,8 @@ void Graphe::addOffset(Polygon polygon,double r)
     vertex = polygon.vertices_end()-1;
     lvertex = lpolygon.vertices_end()-1;
 
-    double xp,yp,x,y,xa,ya;//polygon
-    double lxp,lyp,lx,ly,lxa,lya;//lpolygon
+    double xp = 0,yp = 0,x = 0,y = 0,xa = 0,ya = 0;//polygon
+    double lxp = 0,lyp = 0,lx = 0,ly = 0,lxa = 0,lya = 0;//lpolygon
 
     xp = CGAL::to_double(vertex->x());
     yp = CGAL::to_double(vertex->y());
@@ -58,7 +59,7 @@ void Graphe::addOffset(Polygon polygon,double r)
     lvertex = lpolygon.vertices_begin();
 
 
-
+    int flag = 0;double xmemoire,ymemoire;
     for (; vertex < polygon.vertices_end()-1;)
     {
         x = CGAL::to_double(vertex->x());
@@ -77,8 +78,13 @@ void Graphe::addOffset(Polygon polygon,double r)
             //proj x on ((lxp,lyp);(lx,ly))
             Line line = Line(Point(lxp,lyp),Point(lx,ly));
             Point m = line.projection(Point(x,y));
-            this->addVertice(lxp,lyp,CGAL::to_double(m.x()),CGAL::to_double(m.y()),Seg);
-
+            if (flag == 0)//First point issu
+            {   flag++;
+                xmemoire = CGAL::to_double(m.x());
+                ymemoire = CGAL::to_double(m.y());}
+            else{
+                this->addVertice(lxp,lyp,CGAL::to_double(m.x()),CGAL::to_double(m.y()),Seg);
+            };
             //round side
             Line line2 = Line(Point(lx,ly),Point(lxa,lya));
             Point m2 = line2.projection(Point(x,y));
@@ -90,19 +96,24 @@ void Graphe::addOffset(Polygon polygon,double r)
         }
         else
         {
-            this->addVertice(lxp,lyp,lx,ly,Seg);//on ne connait pas encore xa ya
+            if (flag == 0)//First point issu
+            {   flag++;
+                xmemoire = lx;
+                ymemoire = ly;}
+            else{
+                this->addVertice(lxp,lyp,lx,ly,Seg);
+            };
             lxp = lx;
             lyp = ly;
             lx = lxa;
             ly = lya;
         };
-        //std::cout << "# ("<< lx << ","<< ly << ") #\n";
         xp = x;
         yp = y;
         x = xa;
         y = ya;
     };
-   vertex = polygon.vertices_begin();
+    vertex = polygon.vertices_begin();
     xa = CGAL::to_double(vertex->x());
     ya = CGAL::to_double(vertex->y());
     lvertex = polygon.vertices_begin();
@@ -122,52 +133,25 @@ void Graphe::addOffset(Polygon polygon,double r)
         lxp = CGAL::to_double(m2.x());
         lyp = CGAL::to_double(m2.y());
         this->addVertice(CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()),Arc,x,y);
+        lx = lxp;ly=lyp;
     }
     else
     {
         this->addVertice(lxp,lyp,lx,ly,Seg);
-        std::cout << "# (" << lxp << ","<< lyp << ");("<< lx << ","<< ly << ") #\n";
     };
+    this->addVertice(lx,ly,xmemoire,ymemoire,Seg);
     return;
 }
 
-/*void Graphe::addOffset(Polygon polygon)
-{
-    typename Polygon::Vertex_iterator vertex;
-
-    vertex = polygon.vertices_begin();
-    double xp,yp,x,y;
-
-    xp = CGAL::to_double(vertex->x());
-    yp = CGAL::to_double(vertex->y());
-    vertex++;
-
-    for (; vertex < polygon.vertices_end(); ++vertex)
-    {
-        x = CGAL::to_double(vertex->x());
-        y = CGAL::to_double(vertex->y());
-
-        this->addVertice(xp,yp,x,y,Seg);
-        xp = x;
-        yp = y;
-    };
-    vertex = polygon.vertices_begin();
-    x = CGAL::to_double(vertex->x());
-    y = CGAL::to_double(vertex->y());
-    this->addVertice(xp,yp,x,y,Seg);
-
-    return;
-}*/
-
-/*void Graphe::addOffsets(std::list<Polygon> polygons)
+void Graphe::addOffsets(std::list<Polygon> polygons,double r)
 {
     std::list<Polygon>::iterator polygon;
     for (polygon = polygons.begin(); polygon != polygons.end(); ++polygon)
     {
-        this->addOffset(* polygon);
+        this->addOffset(*polygon,r);
     };
     return;
-}*/
+}
 
 void Graphe::addOffsetScreen(int w,int h,double r)
 {

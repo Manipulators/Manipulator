@@ -45,7 +45,7 @@ public:
     void addVertice(double,double,double,double,VType, double,double);
     int index(double,double);
     void addOffset(Polygon,double);
-    void addOffsets(std::list<Polygon>);
+    void addOffsets(std::list<Polygon>,double);
     void addOffsetScreen(int,int,double);
 };
 

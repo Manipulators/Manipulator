@@ -42,35 +42,3 @@ double angle2 (double x1, double y1, double x2, double y2 )
       if (result1 < 0) {result1 = result1 + 360;};
       return result1;
 }
-
-
-void convex(Polygon polygon)
-{//polygon.is_counterclockwise_oriented()
-    typename Polygon::Vertex_iterator vertex;
-
-    vertex = polygon.vertices_end();
-    double xp,yp,x,y,xa,ya;
-
-    xp = CGAL::to_double(vertex->x());
-    yp = CGAL::to_double(vertex->y());
-    vertex = polygon.vertices_begin();
-
-    for (; vertex < polygon.vertices_end()-1;)
-    {
-        x = CGAL::to_double(vertex->x());
-        y = CGAL::to_double(vertex->y());
-        vertex++;
-        xa = CGAL::to_double(vertex->x());
-        ya = CGAL::to_double(vertex->y());
-        if (angle2(x-xp,y-yp,xa-x,ya-y) <= 180) {std::cout << "# (" << x << ","<< y << ") #\n";};
-        xp = x;
-        yp = y;
-        x = xa;
-        y = ya;
-    };
-    vertex = polygon.vertices_begin();
-    xa = CGAL::to_double(vertex->x());
-    ya = CGAL::to_double(vertex->y());
-    if (angle2(x-xp,y-yp,xa-x,ya-y) <= 180) {std::cout << "# (" << x << ","<< y << ") #\n";};
-    return;
-}
