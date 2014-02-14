@@ -45,6 +45,8 @@ int main (int argc, char **argv)
     //Critical Graph(e).
     Graphe graph;
     double r = 5;
+    graph.addOffset(robot.getPolygon(),r);
+    graph.addOffset(movable_object.getPolygon(),r);
     graph.addOffsetScreen(width, height,r);
 
     // Show main window.

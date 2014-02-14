@@ -43,8 +43,8 @@ void Graphe::addOffset(Polygon polygon,double r)
 
     Polygon lpolygon = offset(polygon,r);
 
-    vertex = polygon.vertices_end();
-    lvertex = lpolygon.vertices_end();
+    vertex = polygon.vertices_end()-1;
+    lvertex = lpolygon.vertices_end()-1;
 
     double xp,yp,x,y,xa,ya;//polygon
     double lxp,lyp,lx,ly,lxa,lya;//lpolygon
@@ -56,6 +56,8 @@ void Graphe::addOffset(Polygon polygon,double r)
     lxp = CGAL::to_double(lvertex->x());
     lyp = CGAL::to_double(lvertex->y());
     lvertex = lpolygon.vertices_begin();
+
+
 
     for (; vertex < polygon.vertices_end()-1;)
     {
@@ -94,12 +96,13 @@ void Graphe::addOffset(Polygon polygon,double r)
             lx = lxa;
             ly = lya;
         };
+        //std::cout << "# ("<< lx << ","<< ly << ") #\n";
         xp = x;
         yp = y;
         x = xa;
         y = ya;
     };
-    vertex = polygon.vertices_begin();
+   vertex = polygon.vertices_begin();
     xa = CGAL::to_double(vertex->x());
     ya = CGAL::to_double(vertex->y());
     lvertex = polygon.vertices_begin();
@@ -123,6 +126,7 @@ void Graphe::addOffset(Polygon polygon,double r)
     else
     {
         this->addVertice(lxp,lyp,lx,ly,Seg);
+        std::cout << "# (" << lxp << ","<< lyp << ");("<< lx << ","<< ly << ") #\n";
     };
     return;
 }
