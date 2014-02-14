@@ -19,5 +19,6 @@ double angle1 (double, double);
 double angle2 (double, double, double, double);
 int inArc(double,double,double,double,double,double,double,double);
 double dist(double,double,double,double);
+int inPoly(double ,double,Polygon);
 
 #endif

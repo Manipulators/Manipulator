@@ -52,3 +52,26 @@ int inArc(double x,double y,double x1,double y1,double x2,double y2,double xc,do
 {//return (x,y) in Arc ?
     return (dist(x,y,xc,yc) <= dist(x1,y1,xc,yc)) && (angle2(x1-xc,y1-yc,x-xc,y-yc) <= angle2(x1-xc,y1-yc,x2-xc,y2-yc));
 }
+
+int inPoly(double x, double y,Polygon polygon)
+{//PIP algo
+
+  int c = 0;
+  double xj,yj,xi,yi;
+  typename Polygon::Vertex_iterator vertex;
+
+  vertex = polygon.vertices_end()-1;
+  xj = CGAL::to_double(vertex->x());
+  yj = CGAL::to_double(vertex->y());
+
+  for (vertex = polygon.vertices_begin(); vertex < polygon.vertices_end(); vertex++)
+  {
+      xi = CGAL::to_double(vertex->x());
+      yi = CGAL::to_double(vertex->y());
+      if ( ((yi>y) != (yj>y)) && (x < (xj-xi) * (y-yi) / (yj-yi) + xi) )
+         c = !c;
+      xj=xi;yj=yi;
+  }
+
+  return c;
+}
