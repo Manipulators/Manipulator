@@ -45,26 +45,35 @@ double angle2 (double x1, double y1, double x2, double y2 )
       return result1;
 }
 
-/*void convex(Polygon polygon)
-{
+
+void convex(Polygon polygon)
+{//polygon.is_counterclockwise_oriented()
     typename Polygon::Vertex_iterator vertex;
-    typename Polygon::Vertex_iterator vertex1;
-    typename Polygon::Vertex_iterator vertex2;
-    typename Polygon::Vertex_iterator vertex3;
 
+    vertex = polygon.vertices_end();
+    double xp,yp,x,y,xa,ya;
+
+    xp = CGAL::to_double(vertex->x());
+    yp = CGAL::to_double(vertex->y());
     vertex = polygon.vertices_begin();
-    vertex1 = vertex;
-    ++vertex;
-    vertex2 = vertex;
-    ++vertex;
 
-    for (; vertex < polygon.vertices_end(); ++vertex)
+    for (; vertex < polygon.vertices_end()-1;)
     {
-        vertex3 = vertex;
-        std::cout << " #" << *vertex2 << "#";
-        vertex1 = vertex2;
-        vertex2 = vertex3;
+        x = CGAL::to_double(vertex->x());
+        y = CGAL::to_double(vertex->y());
+        vertex++;
+        xa = CGAL::to_double(vertex->x());
+        ya = CGAL::to_double(vertex->y());
+        if (angle2(x-xp,y-yp,xa-x,ya-y) <= 180) {std::cout << "# (" << x << ","<< y << ") #\n";};
+        xp = x;
+        yp = y;
+        x = xa;
+        y = ya;
     };
-
+    vertex = polygon.vertices_begin();
+    xa = CGAL::to_double(vertex->x());
+    ya = CGAL::to_double(vertex->y());
+    if (angle2(x-xp,y-yp,xa-x,ya-y) <= 180) {std::cout << "# (" << x << ","<< y << ") #\n";};
     return;
-}*/
+
+}
