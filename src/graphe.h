@@ -40,6 +40,7 @@ class Graphe
 public:
     Vertice matrix [100][100];
     Node nodes [100];
+    std::list<int> regions [100];
     int n;
     Graphe();
     void addVertice(double,double,double,double,VType, double,double);
@@ -47,6 +48,7 @@ public:
     void addOffset(Polygon,double);
     void addOffsets(std::list<Polygon>,double);
     void addOffsetScreen(int,int,double);
+    void buildRegion();
 };
 
 
