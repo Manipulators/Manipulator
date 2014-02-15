@@ -42,18 +42,19 @@ int main (int argc, char **argv)
     robot2.print();
     obstacles.print();
 
-    //Critical Graph(e).
-    Graphe graph;
-    double r = 5;
-    graph.addOffsets(obstacles.getPolygons(),r);
-    graph.addOffsetScreen(width, height,r);
+    //Critical Graph(e) (cf Article for notations).
+    Graphe A1,A,S,CG;// critical graph;
+    A1.addOffsets(obstacles.getPolygons(),robot1.r());
+    A.addOffsets(obstacles.getPolygons(),robot2.r());
+    CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
+    //S.addOffsetScreen(width, height,r);
 
     // Show main window.
     MainWindow window(width, height);
     window.addRobot(robot1);
     window.addRobot(robot2);
     window.addPolygons(obstacles.getPolygons());
-    window.addGraph(graph);
+    window.addGraph(CG);
     window.show();
 
     // Enter the main event loop and wait for return value.

@@ -9,6 +9,12 @@ Circle Robot::get()
     return this->circle;
 }
 
+double Robot::r()
+{
+    Circle circle = this->get();
+    return circle.squared_radius();
+}
+
 void Robot::set(double x,double y,double r,double xf,double yf)
 {
     this->circle = Circle(Point(x,y),r);

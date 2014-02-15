@@ -27,6 +27,7 @@ public:
     // Final position
     double xf;
     double yf;
+    double r();
     // Destructor.
     ~Robot();
 };

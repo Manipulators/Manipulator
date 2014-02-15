@@ -116,7 +116,7 @@ void Graphe::addOffset(Polygon polygon,double r)
     vertex = polygon.vertices_begin();
     xa = CGAL::to_double(vertex->x());
     ya = CGAL::to_double(vertex->y());
-    lvertex = polygon.vertices_begin();
+    lvertex = lpolygon.vertices_begin();
     lxa = CGAL::to_double(lvertex->x());
     lya = CGAL::to_double(lvertex->y());
 
