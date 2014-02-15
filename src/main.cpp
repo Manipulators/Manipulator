@@ -47,6 +47,7 @@ int main (int argc, char **argv)
     A1.addOffsets(obstacles.getPolygons(),robot1.r());
     A.addOffsets(obstacles.getPolygons(),robot2.r());
     CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
+    A1.buildRegion();
     //S.addOffsetScreen(width, height,r);
 
     // Show main window.

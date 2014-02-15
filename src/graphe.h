@@ -22,11 +22,13 @@ struct Node
 
 enum VType {None,Seg,Arc};
 
-struct Vertice
+class Vertice
 {
+public:
     VType vtype;
     double xc;
     double yc;
+    Vertice();
     //Attention : orientation des arc
     //Original wall or corner (cf. Labeling)
     /*double x1;

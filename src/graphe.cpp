@@ -5,6 +5,19 @@ Graphe::Graphe()
     n = 0;
 }
 
+Vertice::Vertice()
+{
+    vtype = None;
+    xc = 0;
+    yc = 0;
+    //Attention : orientation des arc
+    //Original wall or corner (cf. Labeling)
+    /*double x1;
+    double y1;
+    double x2;
+    double y2;*/
+}
+
 int Graphe::index(double xi,double yi)
 {
     int i = 0;
@@ -218,14 +231,13 @@ void Graphe::buildRegion()
             >
             graph;
 
-
     // Convert to boost graph
     graph g(this->n);
 
     int i = 0,j= 0;
     for (i = 0; i < (this->n)-1; i++)
     {
-        for (j = i+1; i < (this->n); j++)
+        for (j = i+1; j < (this->n); j++)
         {
             Vertice m = (this->matrix)[i][j];
             if(m.vtype != None){add_edge(i,j,g);};
@@ -250,8 +262,6 @@ void Graphe::buildRegion()
             )
         std::cout << "Input graph is not planar" << std::endl;
 
-
-    std::cout << std::endl << "Vertices on the faces: " << std::endl;
     vertex_output_visitor v_vis;
     v_vis.i = 0;
 
