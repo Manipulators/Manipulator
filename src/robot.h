@@ -21,9 +21,12 @@ public:
     // Get the circle property of the robot.
     Circle get();
     // Set the circle property of the robot.
-    void set(double,double,double);
+    void set(double,double,double,double,double);
     // Print a description of the robot on the standard output.
     void print();
+    // Final position
+    double xf;
+    double yf;
     // Destructor.
     ~Robot();
 };
