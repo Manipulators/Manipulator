@@ -58,7 +58,7 @@ void MainWindow::addRobot(Robot r)
     return;
 }
 
-void MainWindow::addArc(Node n1,Node nc,Node n2)
+/*void MainWindow::addArc(Node n1,Node nc,Node n2)
 {//nc center; from point n1 to point n2 (counter clockwise); n1 must be on the circle
     double r =sqrt((n1.x - nc.x)*(n1.x - nc.x)+(n1.y - nc.y)*(n1.y - nc.y));
     QPainterPath* myPath = new QPainterPath();
@@ -68,7 +68,7 @@ void MainWindow::addArc(Node n1,Node nc,Node n2)
     this->scene->addPath(*myPath,QPen(Qt::red));
 
     return;
-}
+}*/
 
 void MainWindow::addLine(double x1, double y1, double x2, double y2)
 {
@@ -76,7 +76,7 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
     return;
 }
 
-void MainWindow::addGraph(Graphe g)
+/*void MainWindow::addGraph(Graphe g)
 {
     int i,j;
     for (i = 0; i < g.n - 1; i++)
@@ -111,7 +111,7 @@ void MainWindow::addGraph(Graphe g)
         }
     }
     return;
-}
+}*/
 
 MainWindow::~MainWindow()
 {

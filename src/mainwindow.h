@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include <cmath>
 #include "polygon.h"
-#include "graphe.h"
+#include "arrangement.h"
 #include "criticalcurves.h"
 #include "robot.h"
 
@@ -24,8 +24,8 @@ public:
     void addPolygons(std::list<Polygon>);
     // Add Line to the scene.
     void addLine(double, double, double, double);
-    void addArc(Node,Node,Node);
-    void addGraph(Graphe);
+    //void addArc(Node,Node,Node);
+    //void addGraph(Graphe);
     void addRobot(Robot r);
     // Destructor.
     ~MainWindow();

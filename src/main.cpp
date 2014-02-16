@@ -3,7 +3,6 @@
 #include "movableobject.h"
 #include "obstacles.h"
 #include "criticalcurves.h"
-#include "graphe.h"
 #include <QApplication>
 #include <iostream>
 #include <fstream>
@@ -43,19 +42,17 @@ int main (int argc, char **argv)
     obstacles.print();
 
     //Critical Graph(e) (cf Article for notations).
-    Graphe A1,A,S,CG;// critical graph;
+    Arrangement A1,A,S,CG;// critical graph;
     A1.addOffsets(obstacles.getPolygons(),robot1.r());
     A.addOffsets(obstacles.getPolygons(),robot2.r());
     CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
-    A1.buildRegion();
-    //S.addOffsetScreen(width, height,r);
+    S.addOffsetScreen(width, height,robot1.r());
 
     // Show main window.
     MainWindow window(width, height);
     window.addRobot(robot1);
     window.addRobot(robot2);
     window.addPolygons(obstacles.getPolygons());
-    window.addGraph(CG);
     window.show();
 
     // Enter the main event loop and wait for return value.
