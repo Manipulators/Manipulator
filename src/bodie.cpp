@@ -9,7 +9,7 @@ Circle Bodie::getCircle()
     return this->circle;
 }
 
-double Bodie::r()
+double Bodie::getRadius()
 {
     Circle circle = this->getCircle();
     return circle.squared_radius();
@@ -27,7 +27,7 @@ void Bodie::print()
     Circle circle = this->getCircle();
     Point c = circle.center();
     std::cout << "Bodie:" << std::endl;
-    std::cout << "[center: ("<< c.x() << " " << c.y() << "), raduis: " << circle.squared_radius() << "]" << std::endl;
+    std::cout << "[center: ("<< c.x() << " " << c.y() << "), radius: " << circle.squared_radius() << "]" << std::endl;
 }
 
 Bodie::~Bodie()

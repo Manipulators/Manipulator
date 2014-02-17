@@ -35,7 +35,7 @@ int main (int argc, char **argv)
     in_file >> bodie2;
     in_file.close();
 
-    // Display the bodies.
+    // Display the barriers and the bodies on the standard input.
     barriers.print();
     bodie1.print();
     bodie2.print();
@@ -54,7 +54,6 @@ int main (int argc, char **argv)
     window.addBarriers(barriers);
     window.addBodie(bodie1);
     window.addBodie(bodie2);
-    //window.addPolygons(obstacles.getPolygons());
     window.show();
 
     // Enter the main event loop and wait for return value.

@@ -28,7 +28,7 @@ public:
     double xf;
     double yf;
     // Radius.
-    double r();
+    double getRadius();
     // Destructor.
     ~Bodie();
 };

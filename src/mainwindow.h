@@ -6,10 +6,10 @@
 #include <QGraphicsScene>
 #include <cmath>
 #include "polygon.h"
-#include "arrangement.h"
-#include "criticalcurves.h"
 #include "barriers.h"
 #include "bodie.h"
+#include "arrangement.h"
+#include "criticalcurves.h"
 
 
 class MainWindow : public QMainWindow
@@ -23,12 +23,16 @@ public:
     void addPolygon(Polygon);
     // Add a list of polygons to the scene.
     void addPolygons(std::list<Polygon>);
-    // Add Line to the scene.
+    // Add a line to the scene.
     void addLine(double, double, double, double);
+    // Add some barriers to the scene.
+    void addBarriers(Barriers);
+    // Add a bodie to the scene.
+    void addBodie(Bodie);
+
     //void addArc(Node,Node,Node);
     //void addGraph(Graphe);
-    void addBarriers(Barriers);
-    void addBodie(Bodie);
+
     // Destructor.
     ~MainWindow();
 };

@@ -53,8 +53,9 @@ void MainWindow::addPolygons(std::list<Polygon> polygons)
 void MainWindow::addBarriers(Barriers barriers)
 {
     this->scene->setBackgroundBrush(Qt::gray);
+    QColor color = Qt::white;
     QPolygonF polygon_f = Polygon_CGAL_to_Qt(barriers.getPolygon());
-    this->scene->addPolygon(polygon_f, QPen(Qt::black), QBrush(Qt::white));
+    this->scene->addPolygon(polygon_f, QPen(color), QBrush(color));
     return;
 }
 
@@ -64,7 +65,8 @@ void MainWindow::addBodie(Bodie bodie)
     Point center = circle.center();
     double radius = circle.squared_radius();
     double diameter = 2.0 * radius;
-    this->scene->addEllipse(center.x() - radius, center.y() - radius, diameter, diameter, QPen(Qt::black), QBrush(Qt::darkBlue));
+    QColor color = Qt::darkBlue;
+    this->scene->addEllipse(center.x() - radius, center.y() - radius, diameter, diameter, QPen(color), QBrush(color));
     return;
 }
 
