@@ -28,21 +28,17 @@ set(SOURCES
     main.cpp
     mainwindow.cpp 
     polygon.cpp
-    robot.cpp
-    movableobject.cpp
-    obstacles.cpp
     criticalcurves.cpp
     arrangement.cpp
-    barriers.cpp)
+    barriers.cpp
+    bodie.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
-    robot.h
-    movableobject.h
-    obstacles.h
     criticalcurves.h
     arrangement.h
-    barriers.h)
+    barriers.h
+    bodie.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})

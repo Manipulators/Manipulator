@@ -30,17 +30,17 @@ int main (int argc, char **argv)
 
     // Read the barriers and the bodies from the input file.
     Barriers barriers;
-    Robot robot1;
-    Robot robot2;
+    Bodie bodie1;
+    Bodie bodie2;
     in_file >> barriers;
-    in_file >> robot1;
-    in_file >> robot2;
+    in_file >> bodie1;
+    in_file >> bodie2;
     in_file.close();
 
     // Display the bodies.
     barriers.print();
-    robot1.print();
-    robot2.print();
+    bodie1.print();
+    bodie2.print();
 
     /*
     //Critical Graph(e) (cf Article for notations).
@@ -53,9 +53,9 @@ int main (int argc, char **argv)
 
     // Show main window.
     MainWindow window(width, height);
-    window.addPolygon(barriers.getPolygon());
-    window.addRobot(robot1);
-    window.addRobot(robot2);
+    window.addBarriers(barriers);
+    window.addBodie(bodie1);
+    window.addBodie(bodie2);
     //window.addPolygons(obstacles.getPolygons());
     window.show();
 

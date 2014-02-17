@@ -8,7 +8,8 @@
 #include "polygon.h"
 #include "arrangement.h"
 #include "criticalcurves.h"
-#include "robot.h"
+#include "barriers.h"
+#include "bodie.h"
 
 
 class MainWindow : public QMainWindow
@@ -26,7 +27,8 @@ public:
     void addLine(double, double, double, double);
     //void addArc(Node,Node,Node);
     //void addGraph(Graphe);
-    void addRobot(Robot r);
+    void addBarriers(Barriers);
+    void addBodie(Bodie);
     // Destructor.
     ~MainWindow();
 };

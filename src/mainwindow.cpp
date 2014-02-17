@@ -50,11 +50,21 @@ void MainWindow::addPolygons(std::list<Polygon> polygons)
     return;
 }
 
-void MainWindow::addRobot(Robot r)
+void MainWindow::addBarriers(Barriers barriers)
 {
-    Circle circle = r.get();
-    Point c = circle.center();
-    this->scene->addEllipse(c.x(),c.y(),circle.squared_radius(),circle.squared_radius(),QPen(Qt::green), QBrush(Qt::green));
+    this->scene->setBackgroundBrush(Qt::gray);
+    QPolygonF polygon_f = Polygon_CGAL_to_Qt(barriers.getPolygon());
+    this->scene->addPolygon(polygon_f, QPen(Qt::black), QBrush(Qt::white));
+    return;
+}
+
+void MainWindow::addBodie(Bodie bodie)
+{
+    Circle circle = bodie.getCircle();
+    Point center = circle.center();
+    double radius = circle.squared_radius();
+    double diameter = 2.0 * radius;
+    this->scene->addEllipse(center.x() - radius, center.y() - radius, diameter, diameter, QPen(Qt::black), QBrush(Qt::darkBlue));
     return;
 }
 
