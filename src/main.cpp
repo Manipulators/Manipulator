@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "barriers.h"
-#include "robot.h"
-#include "movableobject.h"
-#include "obstacles.h"
+#include "bodie.h"
 #include "criticalcurves.h"
 #include <QApplication>
 #include <iostream>
