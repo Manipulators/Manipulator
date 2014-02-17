@@ -32,7 +32,8 @@ set(SOURCES
     movableobject.cpp
     obstacles.cpp
     criticalcurves.cpp
-    arrangement.cpp)
+    arrangement.cpp
+    barriers.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
@@ -40,7 +41,8 @@ set(HEADERS
     movableobject.h
     obstacles.h
     criticalcurves.h
-    arrangement.h)
+    arrangement.h
+    barriers.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
