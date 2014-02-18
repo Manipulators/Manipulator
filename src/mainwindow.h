@@ -13,14 +13,24 @@
 #include "arrangement.h"
 #include "criticalcurves.h"
 
+#include "ui_MainWindow.h"
+
+
+namespace Ui
+{
+    class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
 private:
     QGraphicsScene * scene;
+
 public:
     // Constructor.
-    MainWindow(QWidget * parent = 0);
+    MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
     // Add a polygon to the scene.
     void addPolygon(Polygon);
     // Add a list of polygons to the scene.
@@ -37,6 +47,13 @@ public:
 
     // Destructor.
     ~MainWindow();
+
+public slots:
+    void on_actionQuit_triggered();
+
+protected:
+    Ui::MainWindow * ui;
+    void setupUI();
 };
 
 #endif // MAINWINDOW_H

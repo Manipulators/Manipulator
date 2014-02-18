@@ -8,7 +8,9 @@
 #include "mainwindow.h"
 
 
-MainWindow::MainWindow(QWidget * parent)
+MainWindow::MainWindow(QWidget * parent, Qt::WindowFlags flags) :
+    QMainWindow(parent, flags),
+    ui(new Ui::MainWindow)
 {
     // Open the input files.
     std::ifstream in_file("../data/manipulator_1.data");
@@ -33,28 +35,14 @@ MainWindow::MainWindow(QWidget * parent)
     bodie1.print();
     bodie2.print();
 
+    this->setupUI();
 
-    // Set some basic properties.
-    this->setFixedWidth(width+20);
-    this->setFixedHeight(height+40);
-    this->setWindowTitle("Manipulator");
+    this->scene = new QGraphicsScene();
+    this->ui->graphicsView->setScene(scene);
 
-    // Set the menu bar.
-    QMenuBar * menuBar = new QMenuBar(this);
-    QMenu * fileMenu = new QMenu("File", menuBar);
-    QAction * exitAction = new QAction("Exit", fileMenu);
-    this->setMenuBar(menuBar);
-    
-    // Set the status bar.
-    QStatusBar * statusBar = new QStatusBar();
-    this->setStatusBar(statusBar);
-
-    // Set the central widget with a scene.
-    double scene_width = (double)width;
-    double scene_height = (double)height;
-    this->scene = new QGraphicsScene(0.0, 0.0, scene_width, scene_height);
-    QGraphicsView * view = new QGraphicsView(this->scene);
-    this->setCentralWidget(view);
+    this->addBarriers(barriers);
+    this->addBodie(bodie1);
+    this->addBodie(bodie2);
 
 /*
     //Critical Graph(e) (cf Article for notations).
@@ -64,9 +52,6 @@ MainWindow::MainWindow(QWidget * parent)
     CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
     S.addOffsetScreen(width, height,robot1.r());
 */
-    this->addBarriers(barriers);
-    this->addBodie(bodie1);
-    this->addBodie(bodie2);
 }
 
 void MainWindow::addPolygon(Polygon polygon)
@@ -163,4 +148,18 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
 
 MainWindow::~MainWindow()
 {
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    qApp->exit();
+    return;
+}
+
+
+void MainWindow::setupUI()
+{
+    this->ui->setupUi(this);
+    return;
 }

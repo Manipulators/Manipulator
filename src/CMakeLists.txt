@@ -11,15 +11,8 @@ project(${PROJECT})
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS "-Wall")
 
-
-find_package(CGAL COMPONENTS Qt4)
-find_package(CGAL QUIET COMPONENTS Core)
-
+find_package(CGAL QUIET COMPONENTS Core Qt4)
 include(${CGAL_USE_FILE})
-set(QT_USE_QTXML TRUE)
-set(QT_USE_QTMAIN TRUE)
-set(QT_USE_QTSCRIPT TRUE)
-set(QT_USE_QTOPENGL TRUE)
 
 find_package(Qt4)
 include(${QT_USE_FILE})
@@ -39,9 +32,12 @@ set(HEADERS
     arrangement.h
     barriers.h
     bodie.h)
+qt4_wrap_ui(UIS MainWindow.ui)
+qt4_wrap_cpp(MOCS ${HEADERS})
+qt4_add_resources(RESSOURCES MainWindow.qrc)
 
 set(EXECUTABLE manipulator)
-add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
+add_executable(${EXECUTABLE} ${SOURCES} ${MOCS} ${HEADERS} ${UIS} ${RESSOURCES})
 add_to_cached_list(CGAL_EXECUTABLE_TARGETS ${EXECUTABLE})
 # Link with Qt libraries
 target_link_libraries(${EXECUTABLE} ${QT_LIBRARIES})
