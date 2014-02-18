@@ -8,8 +8,32 @@
 #include "mainwindow.h"
 
 
-MainWindow::MainWindow(int width, int height, QWidget * parent)
+MainWindow::MainWindow(QWidget * parent)
 {
+    // Open the input files.
+    std::ifstream in_file("../data/manipulator_1.data");
+
+    // Read the width and height of the main window from the input file.
+    int width;
+    int height;
+    in_file >> width;
+    in_file >> height;
+
+    // Read the barriers and the bodies from the input file.
+    Barriers barriers;
+    Bodie bodie1;
+    Bodie bodie2;
+    in_file >> barriers;
+    in_file >> bodie1;
+    in_file >> bodie2;
+    in_file.close();
+
+    // Display the barriers and the bodies on the standard input.
+    barriers.print();
+    bodie1.print();
+    bodie2.print();
+
+
     // Set some basic properties.
     this->setFixedWidth(width+20);
     this->setFixedHeight(height+40);
@@ -31,6 +55,18 @@ MainWindow::MainWindow(int width, int height, QWidget * parent)
     this->scene = new QGraphicsScene(0.0, 0.0, scene_width, scene_height);
     QGraphicsView * view = new QGraphicsView(this->scene);
     this->setCentralWidget(view);
+
+/*
+    //Critical Graph(e) (cf Article for notations).
+    Arrangement A1,A,S,CG;// critical graph;
+    A1.addOffsets(obstacles.getPolygons(),robot1.r());
+    A.addOffsets(obstacles.getPolygons(),robot2.r());
+    CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
+    S.addOffsetScreen(width, height,robot1.r());
+*/
+    this->addBarriers(barriers);
+    this->addBodie(bodie1);
+    this->addBodie(bodie2);
 }
 
 void MainWindow::addPolygon(Polygon polygon)

@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <cmath>
+#include <iostream>
+#include <fstream>
 #include "polygon.h"
 #include "barriers.h"
 #include "bodie.h"
@@ -18,7 +20,7 @@ private:
     QGraphicsScene * scene;
 public:
     // Constructor.
-    MainWindow(int, int, QWidget * parent = 0);
+    MainWindow(QWidget * parent = 0);
     // Add a polygon to the scene.
     void addPolygon(Polygon);
     // Add a list of polygons to the scene.
