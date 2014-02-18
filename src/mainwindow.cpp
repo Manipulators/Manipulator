@@ -50,80 +50,31 @@ void MainWindow::addPolygons(std::list<Polygon> polygons)
     return;
 }
 
-void MainWindow::addBarriers(Barriers barriers)
+void MainWindow::addRobot(Robot r)
 {
-    this->scene->setBackgroundBrush(Qt::gray);
-    QColor color = Qt::white;
-    QPolygonF polygon_f = Polygon_CGAL_to_Qt(barriers.getPolygon());
-    this->scene->addPolygon(polygon_f, QPen(color), QBrush(color));
+    Circle circle = r.get();
+    Point c = circle.center();
+    this->scene->addEllipse(c.x(),c.y(),circle.squared_radius(),circle.squared_radius(),QPen(Qt::green), QBrush(Qt::green));
     return;
 }
 
-void MainWindow::addBodie(Bodie bodie)
-{
-    Circle circle = bodie.getCircle();
-    Point center = circle.center();
-    double radius = circle.squared_radius();
-    double diameter = 2.0 * radius;
-    QColor color = Qt::darkBlue;
-    this->scene->addEllipse(center.x() - radius, center.y() - radius, diameter, diameter, QPen(color), QBrush(color));
-    return;
-}
-
-/*void MainWindow::addArc(Node n1,Node nc,Node n2)
+void MainWindow::addArc(double xc,double yc,double x1,double y1,double x2,double y2)
 {//nc center; from point n1 to point n2 (counter clockwise); n1 must be on the circle
-    double r =sqrt((n1.x - nc.x)*(n1.x - nc.x)+(n1.y - nc.y)*(n1.y - nc.y));
+    double r =sqrt((x1 - xc)*(x1 - xc)+(y1 - yc)*(y1 - yc));
     QPainterPath* myPath = new QPainterPath();
-    myPath->moveTo(QPointF(n1.x,n1.y));//Start point
-    myPath->arcTo(QRectF(nc.x - r,nc.y - r,2*r,2*r),360 - angle1(n1.x-nc.x,n1.y-nc.y),360 - angle2(n1.x-nc.x,n1.y-nc.y,n2.x-nc.x,n2.y-nc.y));
+    myPath->moveTo(QPointF(x1,y1));//Start point
+    myPath->arcTo(QRectF(xc - r,yc - r,2*r,2*r),360 - angle1(x1-xc,y1-yc),360 - angle2(x1-xc,y1-yc,x2-xc,y2-yc));
 
     this->scene->addPath(*myPath,QPen(Qt::red));
 
     return;
-}*/
+}
 
 void MainWindow::addLine(double x1, double y1, double x2, double y2)
 {
     this->scene->addLine(x1,y1,x2,y2,QPen(Qt::red));
     return;
 }
-
-/*void MainWindow::addGraph(Graphe g)
-{
-    int i,j;
-    for (i = 0; i < g.n - 1; i++)
-    {
-        for (j = i+1; j < g.n; j++)
-        {
-            Vertice v = ((g.matrix)[i][j]);
-            switch (v.vtype)
-            {
-                case None:
-                {
-                    break;
-                }
-                case Seg:
-                {
-                    Node ni = (g.nodes)[i];
-                    Node nj = (g.nodes)[j];
-                    this->addLine(ni.x,ni.y,nj.x,nj.y);
-                    break;
-                }
-                case Arc:
-                {
-                    Node ni = (g.nodes)[i];
-                    Node nj = (g.nodes)[j];
-                    Node nc;
-                    nc.x = v.xc;
-                    nc.y = v.yc;
-                    this->addArc(nj,nc,ni);
-                    break;
-                }
-            }
-        }
-    }
-    return;
-}*/
 
 MainWindow::~MainWindow()
 {
