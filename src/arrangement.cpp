@@ -14,42 +14,20 @@ void Arrangement::addSeg(double x1,double y1,double x2,double y2)
       return;
 }
 
-void Arrangement::addArc(double xc,double yc,double x1,double y1,double x2,double y2,double r)
+void Arrangement::addArc(double xc,double yc,double x1,double y1,double x2,double y2)
 {//center xc yc, begin x1 y1, end x2 y2
-    // Les arcs ne s'ajoute pas bien à cause des approximations
-    //=> sommets de degrées 1
-    /*Rat_circle_2  circ7 (Rat_point_2(xc,yc),r*r);
+    Rat_circle_2  circ7 (Rat_point_2(xc,yc),(x1 - xc)*(x1 - xc)+(y1 - yc)*(y1 - yc) );
       Point_2       ps7 (x1, y1);
       Point_2       pt7 (x2, y2);
-      Conic_arc_2   c7 (circ7, CGAL::COUNTERCLOCKWISE, ps7, pt7);*/
+      Conic_arc_2   c7 (circ7, CGAL::COUNTERCLOCKWISE, ps7, pt7);
 
-   /* Point_2       ps7 (x1, y1);
-    Point_2       pt7 (x2, y2);
-    if(x2 != x1)
-    {
-        std::cout << "\n\n"<< ((x1*x1-x2*x2+y1*y1-y2*y2)+2*yc*(y2-y1))/(2*(x1-x2))<< "||| "<< xc<<"\n\n";
-
-        Rat_circle_2  circ7 (Rat_point_2( Rational((x1*x1-x2*x2+y1*y1-y2*y2)+2*yc*(y2-y1),2*(x1-x2)) ,yc),r*r);
-        Conic_arc_2   c7 (circ7, CGAL::COUNTERCLOCKWISE, ps7, pt7);
-
-        if (!(c7.is_valid())) {std::cout << "\n\n@@@@BANANANE @@@@@@@@@@@\n\n";};
-        insert (this->arr, c7);
-
-    }
-    else
-    {
-        Rat_circle_2  circ7 (Rat_point_2( xc, Rational((x1*x1-x2*x2+y1*y1-y2*y2)+2*xc*(x2-x1),2*(y1-y2))),r*r);
-        Conic_arc_2   c7 (circ7, CGAL::COUNTERCLOCKWISE, ps7, pt7);
-        if (!(c7.is_valid())) {std::cout << "\n\n@@@@BANANANE @@@@@@@@@@@\n\n";};
-        insert (this->arr, c7);
-    }*/
-    this->addSeg(x1,y1,x2,y2);//"Solution" temporaire
-    return;
+      insert (this->arr, c7);
+      return;
 }
 
 void Arrangement::addCircle(double x1,double y1,double r)
 {// r square raduis
-      Rat_circle_2  circ5 (Rat_point_2(x1,y1), r*r);
+      Rat_circle_2  circ5 (Rat_point_2(x1,y1), r);
       Conic_arc_2   c5 (circ5);
 
       insert (this->arr, c5);
@@ -112,7 +90,7 @@ void Arrangement::addOffset(Polygon polygon,double r)
             Point m2 = line2.projection(Point(x,y));
             lxp = CGAL::to_double(m2.x());
             lyp = CGAL::to_double(m2.y());
-            this->addArc(x,y,CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()),r);
+            this->addArc(x,y,CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()));
             //this->addVertice(CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()),Arc,x,y);
             lx = lxa;
             ly = lya;
@@ -157,7 +135,7 @@ void Arrangement::addOffset(Polygon polygon,double r)
         lxp = CGAL::to_double(m2.x());
         lyp = CGAL::to_double(m2.y());
         //this->addVertice(CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()),Arc,x,y);
-        this->addArc(x,y,CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()),r);
+        this->addArc(x,y,CGAL::to_double(m.x()),CGAL::to_double(m.y()),CGAL::to_double(m2.x()),CGAL::to_double(m2.y()));
         lx = lxp;ly=lyp;
     }
     else
@@ -167,20 +145,6 @@ void Arrangement::addOffset(Polygon polygon,double r)
     };
     //this->addVertice(lx,ly,xmemoire,ymemoire,Seg);
     this->addSeg(lx,ly,xmemoire,ymemoire);
-    return;
-}
-
-void Arrangement::addCC2(Arrangement A,double r,Arrangement CG)
-{
-    typename Arrangement_2::Vertex_const_iterator  vit;
-    for (vit = (CG.arr).vertices_begin(); vit != (CG.arr).vertices_end(); ++vit)
-    {
-        Point_2 m = vit->point();
-        double x = CGAL::to_double(m.x());
-        double y = CGAL::to_double(m.y());
-        if (!(A.inRegion(x,y))) {this->addCircle(x,y,r);};
-
-    };
     return;
 }
 
@@ -203,15 +167,10 @@ void Arrangement::addOffsetScreen(int w,int h,double r)
     return;
 }
 
-void Arrangement::print()
-{
-    print_arrangement(this->arr);
-    return;
-}
-
-int Arrangement::inRegion(double x,double y)
+void Arrangement::inRegion(double x,double y)
 {
     Naive_pl naive_pl (this->arr);
     Point_2 q1 (x, y);
-    return point_location_query (naive_pl, q1);
+    //point_location_query (naive_pl, q1);
+    return;
 }

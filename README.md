@@ -88,19 +88,6 @@ Describe obstacles in "Obstacles".
 One line by polygon, described with pairs of points.
 
 
-## Explications du commit du 18
-
-Les includes sont nécessaire pour manipuler les arrangements (http://www.cgal.org/Manual/3.3/doc_html/cgal_manual/Arrangement_2/Chapter_main.html).
-Tu peux les supprimer de git après les avoir mis sur ton PC.
-
-Notre probleme inclu bien des obstacles polygonaux (il faut donc garder les obstacles), les bodies sont exactement des robots (inutile de les renommer), le probleme consiste bien au final à déplacer un objet (il faut donc garder les movableobjects).
-
-Le programme calcul pour l'instant les courbes critiques 1 et 2 (cercle complet), les régions. On sait aussi calculer la région d'un point.
-Les objectifs sont :
-- Afficher un arrangement dans la fenetre graphique
-- Creer le graphe (en utilisant la librairie boost graph) de connections.
-
-
 ## Problems
 
 ## To-do list

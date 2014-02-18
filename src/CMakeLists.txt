@@ -23,25 +23,22 @@ set(QT_USE_QTOPENGL TRUE)
 
 find_package(Qt4)
 include(${QT_USE_FILE})
-include_directories( BEFORE ../include )
 
 set(SOURCES
     main.cpp
     mainwindow.cpp 
     polygon.cpp
-    robot.cpp
-    movableobject.cpp
-    obstacles.cpp
     criticalcurves.cpp
-    arrangement.cpp)
+    arrangement.cpp
+    barriers.cpp
+    bodie.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
-    robot.h
-    movableobject.h
-    obstacles.h
     criticalcurves.h
-    arrangement.h)
+    arrangement.h
+    barriers.h
+    bodie.h)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${HEADERS})
