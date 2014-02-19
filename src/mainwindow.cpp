@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget * parent, Qt::WindowFlags flags) :
 
     this->setupUI();
 
-    this->scene = new QGraphicsScene();
+    this->scene = new QGraphicsScene(this);
     this->ui->graphicsView->setScene(scene);
 
     this->addBarriers(barriers);

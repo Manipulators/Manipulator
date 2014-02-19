@@ -11,7 +11,6 @@
 #include "barriers.h"
 #include "bodie.h"
 #include "arrangement.h"
-#include "criticalcurves.h"
 
 #include "ui_MainWindow.h"
 
