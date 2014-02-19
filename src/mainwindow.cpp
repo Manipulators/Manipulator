@@ -1,4 +1,5 @@
 #include <QAction>
+#include <QFileDialog>
 #include <QMenu>
 #include <QMenuBar>
 #include <QStatusBar>
@@ -151,12 +152,44 @@ MainWindow::~MainWindow()
 }
 
 
+// File menu slots. ////////////////////////////////////////////////////////////
+
+void MainWindow::on_actionOpen_triggered()
+{
+    // TODO: complete.
+
+    QString name = QFileDialog::getOpenFileName();
+    QFile *file = new QFile(name);
+    if (file->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        std::cout << "File \"" << name.toStdString() << "\" opened." << std::endl;
+        file->close();
+    }
+    return;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    // TODO: complete.
+
+    QString name = QFileDialog::getSaveFileName();
+    QFile *file = new QFile(name);
+    if (file->open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        std::cout << "File \"" << name.toStdString() << "\" saved." << std::endl;
+        file->close();
+    }
+    return;
+}
+
 void MainWindow::on_actionQuit_triggered()
 {
     qApp->exit();
     return;
 }
 
+
+// Ui setup. ///////////////////////////////////////////////////////////////////
 
 void MainWindow::setupUI()
 {

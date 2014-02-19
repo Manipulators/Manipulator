@@ -48,6 +48,9 @@ public:
     ~MainWindow();
 
 public slots:
+    // File menu slots.
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
     void on_actionQuit_triggered();
 
 protected:
@@ -56,4 +59,3 @@ protected:
 };
 
 #endif // MAINWINDOW_H
-
