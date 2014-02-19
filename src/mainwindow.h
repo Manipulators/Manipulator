@@ -48,6 +48,8 @@ public:
     ~MainWindow();
 
 public slots:
+    // Miscellaneous slots.
+    void open(QString);
     // File menu slots.
     void on_actionOpen_triggered();
     void on_actionSave_triggered();

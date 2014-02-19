@@ -13,6 +13,14 @@ int main (int argc, char **argv)
     // Show main window.
     window->show();
 
+    // Open the input files.
+    QStringList arguments = application->arguments();
+    if (1 < arguments.size())
+    {
+        // TODO: complete.
+        //window->open(arguments.at(1));
+    }
+
     // Enter the main event loop and wait for return value.
     return application->exec();
 }

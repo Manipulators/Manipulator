@@ -149,6 +149,25 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
 
 MainWindow::~MainWindow()
 {
+    delete this->ui;
+}
+
+
+// Miscellaneous slots. ////////////////////////////////////////////////////////
+
+void MainWindow::open(QString name)
+{
+    if (!name.isEmpty())
+    {
+        QFile *file = new QFile(name);
+        if (file->open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            // TODO: complete.
+            std::cout << "File \"" << name.toStdString() << "\" opened." << std::endl;
+            file->close();
+        }
+        return;
+    }
 }
 
 
@@ -156,22 +175,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    // TODO: complete.
-
     QString name = QFileDialog::getOpenFileName();
-    QFile *file = new QFile(name);
-    if (file->open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        std::cout << "File \"" << name.toStdString() << "\" opened." << std::endl;
-        file->close();
-    }
-    return;
+    open(name);
 }
 
 void MainWindow::on_actionSave_triggered()
 {
     // TODO: complete.
-
     QString name = QFileDialog::getSaveFileName();
     QFile *file = new QFile(name);
     if (file->open(QIODevice::WriteOnly | QIODevice::Text))
