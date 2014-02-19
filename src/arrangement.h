@@ -1,43 +1,46 @@
-#ifndef GRAPHE_H
-#define GRAPHE_H
+#ifndef ARRANGEMENT_H
+#define ARRANGEMENT_H
 
-// Constructing an arrangement of various conic arcs.
 #include <CGAL/basic.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/CORE_algebraic_number_traits.h>
 #include <CGAL/Arr_conic_traits_2.h>
-#include <CGAL/Arrangement_2.h>
-#include <CGAL/Arr_naive_point_location.h>
+#include <CGAL/offset_polygon_2.h>
+#include <CGAL/General_polygon_2.h>
+#include <iostream>
+#include "polygon.h"
 
-typedef CGAL::CORE_algebraic_number_traits              Nt_traits;
-typedef Nt_traits::Rational                             Rational;
-typedef Nt_traits::Algebraic                            Algebraic;
-typedef CGAL::Cartesian<Rational>                       Rat_kernel;
-typedef Rat_kernel::Point_2                             Rat_point_2;
-typedef Rat_kernel::Segment_2                           Rat_segment_2;
-typedef Rat_kernel::Circle_2                            Rat_circle_2;
-typedef CGAL::Cartesian<Algebraic>                      Alg_kernel;
-typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Traits_2;
-typedef Traits_2::Point_2                               Point_2;
+// Inset
+typedef CGAL::CORE_algebraic_number_traits     Nt_traits;
+typedef Nt_traits::Rational                    Rational;
+typedef Nt_traits::Algebraic                   Algebraic;
+
+struct Rat_kernel : public CGAL::Cartesian<Rational> {};
+struct Alg_kernel : public CGAL::Cartesian<Algebraic> {};
+
+typedef CGAL::Arr_conic_traits_2<Rat_kernel,Alg_kernel,Nt_traits>   Traits_2;
+struct Conic_traits_2 : public Traits_2 {};
+
+// General Polygon
+typedef CGAL::Polygon_2<Rat_kernel>            Polygon_G;
+
+typedef CGAL::Gps_traits_2<Conic_traits_2>     Gps_traits_2;
+typedef Gps_traits_2::Polygon_2                Offset_polygon_2;
+
+// Arrangement
+#include <CGAL/Arrangement_2.h>
 typedef Traits_2::Curve_2                               Conic_arc_2;
 typedef CGAL::Arrangement_2<Traits_2>                   Arrangement_2;
-typedef CGAL::Arr_naive_point_location<Arrangement_2>      Naive_pl;
-
-// for polygon
-#include "criticalcurves.h"
 
 class Arrangement
 {
 public:
     Arrangement_2   arr;
+    // Constructor.
     Arrangement();
-    void addSeg(double,double,double,double);
-    void addArc(double,double,double,double,double,double);
-    void addCircle(double,double,double);
-    void addOffset(Polygon,double);
-    void addOffsets(std::list<Polygon>,double);
-    void inRegion(double,double);
-    void addOffsetScreen(int,int,double);
+    // Add the inner offset of the polygon P in arr
+    void addInsetPolygon (Polygon_G, double);
+
 };
 
 #endif

@@ -21,14 +21,12 @@ set(SOURCES
     main.cpp
     mainwindow.cpp 
     polygon.cpp
-    criticalcurves.cpp
     arrangement.cpp
     barriers.cpp
     bodie.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
-    criticalcurves.h
     arrangement.h
     barriers.h
     bodie.h)
