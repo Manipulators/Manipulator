@@ -6,17 +6,197 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>691</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Manipulator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
      <widget class="QGraphicsView" name="graphicsView"/>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>500</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabProblem">
+       <attribute name="title">
+        <string>Problem</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QGroupBox" name="groupBoxInitialConfiguration">
+          <property name="title">
+           <string>Initial configuration</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QGroupBox" name="groupBoxInitialConfigurationFirstBodie">
+             <property name="title">
+              <string>First bodie</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_2">
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxInitialConfigurationFirstBodieY"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelInitialConfigurationFirstBodieX">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxInitialConfigurationFirstBodieX"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="labelInitialConfigurationFirstBodieY">
+                <property name="text">
+                 <string>y</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxInitialConfigurationSecondBodie">
+             <property name="title">
+              <string>Second bodie</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout">
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxInitialConfigurationSecondBodieX"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxInitialConfigurationSecondBodieY"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelInitialConfigurationSecondBodieX">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="labelInitialConfigurationSecondBodieY">
+                <property name="text">
+                 <string>y</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBoxFinalConfiguration">
+          <property name="title">
+           <string>Final configuration</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QGroupBox" name="groupBoxFinalConfigurationFirstBodie">
+             <property name="title">
+              <string>First bodie</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_3">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelFinalConfigurationFirstBodieX">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxFinalConfigurationFirstBodieX"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="labelFinalConfigurationFirstBodieY">
+                <property name="text">
+                 <string>y</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxFinalConfigurationFirstBodieY"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxFinalConfigurationSecondBodie">
+             <property name="title">
+              <string>Second bodie</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_4">
+              <property name="fieldGrowthPolicy">
+               <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelFinalConfigurationSecondBodieX">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxFinalConfigurationSecondBodieX"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="labelFinalConfigurationSecondBodieY">
+                <property name="text">
+                 <string>y</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBoxFinalConfigurationSecondBodieY"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabMiscellaneous">
+       <attribute name="title">
+        <string>Miscellaneous</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="labelTODO">
+          <property name="text">
+           <string>TODO: complete.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -25,7 +205,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>691</width>
      <height>25</height>
     </rect>
    </property>

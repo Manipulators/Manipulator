@@ -19,7 +19,7 @@ void Barriers::setPolygon(Polygon polygon)
 
 void Barriers::print()
 {
-    std::cout << "Barriers" << std::endl;
+    std::cout << "Barriers:" << std::endl;
     print_polygon(this->getPolygon());
 }
 
