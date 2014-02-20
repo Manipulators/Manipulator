@@ -43,6 +43,8 @@ public:
     ~MainWindow();
 
 public slots:
+    // Scene slot.
+    void viewChanged();
     // File menu slots.
     void open(QString name);
     void on_actionOpen_triggered();

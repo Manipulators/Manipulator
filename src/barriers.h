@@ -31,6 +31,7 @@ public:
 
 protected:
     QRectF bounding_rect;
+    void updateBoundingBox();
 };
 
 // Read the description of the barriers from the given stream.

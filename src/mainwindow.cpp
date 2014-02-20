@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     // Setup the GraphicsScene.
     this->scene = new QGraphicsScene(this);
     this->scene->setBackgroundBrush(QBrush(Qt::gray));
+    this->scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
     // Add the barriers to the GraphicsScene.
     this->barriers = new Barriers();
@@ -31,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
     // Setup the Graphicsview.
     this->ui->graphicsView->setScene(scene);
+    QObject::connect(this, SIGNAL(changed()), this, SLOT(viewChanged()));
 
     // Initialize the filename of the current opened file.
     this->filename = "";
@@ -115,6 +117,23 @@ void MainWindow::addGraph(Graphe g)
 MainWindow::~MainWindow()
 {
     delete this->ui;
+}
+
+
+// Scene slot. /////////////////////////////////////////////////////////////////
+
+void MainWindow::viewChanged()
+{
+    // Update the scene rectangle.
+    QRectF rectangle = this->barriers->boundingRect();
+    qreal margin = 0.05 * std::max(rectangle.width(), rectangle.height());
+    rectangle.setTop(rectangle.top() - margin);
+    rectangle.setBottom(rectangle.bottom() + margin);
+    rectangle.setLeft(rectangle.left() - margin);
+    rectangle.setRight(rectangle.right() + margin);
+    this->ui->graphicsView->setSceneRect(rectangle);
+    this->ui->graphicsView->fitInView(rectangle, Qt::KeepAspectRatio);
+    return;
 }
 
 

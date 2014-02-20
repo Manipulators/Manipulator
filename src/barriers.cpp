@@ -1,8 +1,10 @@
+#include <CGAL/Bbox_2.h>
 #include "barriers.h"
 
 
 Barriers::Barriers()
 {
+    updateBoundingBox();
 }
 
 Polygon Barriers::getPolygon()
@@ -23,6 +25,7 @@ void Barriers::print()
 
 void Barriers::modelChanged()
 {
+    updateBoundingBox();
     update(Barriers::boundingRect());
     return;
 }
@@ -43,6 +46,16 @@ void Barriers::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
 
 Barriers::~Barriers()
 {
+}
+
+void Barriers::updateBoundingBox()
+{
+    if (!this->getPolygon().is_empty())
+    {
+        CGAL::Bbox_2 box = this->getPolygon().bbox();
+        this->bounding_rect = QRectF(box.xmin(), box.ymin(), box.xmax() - box.xmin(), box.ymax() - box.ymin());
+    }
+    return;
 }
 
 std::istream& operator >>(std::istream& istream, Barriers* barriers)
