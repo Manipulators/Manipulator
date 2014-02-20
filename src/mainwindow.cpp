@@ -1,98 +1,60 @@
-#include <QAction>
 #include <QFileDialog>
-#include <QMenu>
-#include <QMenuBar>
-#include <QStatusBar>
 #include <QGraphicsView>
-#include <QPainterPath>
-#include <QPointF>
 #include "mainwindow.h"
 
 
-MainWindow::MainWindow(QWidget * parent, Qt::WindowFlags flags) :
+MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     QMainWindow(parent, flags),
     ui(new Ui::MainWindow)
 {
-    // Open the input files.
-    std::ifstream in_file("../data/manipulator_1.data");
-
-    // Read the width and height of the main window from the input file.
-    int width;
-    int height;
-    in_file >> width;
-    in_file >> height;
-
-    // Read the barriers and the bodies from the input file.
-    Barriers barriers;
-    Bodie bodie1;
-    Bodie bodie2;
-    in_file >> barriers;
-    in_file >> bodie1;
-    in_file >> bodie2;
-    in_file.close();
-
-    // Display the barriers and the bodies on the standard input.
-    barriers.print();
-    bodie1.print();
-    bodie2.print();
-
+    // Setup the user interface.
     this->setupUI();
 
+    // Setup the GraphicsScene.
     this->scene = new QGraphicsScene(this);
+    this->scene->setBackgroundBrush(QBrush(Qt::gray));
+
+    // Add the barriers to the GraphicsScene.
+    this->barriers = new Barriers();
+    QObject::connect(this, SIGNAL(changed()), this->barriers, SLOT(modelChanged()));
+    this->scene->addItem(this->barriers);
+
+    // Add the first bodie to the GraphicsScene.
+    this->bodie_1 = new Bodie();
+    QObject::connect(this, SIGNAL(changed()), this->bodie_1, SLOT(modelChanged()));
+    this->scene->addItem(this->bodie_1);
+
+    // Add the second bodie to the GraphicsScene.
+    this->bodie_2 = new Bodie();
+    QObject::connect(this, SIGNAL(changed()), this->bodie_2, SLOT(modelChanged()));
+    this->scene->addItem(this->bodie_2);
+
+    // Setup the Graphicsview.
     this->ui->graphicsView->setScene(scene);
 
-    this->addBarriers(barriers);
-    this->addBodie(bodie1);
-    this->addBodie(bodie2);
+    // Initialize the filename of the current opened file.
+    this->filename = "";
 
-/*
+
+/* This section will disapear. *************************************************
+// To display something, we must use the CGAL::Qt::GraphicsItem concept.
+
     //Critical Graph(e) (cf Article for notations).
     Arrangement A1,A,S,CG;// critical graph;
     A1.addOffsets(obstacles.getPolygons(),robot1.r());
     A.addOffsets(obstacles.getPolygons(),robot2.r());
     CG.addOffsets(obstacles.getPolygons(),robot1.r()+2*robot2.r());
     S.addOffsetScreen(width, height,robot1.r());
-*/
+
+*******************************************************************************/
+
 }
 
-void MainWindow::addPolygon(Polygon polygon)
-{
-    QPolygonF polygon_f = Polygon_CGAL_to_Qt(polygon);
-    this->scene->addPolygon(polygon_f, QPen(Qt::black), QBrush(Qt::blue));
-    return;
-}
 
-void MainWindow::addPolygons(std::list<Polygon> polygons)
-{
-    std::list<Polygon>::iterator polygon;
-    for (polygon = polygons.begin(); polygon != polygons.end(); ++polygon)
-    {
-        this->addPolygon(* polygon);
-    }
-    return;
-}
+/* This section will disapear. *************************************************
+// To display something, we must use the CGAL::Qt::GraphicsItem concept.
 
-void MainWindow::addBarriers(Barriers barriers)
-{
-    this->scene->setBackgroundBrush(Qt::gray);
-    QColor color = Qt::white;
-    QPolygonF polygon_f = Polygon_CGAL_to_Qt(barriers.getPolygon());
-    this->scene->addPolygon(polygon_f, QPen(color), QBrush(color));
-    return;
-}
-
-void MainWindow::addBodie(Bodie bodie)
-{
-    Circle circle = bodie.getCircle();
-    Point center = circle.center();
-    double radius = circle.squared_radius();
-    double diameter = 2.0 * radius;
-    QColor color = Qt::darkBlue;
-    this->scene->addEllipse(center.x() - radius, center.y() - radius, diameter, diameter, QPen(color), QBrush(color));
-    return;
-}
-
-/*void MainWindow::addArc(Node n1,Node nc,Node n2)
+void MainWindow::addArc(Node n1,Node nc,Node n2)
 {//nc center; from point n1 to point n2 (counter clockwise); n1 must be on the circle
     double r =sqrt((n1.x - nc.x)*(n1.x - nc.x)+(n1.y - nc.y)*(n1.y - nc.y));
     QPainterPath* myPath = new QPainterPath();
@@ -102,7 +64,7 @@ void MainWindow::addBodie(Bodie bodie)
     this->scene->addPath(*myPath,QPen(Qt::red));
 
     return;
-}*/
+}
 
 void MainWindow::addLine(double x1, double y1, double x2, double y2)
 {
@@ -110,7 +72,7 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
     return;
 }
 
-/*void MainWindow::addGraph(Graphe g)
+void MainWindow::addGraph(Graphe g)
 {
     int i,j;
     for (i = 0; i < g.n - 1; i++)
@@ -145,7 +107,10 @@ void MainWindow::addLine(double x1, double y1, double x2, double y2)
         }
     }
     return;
-}*/
+}
+
+*******************************************************************************/
+
 
 MainWindow::~MainWindow()
 {
@@ -153,41 +118,63 @@ MainWindow::~MainWindow()
 }
 
 
-// Miscellaneous slots. ////////////////////////////////////////////////////////
+// File menu slots. ////////////////////////////////////////////////////////////
 
 void MainWindow::open(QString name)
 {
-    if (!name.isEmpty())
-    {
-        QFile *file = new QFile(name);
-        if (file->open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            // TODO: complete.
-            std::cout << "File \"" << name.toStdString() << "\" opened." << std::endl;
-            file->close();
-        }
-        return;
-    }
+    // Read the new barriers and bodies from the input file.
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    std::ifstream stream(name.toStdString().c_str());
+    stream >> this->barriers;
+    stream >> this->bodie_1;
+    stream >> this->bodie_2;
+    stream.close();
+    QApplication::restoreOverrideCursor();
+
+    // Commit changes.
+    this->filename = name;
+    emit(changed());
+
+    return;
 }
-
-
-// File menu slots. ////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionOpen_triggered()
 {
-    QString name = QFileDialog::getOpenFileName();
-    open(name);
+    // Get a user selected input file.
+    QString caption = "Open File";
+    QString directory = "../data";
+    QString filter = "Data Files (*.data)";
+    QString name = QFileDialog::getOpenFileName(this, caption, directory, filter);
+
+    if (!name.isEmpty())
+    {
+        open(name);
+    }
 }
 
 void MainWindow::on_actionSave_triggered()
 {
+    // TODO: find a way to avoid total erasing and remove this return.
+    return;
+
+    std::ifstream stream(this->filename.toStdString().c_str());
     // TODO: complete.
-    QString name = QFileDialog::getSaveFileName();
-    QFile *file = new QFile(name);
-    if (file->open(QIODevice::WriteOnly | QIODevice::Text))
+    stream.close();
+    return;
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    // Get a user selected output file.
+    QString caption = "Save File";
+    QString directory = "../data";
+    QString filter = "Data Files (*.data)";
+    QString name = QFileDialog::getSaveFileName(this, caption, directory, filter);
+
+    if (!name.isEmpty())
     {
-        std::cout << "File \"" << name.toStdString() << "\" saved." << std::endl;
-        file->close();
+        this->filename = name;
+        on_actionSave_triggered();
     }
     return;
 }

@@ -30,11 +30,33 @@ void Bodie::print()
     std::cout << "[center: ("<< c.x() << " " << c.y() << "), radius: " << circle.squared_radius() << "]" << std::endl;
 }
 
+void Bodie::modelChanged()
+{
+    update(Bodie::boundingRect());
+    return;
+}
+
+QRectF Bodie::boundingRect() const
+{
+    return this->bounding_rect;
+}
+
+void Bodie::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+    Point center = this->circle.center();
+    double radius = this->circle.squared_radius();
+    double diameter = (int)(2.0 * radius);
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::darkBlue);
+    painter->drawEllipse((int)(center.x() - radius), (int)(center.y() - radius), diameter, diameter);
+    return;
+}
+
 Bodie::~Bodie()
 {
 }
 
-std::istream & operator>>(std::istream & istream, Bodie & bodie)
+std::istream& operator >>(std::istream& istream, Bodie* bodie)
 {
     if (istream)
     {
@@ -45,7 +67,7 @@ std::istream & operator>>(std::istream & istream, Bodie & bodie)
         istream >> xf;
         istream >> yf;
 
-        bodie.setCircle(xi, yi, r, xf, yf);
+        bodie->setCircle(xi, yi, r, xf, yf);
     }
     return istream;
 }

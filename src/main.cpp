@@ -2,23 +2,22 @@
 #include <QApplication>
 
 
-int main (int argc, char **argv)
+int main (int argc, char** argv)
 {
     // Create Qt application.
-    QApplication * application = new QApplication(argc, argv);
+    QApplication* application = new QApplication(argc, argv);
 
     // Create the main window.
-    MainWindow * window = new MainWindow();
+    MainWindow* window = new MainWindow();
 
     // Show main window.
     window->show();
 
-    // Open the input files.
+    // Open the input file.
     QStringList arguments = application->arguments();
     if (1 < arguments.size())
     {
-        // TODO: complete.
-        //window->open(arguments.at(1));
+        window->open(arguments.at(1));
     }
 
     // Enter the main event loop and wait for return value.

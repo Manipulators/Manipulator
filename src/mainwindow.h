@@ -11,7 +11,6 @@
 #include "barriers.h"
 #include "bodie.h"
 #include "arrangement.h"
-
 #include "ui_MainWindow.h"
 
 
@@ -25,21 +24,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    QGraphicsScene * scene;
+    QGraphicsScene *scene;
+    QString filename;
+    Barriers *barriers;
+    Bodie *bodie_1;
+    Bodie *bodie_2;
 
 public:
     // Constructor.
     MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
-    // Add a polygon to the scene.
-    void addPolygon(Polygon);
-    // Add a list of polygons to the scene.
-    void addPolygons(std::list<Polygon>);
     // Add a line to the scene.
     void addLine(double, double, double, double);
-    // Add some barriers to the scene.
-    void addBarriers(Barriers);
-    // Add a bodie to the scene.
-    void addBodie(Bodie);
 
     //void addArc(Node,Node,Node);
     //void addGraph(Graphe);
@@ -48,12 +43,15 @@ public:
     ~MainWindow();
 
 public slots:
-    // Miscellaneous slots.
-    void open(QString);
     // File menu slots.
+    void open(QString name);
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
+    void on_actionSave_As_triggered();
     void on_actionQuit_triggered();
+
+signals:
+    void changed();
 
 protected:
     Ui::MainWindow * ui;
