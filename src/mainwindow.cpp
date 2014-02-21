@@ -218,7 +218,7 @@ void MainWindow::on_actionSave_triggered()
     return;
 }
 
-void MainWindow::on_actionSave_As_triggered()
+void MainWindow::on_actionSaveAs_triggered()
 {
     // Get a user selected output file.
     QString caption = "Save File";
@@ -237,6 +237,15 @@ void MainWindow::on_actionSave_As_triggered()
 void MainWindow::on_actionQuit_triggered()
 {
     qApp->exit();
+    return;
+}
+
+
+// View menu slot. /////////////////////////////////////////////////////////////
+
+void MainWindow::on_actionFit_triggered()
+{
+    this->viewChanged();
     return;
 }
 

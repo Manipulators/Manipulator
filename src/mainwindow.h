@@ -11,7 +11,7 @@
 #include "barriers.h"
 #include "bodie.h"
 #include "arrangement.h"
-#include "ui_MainWindow.h"
+#include "ui_mainwindow.h"
 
 
 namespace Ui
@@ -50,8 +50,10 @@ public slots:
     void open(QString name);
     void on_actionOpen_triggered();
     void on_actionSave_triggered();
-    void on_actionSave_As_triggered();
+    void on_actionSaveAs_triggered();
     void on_actionQuit_triggered();
+    // View menu slot.
+    void on_actionFit_triggered();
 
 protected:
     Ui::MainWindow * ui;
