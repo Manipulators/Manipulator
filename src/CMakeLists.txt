@@ -30,9 +30,9 @@ set(HEADERS
     arrangement.h
     barriers.h
     bodie.h)
-qt4_wrap_ui(UIS MainWindow.ui)
+qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})
-qt4_add_resources(RESSOURCES MainWindow.qrc)
+qt4_add_resources(RESSOURCES mainwindow.qrc)
 
 set(EXECUTABLE manipulator)
 add_executable(${EXECUTABLE} ${SOURCES} ${MOCS} ${HEADERS} ${UIS} ${RESSOURCES})
