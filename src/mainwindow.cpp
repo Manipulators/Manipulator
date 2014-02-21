@@ -300,6 +300,12 @@ void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(dou
     return;
 }
 
+void MainWindow::on_pushButtonSolve_clicked()
+{
+    //TODO: complete.
+    return;
+}
+
 
 // Ui setup. ///////////////////////////////////////////////////////////////////
 

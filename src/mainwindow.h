@@ -68,6 +68,7 @@ private slots:
     void on_doubleSpinBoxFinalConfigurationFirstBodieY_valueChanged(double y);
     void on_doubleSpinBoxFinalConfigurationSecondBodieX_valueChanged(double x);
     void on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(double y);
+    void on_pushButtonSolve_clicked();
 };
 
 #endif // MAINWINDOW_H
