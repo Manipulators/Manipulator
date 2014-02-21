@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
     // Setup the Graphicsview.
     this->ui->graphicsView->setScene(scene);
+    this->ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 
     // Initialize the filename of the current opened file.
     this->filename = "";
@@ -159,6 +160,8 @@ void MainWindow::viewChanged()
 
 void MainWindow::tabWidgetChanged()
 {
+    this->ui->doubleSpinBoxRadiusFirstBodieR->setRange(this->bodie_1->getR(), this->bodie_1->getR());
+    this->ui->doubleSpinBoxRadiusSecondBodieR->setRange(this->bodie_2->getR(), this->bodie_2->getR());
     this->ui->doubleSpinBoxInitialConfigurationFirstBodieX->setValue(this->bodie_1->getX());
     this->ui->doubleSpinBoxInitialConfigurationFirstBodieY->setValue(this->bodie_1->getY());
     this->ui->doubleSpinBoxInitialConfigurationSecondBodieX->setValue(this->bodie_2->getX());

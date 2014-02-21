@@ -26,8 +26,11 @@ double Bodie::getR()
 
 void Bodie::setR(double r)
 {
-    this->r = r;
-    emit(bodieChanged());
+    if (!(this->r == r))
+    {
+        this->r = r;
+        emit(bodieChanged());
+    }
     return;
 }
 
@@ -38,8 +41,11 @@ double Bodie::getX()
 
 void Bodie::setX(double x)
 {
-    this->x = x;
-    emit(bodieChanged());
+    if (!(this->x == x))
+    {
+        this->x = x;
+        emit(bodieChanged());
+    }
     return;
 }
 
@@ -50,8 +56,11 @@ double Bodie::getY()
 
 void Bodie::setY(double y)
 {
-    this->y = y;
-    emit(bodieChanged());
+    if (!(this->y == y))
+    {
+        this->y = y;
+        emit(bodieChanged());
+    }
     return;
 }
 
