@@ -2,6 +2,10 @@
 
 Bodie::Bodie()
 {
+    this->x = 0;
+    this->y = 0;
+    this->r = 0;
+    QObject::connect(this, SIGNAL(bodieChanged()), this, SLOT(modelChanged()));
 }
 
 Circle Bodie::getCircle()
@@ -15,11 +19,49 @@ double Bodie::getRadius()
     return circle.squared_radius();
 }
 
+double Bodie::getR()
+{
+    return this->r;
+}
+
+void Bodie::setR(double r)
+{
+    this->r = r;
+    emit(bodieChanged());
+    return;
+}
+
+double Bodie::getX()
+{
+    return this->x;
+}
+
+void Bodie::setX(double x)
+{
+    this->x = x;
+    emit(bodieChanged());
+    return;
+}
+
+double Bodie::getY()
+{
+    return this->y;
+}
+
+void Bodie::setY(double y)
+{
+    this->y = y;
+    emit(bodieChanged());
+    return;
+}
+
 void Bodie::setCircle(double x, double y, double r, double xf, double yf)
 {
     this->circle = Circle(Point(x,y), r);
     this->xf = xf;
     this->yf = yf;
+    emit(bodieChanged());
+    return;
 }
 
 void Bodie::print()
@@ -32,7 +74,8 @@ void Bodie::print()
 
 void Bodie::modelChanged()
 {
-    update(Bodie::boundingRect());
+    updateBoundingRect();
+    this->setPos(this->getX(), this->getY());
     return;
 }
 
@@ -43,17 +86,24 @@ QRectF Bodie::boundingRect() const
 
 void Bodie::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    Point center = this->circle.center();
-    double radius = this->circle.squared_radius();
-    double diameter = (int)(2.0 * radius);
+    double r = (int)this->getR();
+    double d = 2 * r;
     painter->setPen(Qt::black);
     painter->setBrush(Qt::darkBlue);
-    painter->drawEllipse((int)(center.x() - radius), (int)(center.y() - radius), diameter, diameter);
+    painter->drawEllipse(-r, -r, d, d);
     return;
 }
 
 Bodie::~Bodie()
 {
+}
+
+void Bodie::updateBoundingRect()
+{
+    double r = this->getR();
+    double d = 2 * r;
+    this->bounding_rect = QRectF(-r,-r, d, d);
+    return;
 }
 
 std::istream& operator >>(std::istream& istream, Bodie* bodie)
@@ -67,6 +117,9 @@ std::istream& operator >>(std::istream& istream, Bodie* bodie)
         istream >> xf;
         istream >> yf;
 
+        bodie->setR(r);
+        bodie->setX(xi);
+        bodie->setY(yi);
         bodie->setCircle(xi, yi, r, xf, yf);
     }
     return istream;

@@ -4,6 +4,7 @@
 
 Barriers::Barriers()
 {
+    QObject::connect(this, SIGNAL(barriersChanged()), this, SLOT(modelChanged()));
     updateBoundingBox();
 }
 
@@ -15,6 +16,8 @@ Polygon Barriers::getPolygon()
 void Barriers::setPolygon(Polygon polygon)
 {
     this->polygon = polygon;
+    emit(barriersChanged());
+    return;
 }
 
 void Barriers::print()

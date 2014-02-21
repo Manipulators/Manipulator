@@ -9,6 +9,8 @@
 
 class Barriers : public CGAL::Qt::GraphicsItem
 {
+    Q_OBJECT
+
 private:
     Polygon polygon;
 
@@ -28,6 +30,9 @@ public:
 
     // Destructor.
     ~Barriers();
+
+signals:
+    void barriersChanged();
 
 protected:
     QRectF bounding_rect;

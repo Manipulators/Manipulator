@@ -45,6 +45,7 @@ public:
 public slots:
     // Scene slot.
     void viewChanged();
+    void tabWidgetChanged();
     // File menu slots.
     void open(QString name);
     void on_actionOpen_triggered();
@@ -52,12 +53,19 @@ public slots:
     void on_actionSave_As_triggered();
     void on_actionQuit_triggered();
 
-signals:
-    void changed();
-
 protected:
     Ui::MainWindow * ui;
     void setupUI();
+
+private slots:
+    void on_doubleSpinBoxInitialConfigurationFirstBodieX_valueChanged(double x);
+    void on_doubleSpinBoxInitialConfigurationFirstBodieY_valueChanged(double y);
+    void on_doubleSpinBoxInitialConfigurationSecondBodieX_valueChanged(double x);
+    void on_doubleSpinBoxInitialConfigurationSecondBodieY_valueChanged(double y);
+    void on_doubleSpinBoxFinalConfigurationFirstBodieX_valueChanged(double x);
+    void on_doubleSpinBoxFinalConfigurationFirstBodieY_valueChanged(double y);
+    void on_doubleSpinBoxFinalConfigurationSecondBodieX_valueChanged(double x);
+    void on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(double y);
 };
 
 #endif // MAINWINDOW_H

@@ -15,14 +15,31 @@ typedef CGAL::Point_2<K>           Point;
 
 class Bodie : public CGAL::Qt::GraphicsItem
 {
+    Q_OBJECT
+
 private:
     Circle circle;
+    double x;
+    double y;
+    double r;
 
 public:
     // Constructor.
     Bodie();
     // Get the circle property of the bodie.
     Circle getCircle();
+    // Get the radius property of the bodie.
+    double getR();
+    // Set the radius property of the bodie.
+    void setR(double r);
+    // Get the x-coordinate of the bodie.
+    double getX();
+    // Set the x-coordinate of the bodie.
+    void setX(double x);
+    // Get the x-coordinate of the bodie.
+    double getY();
+    // Set the y-coordinate of the bodie.
+    void setY(double y);
     // Set the circle property of the bodie.
     void setCircle(double, double, double, double, double);
     // Print a description of the bodie on the standard output.
@@ -43,8 +60,12 @@ public:
     // Destructor.
     ~Bodie();
 
+signals:
+    void bodieChanged();
+
 protected:
     QRectF bounding_rect;
+    void updateBoundingRect();
 };
 
 // Read the description of the bodie from the given stream.

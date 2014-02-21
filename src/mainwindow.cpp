@@ -17,22 +17,21 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
     // Add the barriers to the GraphicsScene.
     this->barriers = new Barriers();
-    QObject::connect(this, SIGNAL(changed()), this->barriers, SLOT(modelChanged()));
+    QObject::connect(this->barriers, SIGNAL(barriersChanged()), this, SLOT(viewChanged()));
     this->scene->addItem(this->barriers);
 
     // Add the first bodie to the GraphicsScene.
     this->bodie_1 = new Bodie();
-    QObject::connect(this, SIGNAL(changed()), this->bodie_1, SLOT(modelChanged()));
+    QObject::connect(this->bodie_1, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
     this->scene->addItem(this->bodie_1);
 
     // Add the second bodie to the GraphicsScene.
     this->bodie_2 = new Bodie();
-    QObject::connect(this, SIGNAL(changed()), this->bodie_2, SLOT(modelChanged()));
+    QObject::connect(this->bodie_2, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
     this->scene->addItem(this->bodie_2);
 
     // Setup the Graphicsview.
     this->ui->graphicsView->setScene(scene);
-    QObject::connect(this, SIGNAL(changed()), this, SLOT(viewChanged()));
 
     // Initialize the filename of the current opened file.
     this->filename = "";
@@ -127,12 +126,47 @@ void MainWindow::viewChanged()
     // Update the scene rectangle.
     QRectF rectangle = this->barriers->boundingRect();
     qreal margin = 0.05 * std::max(rectangle.width(), rectangle.height());
-    rectangle.setTop(rectangle.top() - margin);
-    rectangle.setBottom(rectangle.bottom() + margin);
-    rectangle.setLeft(rectangle.left() - margin);
-    rectangle.setRight(rectangle.right() + margin);
+    double x_min = rectangle.left() - margin;
+    double x_max = rectangle.right() + margin;
+    double y_min = rectangle.top() - margin;
+    double y_max = rectangle.bottom() + margin;
+    rectangle.setLeft(x_min);
+    rectangle.setRight(x_max);
+    rectangle.setTop(y_min);
+    rectangle.setBottom(y_max);
     this->ui->graphicsView->setSceneRect(rectangle);
     this->ui->graphicsView->fitInView(rectangle, Qt::KeepAspectRatio);
+
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieX->setMinimum(x_min);
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieX->setMaximum(x_max);
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieY->setMinimum(y_min);
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieY->setMaximum(y_max);
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieX->setMinimum(x_min);
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieX->setMaximum(x_max);
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieY->setMinimum(y_min);
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieY->setMaximum(y_max);
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieX->setMinimum(x_min);
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieX->setMaximum(x_max);
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieY->setMinimum(y_min);
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieY->setMaximum(y_max);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieX->setMinimum(x_min);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieX->setMaximum(x_max);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieY->setMinimum(y_min);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieY->setMaximum(y_max);
+
+    return;
+}
+
+void MainWindow::tabWidgetChanged()
+{
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieX->setValue(this->bodie_1->getX());
+    this->ui->doubleSpinBoxInitialConfigurationFirstBodieY->setValue(this->bodie_1->getY());
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieX->setValue(this->bodie_2->getX());
+    this->ui->doubleSpinBoxInitialConfigurationSecondBodieY->setValue(this->bodie_2->getY());
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieX->setValue(this->bodie_1->xf);
+    this->ui->doubleSpinBoxFinalConfigurationFirstBodieY->setValue(this->bodie_1->yf);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieX->setValue(this->bodie_2->xf);
+    this->ui->doubleSpinBoxFinalConfigurationSecondBodieY->setValue(this->bodie_2->yf);
     return;
 }
 
@@ -150,9 +184,8 @@ void MainWindow::open(QString name)
     stream.close();
     QApplication::restoreOverrideCursor();
 
-    // Commit changes.
+    // Update filename of the current opened file.
     this->filename = name;
-    emit(changed());
 
     return;
 }
@@ -201,6 +234,57 @@ void MainWindow::on_actionSave_As_triggered()
 void MainWindow::on_actionQuit_triggered()
 {
     qApp->exit();
+    return;
+}
+
+
+// Problem tab slots. //////////////////////////////////////////////////////////
+
+void MainWindow::on_doubleSpinBoxInitialConfigurationFirstBodieX_valueChanged(double x)
+{
+    this->bodie_1->setX(x);
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxInitialConfigurationFirstBodieY_valueChanged(double y)
+{
+    this->bodie_1->setY(y);
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxInitialConfigurationSecondBodieX_valueChanged(double x)
+{
+    this->bodie_2->setX(x);
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxInitialConfigurationSecondBodieY_valueChanged(double y)
+{
+    this->bodie_2->setY(y);
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxFinalConfigurationFirstBodieX_valueChanged(double x)
+{
+    // TODO: complete.
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxFinalConfigurationFirstBodieY_valueChanged(double y)
+{
+    // TODO: complete.
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieX_valueChanged(double x)
+{
+    // TODO: complete.
+    return;
+}
+
+void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(double y)
+{
+    // TODO: complete.
     return;
 }
 

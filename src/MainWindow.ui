@@ -42,6 +42,13 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QGroupBox" name="groupBoxInitialConfiguration">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+            <kerning>true</kerning>
+           </font>
+          </property>
           <property name="title">
            <string>Initial configuration</string>
           </property>
