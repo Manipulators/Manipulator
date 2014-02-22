@@ -1,9 +1,9 @@
 #include "polygon.h"
 
 
-void print_polygon(Polygon polygon)
+void print_polygon(Polygon_2 polygon)
 {
-    typename Polygon::Vertex_iterator vertex;
+    typename Polygon_2::Vertex_iterator vertex;
 
     std::cout << "[" << polygon.size() << " vertices:";
     for (vertex = polygon.vertices_begin(); vertex < polygon.vertices_end(); ++vertex)
@@ -15,10 +15,10 @@ void print_polygon(Polygon polygon)
     return;
 }
 
-QPolygonF Polygon_CGAL_to_Qt(Polygon polygon)
+QPolygonF Polygon_CGAL_to_Qt(Polygon_2 polygon)
 {
     QPolygonF polygon_f;
-    typename Polygon::Vertex_iterator vertex;
+    typename Polygon_2::Vertex_iterator vertex;
 
     for (vertex = polygon.vertices_begin(); vertex < polygon.vertices_end(); ++vertex)
     {

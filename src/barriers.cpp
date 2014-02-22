@@ -1,4 +1,5 @@
 #include <CGAL/Bbox_2.h>
+#include <QPainter>
 #include "barriers.h"
 
 
@@ -8,12 +9,12 @@ Barriers::Barriers()
     updateBoundingBox();
 }
 
-Polygon Barriers::getPolygon()
+Polygon_2 Barriers::getPolygon()
 {
     return this->polygon;
 }
 
-void Barriers::setPolygon(Polygon polygon)
+void Barriers::setPolygon(Polygon_2 polygon)
 {
     this->polygon = polygon;
     emit(barriersChanged());
@@ -63,7 +64,7 @@ void Barriers::updateBoundingBox()
 
 std::istream& operator >>(std::istream& istream, Barriers* barriers)
 {
-    Polygon polygon;
+    Polygon_2 polygon;
     istream >> polygon;
     barriers->setPolygon(polygon);
 

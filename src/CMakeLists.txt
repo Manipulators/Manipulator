@@ -21,15 +21,15 @@ set(SOURCES
     main.cpp
     mainwindow.cpp 
     polygon.cpp
-    arrangement.cpp
     barriers.cpp
-    bodie.cpp)
+    bodie.cpp
+    criticalcurves.cpp)
 set(HEADERS
     mainwindow.h
     polygon.h
-    arrangement.h
     barriers.h
-    bodie.h)
+    bodie.h
+    criticalcurves.h)
 qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})
 qt4_add_resources(RESSOURCES mainwindow.qrc)

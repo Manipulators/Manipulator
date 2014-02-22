@@ -20,6 +20,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     QObject::connect(this->barriers, SIGNAL(barriersChanged()), this, SLOT(viewChanged()));
     this->scene->addItem(this->barriers);
 
+    // Add the critical curves to the GraphicsScene.
+    this->critical_curves = new CriticalCurves();
+    this->scene->addItem(this->critical_curves);
+
     // Add the first bodie to the GraphicsScene.
     this->bodie_1 = new Bodie();
     QObject::connect(this->bodie_1, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
@@ -303,6 +307,7 @@ void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(dou
 void MainWindow::on_pushButtonSolve_clicked()
 {
     //TODO: complete.
+    this->critical_curves->addInsetPolygon(this->barriers->getPolygon(), this->bodie_2->getR());
     return;
 }
 

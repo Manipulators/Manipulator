@@ -3,7 +3,6 @@
 
 #include "polygon.h"
 #include <CGAL/Qt/GraphicsItem.h>
-#include <QPainter>
 #include <iostream>
 
 
@@ -12,15 +11,15 @@ class Barriers : public CGAL::Qt::GraphicsItem
     Q_OBJECT
 
 private:
-    Polygon polygon;
+    Polygon_2 polygon;
 
 public:
     // Constructor.
     Barriers();
     // Get the polygon property of the barriers.
-    Polygon getPolygon();
+    Polygon_2 getPolygon();
     // Set the polygon property of the barriers.
-    void setPolygon(Polygon polygon);
+    void setPolygon(Polygon_2 polygon);
     // Print a description of the barriers on the standard output.
     void print();
 

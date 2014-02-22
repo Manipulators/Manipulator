@@ -10,7 +10,7 @@
 #include "polygon.h"
 #include "barriers.h"
 #include "bodie.h"
-#include "arrangement.h"
+#include "criticalcurves.h"
 #include "ui_mainwindow.h"
 
 
@@ -29,6 +29,7 @@ private:
     Barriers *barriers;
     Bodie *bodie_1;
     Bodie *bodie_2;
+    CriticalCurves *critical_curves;
 
 public:
     // Constructor.

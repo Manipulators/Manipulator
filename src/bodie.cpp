@@ -1,4 +1,6 @@
+#include <QPainter>
 #include "bodie.h"
+
 
 Bodie::Bodie()
 {
@@ -6,17 +8,6 @@ Bodie::Bodie()
     this->y = 0;
     this->r = 0;
     QObject::connect(this, SIGNAL(bodieChanged()), this, SLOT(modelChanged()));
-}
-
-Circle Bodie::getCircle()
-{
-    return this->circle;
-}
-
-double Bodie::getRadius()
-{
-    Circle circle = this->getCircle();
-    return circle.squared_radius();
 }
 
 double Bodie::getR()
@@ -64,21 +55,10 @@ void Bodie::setY(double y)
     return;
 }
 
-void Bodie::setCircle(double x, double y, double r, double xf, double yf)
-{
-    this->circle = Circle(Point(x,y), r);
-    this->xf = xf;
-    this->yf = yf;
-    emit(bodieChanged());
-    return;
-}
-
 void Bodie::print()
 {
-    Circle circle = this->getCircle();
-    Point c = circle.center();
     std::cout << "Bodie:" << std::endl;
-    std::cout << "[center: ("<< c.x() << " " << c.y() << "), radius: " << circle.squared_radius() << "]" << std::endl;
+    std::cout << "[center: ("<< this->getX() << " " << this->getY() << "), radius: " << this->getR() << "]" << std::endl;
 }
 
 void Bodie::modelChanged()
@@ -129,7 +109,6 @@ std::istream& operator >>(std::istream& istream, Bodie* bodie)
         bodie->setR(r);
         bodie->setX(xi);
         bodie->setY(yi);
-        bodie->setCircle(xi, yi, r, xf, yf);
     }
     return istream;
 }
