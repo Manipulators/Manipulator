@@ -39,19 +39,26 @@ QRectF CriticalCurves::boundingRect() const
 
 void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    // TODO: improve.
+    // TODO: improve the number of points used for the approximation..
+    typedef std::pair<double, double> approximated_point_2;
+
+    int n = 25;
+    approximated_point_2* points = new approximated_point_2[n + 1];
+
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
         for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
-            int n = 1;
-            typedef std::pair<double, double> approximated_point_2;
-            approximated_point_2* points = new approximated_point_2[n + 1];
             curve->polyline_approximation(n, points);
-            for (int i = 0; i < n; ++i)
+            int i_max = n;
+            if (CGAL::COLLINEAR == curve->orientation())
             {
-                QPoint source = QPoint(points[i + 0].first, points[i + 0].second);
-                QPoint target = QPoint(points[i + 1].first, points[i + 1].second);
+                i_max = 1;
+            }
+            for (int i = 0; i < i_max; ++i)
+            {
+                QPointF source = QPointF(points[i + 0].first, points[i + 0].second);
+                QPointF target = QPointF(points[i + 1].first, points[i + 1].second);
                 painter->drawLine(source, target);
             }
         }

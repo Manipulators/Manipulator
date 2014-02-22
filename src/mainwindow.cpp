@@ -253,6 +253,20 @@ void MainWindow::on_actionFit_triggered()
     return;
 }
 
+void MainWindow::on_actionZoomIn_triggered()
+{
+    double scaleFactor = 1.15;
+    this->ui->graphicsView->scale(scaleFactor, scaleFactor);
+    return;
+}
+
+void MainWindow::on_actionZoomOut_triggered()
+{
+    double scaleFactor = 1.15;
+    this->ui->graphicsView->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+    return;
+}
+
 
 // Problem tab slots. //////////////////////////////////////////////////////////
 

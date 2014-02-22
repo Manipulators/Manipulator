@@ -55,6 +55,8 @@ public slots:
     void on_actionQuit_triggered();
     // View menu slot.
     void on_actionFit_triggered();
+    void on_actionZoomIn_triggered();
+    void on_actionZoomOut_triggered();
 
 protected:
     Ui::MainWindow * ui;
