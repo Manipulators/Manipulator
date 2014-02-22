@@ -246,6 +246,8 @@ void MainWindow::on_pushButtonSolve_clicked()
 {
     //TODO: complete.
     this->critical_curves->addInsetPolygon(this->barriers->getPolygon(), this->bodie_2->getR());
+    this->ui->groupBoxInitialConfiguration->setDisabled(true);
+    this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);
     this->ui->checkBoxShowCriticalCurves->setChecked(true);
     this->ui->pushButtonSolve->setDisabled(true);
