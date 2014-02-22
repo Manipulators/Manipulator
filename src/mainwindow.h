@@ -72,6 +72,8 @@ private slots:
     void on_doubleSpinBoxFinalConfigurationSecondBodieX_valueChanged(double x);
     void on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(double y);
     void on_pushButtonSolve_clicked();
+    void on_checkBoxShowBodie_stateChanged(int state);
+    void on_checkBoxShowCriticalCurves_stateChanged(int state);
 };
 
 #endif // MAINWINDOW_H

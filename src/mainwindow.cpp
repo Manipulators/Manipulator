@@ -322,6 +322,47 @@ void MainWindow::on_pushButtonSolve_clicked()
 {
     //TODO: complete.
     this->critical_curves->addInsetPolygon(this->barriers->getPolygon(), this->bodie_2->getR());
+    this->ui->groupBoxDisplay->setEnabled(true);
+    this->ui->checkBoxShowCriticalCurves->setChecked(true);
+    this->ui->pushButtonSolve->setDisabled(true);
+    return;
+}
+
+void MainWindow::on_checkBoxShowBodie_stateChanged(int state)
+{
+    switch (state)
+    {
+        case Qt::Checked:
+            this->bodie_1->show();
+            this->bodie_2->show();
+            break;
+        case Qt::Unchecked:
+            this->bodie_1->hide();
+            this->bodie_2->hide();
+            break;
+        case Qt::PartiallyChecked:
+            break;
+        default:
+            break;
+    }
+    return;
+}
+
+void MainWindow::on_checkBoxShowCriticalCurves_stateChanged(int state)
+{
+    switch (state)
+    {
+        case Qt::Checked:
+            this->critical_curves->show();
+            break;
+        case Qt::Unchecked:
+            this->critical_curves->hide();
+            break;
+        case Qt::PartiallyChecked:
+            break;
+        default:
+            break;
+    }
     return;
 }
 

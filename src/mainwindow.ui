@@ -33,7 +33,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabProblem">
        <attribute name="title">
@@ -352,10 +352,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QCheckBox" name="checkBox">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <widget class="QCheckBox" name="checkBoxShowBodie">
              <property name="text">
               <string>Show bodie</string>
              </property>
@@ -368,7 +365,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_2">
+            <widget class="QCheckBox" name="checkBoxShowCriticalCurves">
              <property name="text">
               <string>Show critical curves</string>
              </property>
