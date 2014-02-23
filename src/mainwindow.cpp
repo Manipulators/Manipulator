@@ -118,6 +118,16 @@ void MainWindow::open(QString name)
     // Update filename of the current opened file.
     this->filename = name;
 
+    // Update the graphics items.
+    this->critical_curves->clear();
+
+    // Update the UI elements enabled.
+    this->ui->groupBoxInitialConfiguration->setEnabled(true);
+    this->ui->groupBoxFinalConfiguration->setEnabled(true);
+    this->ui->groupBoxDisplay->setEnabled(false);
+    this->ui->checkBoxShowCriticalCurves->setChecked(false);
+    this->ui->pushButtonSolve->setEnabled(true);
+
     return;
 }
 

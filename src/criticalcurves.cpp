@@ -25,6 +25,12 @@ void CriticalCurves::addInsetPolygon (Polygon_2 P, double r)
     return;
 }
 
+void CriticalCurves::clear()
+{
+    this->inset_polygons.clear();
+    return;
+}
+
 void CriticalCurves::modelChanged()
 {
     updateBoundingRect();
@@ -39,27 +45,34 @@ QRectF CriticalCurves::boundingRect() const
 
 void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    // TODO: improve the number of points used for the approximation..
     typedef std::pair<double, double> approximated_point_2;
-
-    int n = 25;
-    approximated_point_2* points = new approximated_point_2[n + 1];
 
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
         for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
+            // TODO: improve the number of points used for the approximation..
+            int n = 25;
+            approximated_point_2* points = new approximated_point_2[n + 1];
             curve->polyline_approximation(n, points);
-            int i_max = n;
             if (CGAL::COLLINEAR == curve->orientation())
             {
-                i_max = 1;
+                // Draw a segment.
+                curve->polyline_approximation(n, points);
+                QPointF p1 = QPointF(points[0].first, points[0].second);
+                QPointF p2 = QPointF(points[1].first, points[1].second);
+                painter->drawLine(p1, p2);
             }
-            for (int i = 0; i < i_max; ++i)
+            else
             {
-                QPointF source = QPointF(points[i + 0].first, points[i + 0].second);
-                QPointF target = QPointF(points[i + 1].first, points[i + 1].second);
-                painter->drawLine(source, target);
+                // Draw an approximation of the conic arc.
+                QPainterPath path;
+                path.moveTo(points[0].first, points[0].second);
+                for (int i = 1; i < n + 1; ++i)
+                {
+                    path.lineTo(points[i].first, points[i].second);
+                }
+                painter->drawPath(path);
             }
         }
     }

@@ -32,12 +32,15 @@ public:
     CriticalCurves();
     // Add the inner offset of the polygon P in arr.
     void addInsetPolygon (Polygon_2, double);
+    // Clear the inset polygons.
+    void clear();
     // Receive changed signals from the main window.
     void modelChanged();
     // Get the bounding rectangle of the critical curves on the GraphicsScene.
     QRectF boundingRect() const;
     // Paint the critical curves on the GraphicsScene.
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+    // Destructor.
     ~CriticalCurves();
 
 protected:
