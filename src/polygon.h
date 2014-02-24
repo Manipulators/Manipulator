@@ -1,6 +1,7 @@
 #ifndef POLYGON_H
 #define POLYGON_H
 
+#include <CGAL/basic.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/CORE_algebraic_number_traits.h>
 #include <CGAL/Polygon_2.h>
@@ -11,7 +12,7 @@
 // Define the CGAL rational kernel.
 typedef CGAL::CORE_algebraic_number_traits Nt_traits;
 typedef Nt_traits::Rational Rational;
-struct Rat_kernel : public CGAL::Cartesian<Rational> {};
+typedef CGAL::Cartesian<Rational> Rat_kernel;
 
 
 // Define the CGAL polygon.

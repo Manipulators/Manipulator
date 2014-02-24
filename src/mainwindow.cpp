@@ -255,7 +255,7 @@ void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(dou
 void MainWindow::on_pushButtonSolve_clicked()
 {
     //TODO: complete.
-    this->critical_curves->addInsetPolygon(this->barriers->getPolygon(), this->bodie_2->getR());
+    this->critical_curves->setParameters(this->barriers->getPolygon(), this->bodie_1->getR(), this->bodie_2->getR());
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);

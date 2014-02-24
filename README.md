@@ -3,6 +3,9 @@
 Computing a solution for the "Manipulation Planning Problem".
 
 
+![Screenshot](https://github.com/Manipulators/Manipulator/tree/master/doc/screenshot.png)
+
+
 ## Compilation
 
 ### Linux (Debian-based)
