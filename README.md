@@ -3,7 +3,7 @@
 Computing a solution for the "Manipulation Planning Problem".
 
 
-![Picture](https://github.com/Manipulators/Manipulator/tree/master/doc/screenshot.png)
+![Screenshot](https://raw.github.com/Manipulators/Manipulator/tree/master/doc/screenshot.png)
 
 
 ## Compilation
