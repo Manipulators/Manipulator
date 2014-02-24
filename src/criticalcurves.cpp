@@ -8,6 +8,7 @@ typedef Inset_polygons_2::iterator Inset_polygons_iterator;
 typedef Conic_traits_2::X_monotone_curve_2 X_monotone_curve_2;
 typedef std::list<X_monotone_curve_2> Container;
 typedef Container::iterator Curve_iterator;
+typedef Arrangement_2::Edge_iterator Edge_iterator;
 
 
 CriticalCurves::CriticalCurves()
@@ -34,20 +35,55 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
         }
     }
 
+
+    typedef Rat_kernel::Point_2 Rat_point_2;
+    typedef Rat_kernel::Segment_2 Rat_segment_2;
+    typedef Rat_kernel::Circle_2 Rat_circle_2;
+    typedef Conic_traits_2::Curve_2 Conic_arc_2;
+    typedef Conic_traits_2::Point_2 Conic_point_2;
+
     // Add the critical curves of type I.
     // TODO: complete.
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
-
+        for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
+        {
+            if (CGAL::COLLINEAR == curve->orientation())
+            {
+                // Displaced a segment.
+                // TODO: improve with the use of rational kernel operation (accuracy purpose).
+                double factor = radius_1 + radius_2;
+                Conic_point_2 source = curve->source();
+                Conic_point_2 target = curve->target();
+                double x_source = CGAL::to_double(source.x());
+                double y_source = CGAL::to_double(source.y());
+                double x_target = CGAL::to_double(target.x());
+                double y_target = CGAL::to_double(target.y());
+                double delta_x = x_target - x_source;
+                double delta_y = y_target - y_source;
+                double length = std::sqrt(delta_x * delta_x + delta_y * delta_y);
+                double translation_x = factor * delta_y / length;
+                double translation_y = - factor * delta_x / length;
+                Rat_point_2 point_1(x_source + translation_x, y_source + translation_y);
+                Rat_point_2 point_2(x_target + translation_x, y_target + translation_y);
+                Rat_segment_2 segment(point_1, point_2);
+                Conic_arc_2 conic_arc(segment);
+                insert(this->critical_curves, conic_arc);
+            }
+            else
+            {
+                // Displaces an arc.
+                // TODO: complete.
+                //Rat_circle_2 circle(center, radius * radius);
+                //Rat_point_2 source(x_source, y_source);
+                //Rat_point_2 target(x_target, y_target);
+                //Conic_arc_2 conic_arc(circle, CGAL::CLOCKWISE, source, target);
+            }
+        }
     }
 
     // Add the critical curves of type II.
-    // TODO: complete.
-
-    typedef Rat_kernel::Point_2 Rat_point_2;
-    typedef Rat_kernel::Circle_2 Rat_circle_2;
-    typedef Conic_traits_2::Curve_2 Conic_arc_2;
-
+    // TODO: remove the curves which are not include in one of the inset polygons.
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
         for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
@@ -55,11 +91,20 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
             int x = (int)(CGAL::to_double(curve->source().x()));
             int y = (int)(CGAL::to_double(curve->source().y()));
             double radius = radius_1 + radius_2;
-            Rat_circle_2 circle (Rat_point_2(x, y), radius * radius);
-            Conic_arc_2 conic_arc (circle);
+            Rat_point_2 center(x, y);
+            Rat_circle_2 circle(center, radius * radius);
+            Conic_arc_2 conic_arc(circle);
             insert(this->critical_curves, conic_arc);
         }
     }
+
+    // Remove the curves which are not include in one of the inset polygons.
+    // TODO:complete.
+    for (Edge_iterator edge = this->critical_curves.edges_begin(); edge != this->critical_curves.edges_end(); ++edge)
+    {
+        //zone(arrangment, curve, output_iterator);
+    }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -127,9 +172,6 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
 
 
     // Paint the critical curves.
-
-    typedef Arrangement_2::Edge_iterator Edge_iterator;
-
     for (Edge_iterator edge = this->critical_curves.edges_begin(); edge != this->critical_curves.edges_end(); ++edge)
     {
         // TODO: improve the number of points used for the approximation..
