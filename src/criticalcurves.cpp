@@ -32,6 +32,8 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
         for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
             insert(this->critical_curves, *curve);
+            insert(this->almost_critical_curves, *curve);
+            insert(this->admissible, *curve);
         }
     }
 
@@ -68,7 +70,7 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
                 Rat_point_2 point_2(x_target + translation_x, y_target + translation_y);
                 Rat_segment_2 segment(point_1, point_2);
                 Conic_arc_2 conic_arc(segment);
-                insert(this->critical_curves, conic_arc);
+                insert(this->almost_critical_curves, conic_arc);
             }
             else
             {
@@ -111,7 +113,7 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
 
                 Conic_arc_2 conic_arc(circle, CGAL::COUNTERCLOCKWISE, source_2, target_2);
 
-                insert(this->critical_curves, conic_arc);
+                insert(this->almost_critical_curves, conic_arc);
             }
         }
     }
@@ -128,15 +130,34 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
             Rat_point_2 center(x, y);
             Rat_circle_2 circle(center, radius * radius);
             Conic_arc_2 conic_arc(circle);
-            insert(this->critical_curves, conic_arc);
+            insert(this->almost_critical_curves, conic_arc);
         }
     }
 
     // Remove the curves which are not include in one of the inset polygons.
-    // TODO:complete.
-    for (Edge_iterator edge = this->critical_curves.edges_begin(); edge != this->critical_curves.edges_end(); ++edge)
+    Walk_pl pl(this->admissible);
+
+    for (Edge_iterator edge = this->almost_critical_curves.edges_begin(); edge != this->almost_critical_curves.edges_end(); ++edge)
     {
-        //zone(arrangment, curve, output_iterator);
+        std::vector<CGAL::Object> listo;
+        CGAL::zone(this->admissible,edge->curve(), std::back_inserter(listo),pl);
+        typedef Arrangement_2::Face_handle                    Face_handle;
+        Face_handle face;
+        int flag = 0;
+        for(int i = 0;i < listo.size();i++)
+        {
+            if(assign(face,listo[i]))
+            {
+                if(face->is_unbounded())
+                {
+                    flag = 1;
+                };
+            };
+        }
+        if(flag==0)
+        {
+           insert(this->critical_curves,edge->curve());
+        };
     }
 
 

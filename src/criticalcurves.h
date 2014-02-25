@@ -23,6 +23,9 @@ typedef CGAL::Gps_traits_2<Conic_traits_2> Gps_traits_2;
 typedef Gps_traits_2::Polygon_2 Inset_polygon_2;
 typedef std::list<Inset_polygon_2> Inset_polygons_2;
 
+// Point location
+typedef CGAL::Arr_walk_along_line_point_location<Arrangement_2> Walk_pl;
+
 
 class CriticalCurves : public CGAL::Qt::GraphicsItem
 {
@@ -30,6 +33,11 @@ class CriticalCurves : public CGAL::Qt::GraphicsItem
 
 public:
     Inset_polygons_2 inset_polygons;
+    // Admissible (for C2)
+    Arrangement_2 admissible;
+    // Critical curves (without removing non admissible curves)
+    Arrangement_2 almost_critical_curves;
+    // Critical curves
     Arrangement_2 critical_curves;
     // Constructor.
     CriticalCurves();
