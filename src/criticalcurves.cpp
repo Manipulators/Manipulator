@@ -75,26 +75,42 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
                 // Displaces an arc.
                 // TODO: complete.
 
-                Rational two = 2;
-                Rational four = 4;
+                typedef Alg_kernel::FT Algebraic_ft;
+
+                Rational two(2);
+                Rational four(4);
 
                 Rational r = curve->r();
                 Rational s = curve->s();
                 Rational t = curve->t();
                 Rational u = curve->u();
                 Rational v = curve->v();
-                Rational w_1 = curve->w();
+                Rational w = curve->w();
 
-                Rational r_1 = radius_1;
-                Rational r_2 = radius_2;
-                Rational r_3 = r_1 + two * r_2;
+                Nt_traits nt_traits;
+                Rational x_center = - u / (two * r);
+                Rational y_center = - v / (two * r);
+                Rat_point_2 rat_center(x_center, y_center);
+                Conic_point_2 center(nt_traits.convert(x_center), nt_traits.convert(y_center));
 
-                Rational x_0 = - u / (two * r);
-                Rational y_0 = - v / (two * r);
-                Rational w_2 = r * ((u * u + v * v) / (four * r * r) - (r_3 * r_3));
+                Rational radius = Rational(radius_1) + two * Rational(radius_2);
 
-                Conic_arc_2 conic_arc(r, s, t, u, v, w_2);
-                //Conic_arc_2 conic_arc(r, s, t, u, v, w, CGAL::CLOCKWISE, source, target);
+                Algebraic_ft coefficient = nt_traits.convert(radius / Rational(radius_2));
+
+                Conic_point_2 source_1 = curve->source();
+                Algebraic_ft x_source_2 = center.x() + coefficient * (source_1.x() - center.x());
+                Algebraic_ft y_source_2 = center.y() + coefficient * (source_1.y() - center.y());
+                Conic_point_2 source_2(x_source_2, y_source_2);
+
+                Conic_point_2 target_1 = curve->target();
+                Algebraic_ft x_target_2 = center.x() + coefficient * (target_1.x() - center.x());
+                Algebraic_ft y_target_2 = center.y() + coefficient * (target_1.y() - center.y());
+                Conic_point_2 target_2(x_target_2, y_target_2);
+
+                Rat_circle_2 circle(rat_center, radius * radius);
+
+                Conic_arc_2 conic_arc(circle, CGAL::COUNTERCLOCKWISE, source_2, target_2);
+
                 insert(this->critical_curves, conic_arc);
             }
         }
