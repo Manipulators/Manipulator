@@ -74,10 +74,28 @@ void CriticalCurves::setParameters(Polygon_2 polygon, double radius_1, double ra
             {
                 // Displaces an arc.
                 // TODO: complete.
-                //Rat_circle_2 circle(center, radius * radius);
-                //Rat_point_2 source(x_source, y_source);
-                //Rat_point_2 target(x_target, y_target);
-                //Conic_arc_2 conic_arc(circle, CGAL::CLOCKWISE, source, target);
+
+                Rational two = 2;
+                Rational four = 4;
+
+                Rational r = curve->r();
+                Rational s = curve->s();
+                Rational t = curve->t();
+                Rational u = curve->u();
+                Rational v = curve->v();
+                Rational w_1 = curve->w();
+
+                Rational r_1 = radius_1;
+                Rational r_2 = radius_2;
+                Rational r_3 = r_1 + two * r_2;
+
+                Rational x_0 = - u / (two * r);
+                Rational y_0 = - v / (two * r);
+                Rational w_2 = r * ((u * u + v * v) / (four * r * r) - (r_3 * r_3));
+
+                Conic_arc_2 conic_arc(r, s, t, u, v, w_2);
+                //Conic_arc_2 conic_arc(r, s, t, u, v, w, CGAL::CLOCKWISE, source, target);
+                insert(this->critical_curves, conic_arc);
             }
         }
     }
