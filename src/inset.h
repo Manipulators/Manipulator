@@ -1,10 +1,9 @@
-#ifndef CRITICALCURVES_H
-#define CRITICALCURVES_H
+#ifndef INSET_H
+#define INSET_H
 
 #include <CGAL/CORE_algebraic_number_traits.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/Arr_conic_traits_2.h>
-#include <CGAL/Arrangement_2.h>
 #include <CGAL/Gps_traits_2.h>
 #include <CGAL/Polygon_2.h>
 #include <CGAL/Qt/GraphicsItem.h>
@@ -18,39 +17,40 @@ typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Conic_traits
 typedef CGAL::Gps_traits_2<Conic_traits_2> Gps_traits_2;
 typedef Gps_traits_2::Polygon_2 Inset_polygon_2;
 typedef std::list<Inset_polygon_2> Inset_polygons_2;
-typedef CGAL::Arrangement_2<Conic_traits_2> Arrangement_2;
+typedef Inset_polygons_2::iterator Inset_polygons_iterator;
+typedef Conic_traits_2::X_monotone_curve_2 X_monotone_curve_2;
+typedef std::list<X_monotone_curve_2> X_monotone_curves_2;
+typedef X_monotone_curves_2::iterator Curve_iterator;
 typedef CGAL::Polygon_2<Rat_kernel> Polygon_2;
 
 
-class CriticalCurves : public CGAL::Qt::GraphicsItem
+class Inset : public CGAL::Qt::GraphicsItem
 {
     Q_OBJECT
 
 public:
     Inset_polygons_2 inset_polygons;
-    // Critical curves.
-    Arrangement_2 critical_curves;
     // Constructor.
-    CriticalCurves();
+    Inset();
     // Add the inner offset of the polygon P in arr.
     void setParameters(Polygon_2 polygon, double radius_1, double radius_2);
     // Clear the inset polygons.
     void clear();
     // Receive changed signals from the main window.
     void modelChanged();
-    // Get the bounding rectangle of the critical curves on the GraphicsScene.
+    // Get the bounding rectangle of the inset polygons on the GraphicsScene.
     QRectF boundingRect() const;
-    // Paint the critical curves on the GraphicsScene.
+    // Paint the inset polygons on the GraphicsScene.
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     // Destructor.
-    ~CriticalCurves();
+    ~Inset();
 
 protected:
     QRectF bounding_rect;
     void updateBoundingRect();
 
 signals:
-    void criticalCurvesChanged();
+    void insetChanged();
 };
 
-#endif
+#endif // INSET_H

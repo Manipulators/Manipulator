@@ -1,15 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
-#include <QWidget>
-#include <QGraphicsScene>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include "polygon.h"
+#include <QMainWindow>
 #include "barriers.h"
 #include "bodie.h"
+#include "inset.h"
 #include "criticalcurves.h"
 #include "ui_mainwindow.h"
 
@@ -24,22 +19,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    QGraphicsScene *scene;
+    QGraphicsScene* scene;
     QString filename;
-    Barriers *barriers;
-    Bodie *bodie_1;
-    Bodie *bodie_2;
-    CriticalCurves *critical_curves;
+    Barriers* barriers;
+    Bodie* bodie_1;
+    Bodie* bodie_2;
+    Inset* inset;
+    CriticalCurves* critical_curves;
 
 public:
     // Constructor.
-    MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
-    // Add a line to the scene.
-    void addLine(double, double, double, double);
-
-    //void addArc(Node,Node,Node);
-    //void addGraph(Graphe);
-
+    MainWindow(QWidget* parent = 0, Qt::WindowFlags flags = 0);
     // Destructor.
     ~MainWindow();
 

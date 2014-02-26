@@ -1,4 +1,3 @@
-#include <CGAL/Bbox_2.h>
 #include <QPainter>
 #include "barriers.h"
 
@@ -21,12 +20,6 @@ void Barriers::setPolygon(Polygon_2 polygon)
     return;
 }
 
-void Barriers::print()
-{
-    std::cout << "Barriers:" << std::endl;
-    print_polygon(this->getPolygon());
-}
-
 void Barriers::modelChanged()
 {
     updateBoundingBox();
@@ -41,7 +34,15 @@ QRectF Barriers::boundingRect() const
 
 void Barriers::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    QPolygonF polygon = Polygon_CGAL_to_Qt(this->polygon);
+    typename Polygon_2::Vertex_iterator vertex;
+
+    QPolygonF polygon;
+    for (vertex = this->polygon.vertices_begin(); vertex != this->polygon.vertices_end(); ++vertex)
+    {
+        double x = CGAL::to_double(vertex->x());
+        double y = CGAL::to_double(vertex->y());
+        polygon << QPointF(x, y);
+    }
     painter->setPen(Qt::black);
     painter->setBrush(Qt::white);
     painter->drawPolygon(polygon);

@@ -20,15 +20,15 @@ include(${QT_USE_FILE})
 set(SOURCES
     main.cpp
     mainwindow.cpp 
-    polygon.cpp
     barriers.cpp
     bodie.cpp
+    inset.cpp
     criticalcurves.cpp)
 set(HEADERS
     mainwindow.h
-    polygon.h
     barriers.h
     bodie.h
+    inset.h
     criticalcurves.h)
 qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})

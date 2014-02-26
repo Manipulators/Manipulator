@@ -55,12 +55,6 @@ void Bodie::setY(double y)
     return;
 }
 
-void Bodie::print()
-{
-    std::cout << "Bodie:" << std::endl;
-    std::cout << "[center: ("<< this->getX() << " " << this->getY() << "), radius: " << this->getR() << "]" << std::endl;
-}
-
 void Bodie::modelChanged()
 {
     updateBoundingRect();

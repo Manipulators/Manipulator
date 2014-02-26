@@ -1,5 +1,4 @@
 #include <QFileDialog>
-#include <QGraphicsView>
 #include "mainwindow.h"
 
 
@@ -24,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     this->critical_curves = new CriticalCurves();
     this->scene->addItem(this->critical_curves);
 
+    // Add the inset to the GraphicsScene.
+    this->inset = new Inset();
+    this->scene->addItem(this->inset);
+
     // Add the first bodie to the GraphicsScene.
     this->bodie_1 = new Bodie();
     QObject::connect(this->bodie_1, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
@@ -45,6 +48,11 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 MainWindow::~MainWindow()
 {
     delete this->ui;
+    delete this->barriers;
+    delete this->bodie_1;
+    delete this->bodie_2;
+    delete this->inset;
+    delete this->critical_curves;
 }
 
 
@@ -254,7 +262,7 @@ void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(dou
 
 void MainWindow::on_pushButtonSolve_clicked()
 {
-    //TODO: complete.
+    // TODO: complete.
     this->critical_curves->setParameters(this->barriers->getPolygon(), this->bodie_1->getR(), this->bodie_2->getR());
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);

@@ -1,7 +1,6 @@
 #ifndef BODIE_H
 #define BODIE_H
 
-#include <iostream>
 #include <CGAL/Qt/GraphicsItem.h>
 
 
@@ -29,19 +28,15 @@ public:
     double getY();
     // Set the y-coordinate of the bodie.
     void setY(double y);
-    // Print a description of the bodie on the standard output.
-    void print();
     // Final position.
     double xf;
     double yf;
-
-    // Receive changed signals from the main window.
+    // Receive changed signals from the bodie instance.
     void modelChanged();
-    // Get the bounding rectangle of one bodie on the GraphicsScene.
+    // Get the bounding rectangle of the bodie on the graphics scene.
     QRectF boundingRect() const;
-    // Paint one bodie on the GraphicsScene.
+    // Paint the bodie on the graphics scene.
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-
     // Destructor.
     ~Bodie();
 

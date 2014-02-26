@@ -1,9 +1,15 @@
 #ifndef BARRIERS_H
 #define BARRIERS_H
 
-#include "polygon.h"
+#include <CGAL/CORE_algebraic_number_traits.h>
+#include <CGAL/Cartesian.h>
+#include <CGAL/Polygon_2.h>
 #include <CGAL/Qt/GraphicsItem.h>
-#include <iostream>
+
+typedef CGAL::CORE_algebraic_number_traits Nt_traits;
+typedef Nt_traits::Rational Rational;
+typedef CGAL::Cartesian<Rational> Rat_kernel;
+typedef CGAL::Polygon_2<Rat_kernel> Polygon_2;
 
 
 class Barriers : public CGAL::Qt::GraphicsItem
@@ -20,13 +26,12 @@ public:
     Polygon_2 getPolygon();
     // Set the polygon property of the barriers.
     void setPolygon(Polygon_2 polygon);
-    // Print a description of the barriers on the standard output.
-    void print();
-
+    // Receive changed signals from the barriers instance.
     void modelChanged();
+    // Get the bounding rectangle of one bodie on the graphics scene.
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+    // Paint the barriers on the graphics scene.
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     // Destructor.
     ~Barriers();
 
@@ -39,6 +44,6 @@ protected:
 };
 
 // Read the description of the barriers from the given stream.
-std::istream& operator >>(std::istream& stream, Barriers* barriers);
+std::istream& operator >> (std::istream& stream, Barriers* barriers);
 
 #endif // BARRIERS_H
