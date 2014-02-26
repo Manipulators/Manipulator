@@ -101,8 +101,8 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
         // Add the critical curves of type II.
         for (Edge_iterator edge = inset->edges_begin(); edge != inset->edges_end(); ++edge)
         {
-            int x = (int)(CGAL::to_double(edge->curve().source().x()));
-            int y = (int)(CGAL::to_double(edge->curve().source().y()));
+            double x = CGAL::to_double(edge->curve().source().x());
+            double y = CGAL::to_double(edge->curve().source().y());
             double radius = radius_1 + radius_2;
             Rat_point_2 center(x, y);
             Rat_circle_2 circle(center, radius * radius);
@@ -129,6 +129,12 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
             }
             objects.clear();
         }
+
+        // Print essential information on the standard input.
+        std::cout << "Arrangement:" << std::endl;
+        std::cout << "  Number of vertices: " << arrangement.number_of_vertices() << std::endl;
+        std::cout << "  Number of edges   : " << arrangement.number_of_edges() << std::endl;
+        std::cout << "  Number of face    : " << arrangement.number_of_faces() << std::endl;
 
         this->critical_curves.push_back(arrangement);
     }
@@ -165,7 +171,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
         {
             // TODO: improve the number of points used for the approximation..
             int n = 25;
-            double point_size = 0.5;
+            double point_size = 0.4;
             approximated_point_2* points = new approximated_point_2[n + 1];
             edge->curve().polyline_approximation(n, points);
             if (CGAL::COLLINEAR == edge->curve().orientation())
@@ -174,6 +180,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                 QPointF p1 = QPointF(points[0].first, points[0].second);
                 QPointF p2 = QPointF(points[1].first, points[1].second);
                 painter->drawLine(p1, p2);
+                /*
                 // Draw its endpoints.
                 QPointF p3 = QPointF(points[0].first, points[0].second);
                 QPointF p4 = QPointF(points[1].first, points[1].second);
@@ -181,6 +188,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                 painter->drawEllipse(p3, point_size, point_size);
                 painter->drawEllipse(p4, point_size, point_size);
                 painter->setBrush(QBrush(Qt::transparent));
+                */
             }
             else
             {
@@ -192,6 +200,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                     path.lineTo(points[i].first, points[i].second);
                 }
                 painter->drawPath(path);
+                /*
                 // Draw its endpoints.
                 QPointF p3 = QPointF(points[0].first, points[0].second);
                 QPointF p4 = QPointF(points[n].first, points[n].second);
@@ -199,6 +208,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                 painter->drawEllipse(p3, point_size, point_size);
                 painter->drawEllipse(p4, point_size, point_size);
                 painter->setBrush(QBrush(Qt::transparent));
+                */
             }
         }
     }
