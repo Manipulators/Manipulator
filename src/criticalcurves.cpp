@@ -6,8 +6,8 @@ typedef Arrangements_2::iterator Arrangement_2_iterator;
 typedef Arrangement_2::Edge_iterator Edge_iterator;
 typedef Conic_traits_2::Point_2 Conic_point_2;
 typedef Rat_kernel::Point_2 Rat_point_2;
-typedef Rat_kernel::Segment_2 Rat_segment_2;
 typedef Conic_traits_2::Curve_2 Conic_arc_2;
+typedef Conic_traits_2::X_monotone_curve_2 X_monotone_curve_2;
 typedef Alg_kernel::FT Algebraic_ft;
 typedef Rat_kernel::Circle_2 Rat_circle_2;
 typedef std::list<CGAL::Object> Objects;
@@ -40,24 +40,22 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
             if (CGAL::COLLINEAR == edge->curve().orientation())
             {
                 // Displaced a segment.
-                // TODO: improve with the use of rational kernel operation (accuracy purpose).
-                double factor = radius_1 + radius_2;
+                Nt_traits nt_traits;
+                Algebraic_ft factor = nt_traits.convert(Rational(radius_1) + Rational(radius_2));
                 Conic_point_2 source = edge->curve().source();
                 Conic_point_2 target = edge->curve().target();
-                double x_source = CGAL::to_double(source.x());
-                double y_source = CGAL::to_double(source.y());
-                double x_target = CGAL::to_double(target.x());
-                double y_target = CGAL::to_double(target.y());
-                double delta_x = x_target - x_source;
-                double delta_y = y_target - y_source;
-                double length = std::sqrt(delta_x * delta_x + delta_y * delta_y);
-                double translation_x = factor * delta_y / length;
-                double translation_y = - factor * delta_x / length;
-                Rat_point_2 point_1(x_source + translation_x, y_source + translation_y);
-                Rat_point_2 point_2(x_target + translation_x, y_target + translation_y);
-                Rat_segment_2 segment(point_1, point_2);
-                Conic_arc_2 conic_arc(segment);
-                insert(arrangement, conic_arc);
+                Algebraic_ft delta_x = target.x() - source.x();
+                Algebraic_ft delta_y = target.y() - source.y();
+                Algebraic_ft length = nt_traits.sqrt(delta_x * delta_x + delta_y * delta_y);
+                Algebraic_ft translation_x = factor * delta_y / length;
+                Algebraic_ft translation_y = - factor * delta_x / length;
+                Conic_point_2 point_1(source.x() + translation_x, source.y() + translation_y);
+                Conic_point_2 point_2(target.x() + translation_x, target.y() + translation_y);
+                Algebraic_ft a = - delta_y;
+                Algebraic_ft b = delta_x;
+                Algebraic_ft c = factor * length - (source.y() * target.x() - source.x() * target.y());
+                X_monotone_curve_2 x_monotone_curve(a, b, c, point_1, point_2);
+                insert(arrangement, x_monotone_curve);
             }
             else
             {
