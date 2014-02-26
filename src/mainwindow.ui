@@ -368,6 +368,13 @@
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="checkBoxShowInset">
+             <property name="text">
+              <string>Show inset</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QCheckBox" name="checkBoxShowCriticalCurves">
              <property name="text">
               <string>Show critical curves</string>

@@ -263,7 +263,8 @@ void MainWindow::on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(dou
 void MainWindow::on_pushButtonSolve_clicked()
 {
     // TODO: complete.
-    this->critical_curves->setParameters(this->barriers->getPolygon(), this->bodie_1->getR(), this->bodie_2->getR());
+    this->inset->setParameters(this->barriers->getPolygon(), this->bodie_1->getR(), this->bodie_2->getR());
+    this->critical_curves->setParameters(this->inset->getArrangements(), this->bodie_1->getR(), this->bodie_2->getR());
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);
@@ -292,11 +293,31 @@ void MainWindow::on_checkBoxShowBodie_stateChanged(int state)
     return;
 }
 
+void MainWindow::on_checkBoxShowInset_stateChanged(int state)
+{
+    switch (state)
+    {
+        case Qt::Checked:
+            this->ui->checkBoxShowCriticalCurves->setChecked(false);
+            this->inset->show();
+            break;
+        case Qt::Unchecked:
+            this->inset->hide();
+            break;
+        case Qt::PartiallyChecked:
+            break;
+        default:
+            break;
+    }
+    return;
+}
+
 void MainWindow::on_checkBoxShowCriticalCurves_stateChanged(int state)
 {
     switch (state)
     {
         case Qt::Checked:
+            this->ui->checkBoxShowInset->setChecked(false);
             this->critical_curves->show();
             break;
         case Qt::Unchecked:

@@ -1,5 +1,12 @@
+#include <CGAL/offset_polygon_2.h>
 #include <QPainter>
 #include "inset.h"
+
+typedef Inset_polygons_2::iterator Inset_polygons_iterator;
+typedef Conic_traits_2::X_monotone_curve_2 X_monotone_curve_2;
+typedef std::list<X_monotone_curve_2> X_monotone_curves_2;
+typedef X_monotone_curves_2::iterator X_monotone_curve_2_iterator;
+typedef std::pair<double, double> approximated_point_2;
 
 
 Inset::Inset()
@@ -9,22 +16,25 @@ Inset::Inset()
 
 void Inset::setParameters(Polygon_2 polygon, double radius_1, double radius_2)
 {
-    /*
     Conic_traits_2 traits;
     inset_polygon_2(polygon, radius_2, traits, std::back_inserter(this->inset_polygons));
+    emit(insetChanged());
+    return;
+}
 
-    // Add the curves of the inset polygons.
-    Arrangement_2 inset_polygons;
+Arrangements_2 Inset::getArrangements()
+{
+    Arrangements_2 arrangements;
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
-        for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
+        Arrangement_2 arrangement;
+        for (X_monotone_curve_2_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
-            insert(inset_polygons, *curve);
-            insert(this->critical_curves, *curve);
+            insert(arrangement, *curve);
         }
+        arrangements.push_back(arrangement);
     }
-    */
-    return;
+    return arrangements;
 }
 
 void Inset::modelChanged()
@@ -41,12 +51,10 @@ QRectF Inset::boundingRect() const
 
 void Inset::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    typedef std::pair<double, double> approximated_point_2;
-
     // Paint the inset polygons.
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
-        for (Curve_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
+        for (X_monotone_curve_2_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
             // TODO: improve the number of points used for the approximation..
             int n = 25;

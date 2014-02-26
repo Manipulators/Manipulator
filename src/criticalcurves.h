@@ -15,11 +15,8 @@ typedef Nt_traits::Algebraic Algebraic;
 typedef CGAL::Cartesian<Rational> Rat_kernel;
 typedef CGAL::Cartesian<Algebraic> Alg_kernel;
 typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Conic_traits_2;
-typedef CGAL::Gps_traits_2<Conic_traits_2> Gps_traits_2;
-typedef Gps_traits_2::Polygon_2 Inset_polygon_2;
-typedef std::list<Inset_polygon_2> Inset_polygons_2;
 typedef CGAL::Arrangement_2<Conic_traits_2> Arrangement_2;
-typedef CGAL::Polygon_2<Rat_kernel> Polygon_2;
+typedef std::list<Arrangement_2> Arrangements_2;
 
 
 class CriticalCurves : public CGAL::Qt::GraphicsItem
@@ -27,20 +24,19 @@ class CriticalCurves : public CGAL::Qt::GraphicsItem
     Q_OBJECT
 
 public:
-    Inset_polygons_2 inset_polygons;
     // Critical curves.
-    Arrangement_2 critical_curves;
+    Arrangements_2 critical_curves;
     // Constructor.
     CriticalCurves();
-    // Add the inner offset of the polygon P in arr.
-    void setParameters(Polygon_2 polygon, double radius_1, double radius_2);
-    // Clear the inset polygons.
+    // Set the parameters of the critical curves and recompute them.
+    void setParameters(Arrangements_2 inset, double radius_1, double radius_2);
+    // Clear the critical curves.
     void clear();
-    // Receive changed signals from the main window.
+    // Receive changed signals from the critical curves instance.
     void modelChanged();
-    // Get the bounding rectangle of the critical curves on the GraphicsScene.
+    // Get the bounding rectangle of the critical curves on the graphics scene.
     QRectF boundingRect() const;
-    // Paint the critical curves on the GraphicsScene.
+    // Paint the critical curves on the graphics scene.
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     // Destructor.
     ~CriticalCurves();
