@@ -23,13 +23,21 @@ set(SOURCES
     barriers.cpp
     bodie.cpp
     inset.cpp
-    criticalcurves.cpp)
+    criticalcurves.cpp
+    noncriticalregion.cpp
+    admissibleconfigurationspacecell.cpp
+    graspconfigurationspacecell.cpp
+    manipulationgraph.cpp)
 set(HEADERS
     mainwindow.h
     barriers.h
     bodie.h
     inset.h
-    criticalcurves.h)
+    criticalcurves.h
+    noncriticalregion.h
+    admissibleconfigurationspacecell.h
+    graspconfigurationspacecell.h
+    manipulationgraph.h)
 qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})
 qt4_add_resources(RESSOURCES mainwindow.qrc)

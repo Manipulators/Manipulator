@@ -22,20 +22,23 @@ CriticalCurves::CriticalCurves()
     QObject::connect(this, SIGNAL(criticalCurvesChanged()), this, SLOT(modelChanged()));
 }
 
-void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, double radius_2)
+void CriticalCurves::setParameters(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2)
 {
-    for (Arrangement_2_iterator inset = insets.begin(); inset != insets.end(); ++inset)
+    Arrangement_2_iterator inset_1 = insets_1.begin();
+    Arrangement_2_iterator inset_2 = insets_2.begin();
+
+    while (inset_1 != insets_1.end() && inset_2 != insets_2.end())
     {
         Arrangement_2 arrangement;
 
         // Add the curves of the inset.
-        for (Edge_iterator edge = inset->edges_begin(); edge != inset->edges_end(); ++edge)
+        for (Edge_iterator edge = inset_1->edges_begin(); edge != inset_1->edges_end(); ++edge)
         {
             insert(arrangement, edge->curve());
         }
 
         // Add the critical curves of type I.
-        for (Edge_iterator edge = inset->edges_begin(); edge != inset->edges_end(); ++edge)
+        for (Edge_iterator edge = inset_2->edges_begin(); edge != inset_2->edges_end(); ++edge)
         {
             if (CGAL::COLLINEAR == edge->curve().orientation())
             {
@@ -99,7 +102,7 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
         }
 
         // Add the critical curves of type II.
-        for (Edge_iterator edge = inset->edges_begin(); edge != inset->edges_end(); ++edge)
+        for (Edge_iterator edge = inset_2->edges_begin(); edge != inset_2->edges_end(); ++edge)
         {
             double x = CGAL::to_double(edge->curve().source().x());
             double y = CGAL::to_double(edge->curve().source().y());
@@ -115,7 +118,7 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
         Face_handle face;
         for (Edge_iterator edge = arrangement.edges_begin(); edge != arrangement.edges_end(); ++edge)
         {
-            CGAL::zone(*inset, edge->curve(), std::back_inserter(objects));
+            CGAL::zone(*inset_1, edge->curve(), std::back_inserter(objects));
             for (Object_iterator object = objects.begin(); object != objects.end(); ++object)
             {
                 if (assign(face, *object))
@@ -137,11 +140,19 @@ void CriticalCurves::setParameters(Arrangements_2 insets, double radius_1, doubl
         std::cout << "  Number of face    : " << arrangement.number_of_faces() << std::endl;
 
         this->critical_curves.push_back(arrangement);
+
+        ++inset_1;
+        ++inset_2;
     }
 
     // Commit changes.
     emit(criticalCurvesChanged());
     return;
+}
+
+Arrangements_2 CriticalCurves::getArrangements()
+{
+    return this->critical_curves;
 }
 
 void CriticalCurves::clear()
@@ -171,7 +182,9 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
         {
             // TODO: improve the number of points used for the approximation..
             int n = 25;
+            /* Temporarily commented.
             double point_size = 0.4;
+            */
             approximated_point_2* points = new approximated_point_2[n + 1];
             edge->curve().polyline_approximation(n, points);
             if (CGAL::COLLINEAR == edge->curve().orientation())
@@ -180,7 +193,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                 QPointF p1 = QPointF(points[0].first, points[0].second);
                 QPointF p2 = QPointF(points[1].first, points[1].second);
                 painter->drawLine(p1, p2);
-                /*
+                /* Temporarily commented.
                 // Draw its endpoints.
                 QPointF p3 = QPointF(points[0].first, points[0].second);
                 QPointF p4 = QPointF(points[1].first, points[1].second);
@@ -200,7 +213,7 @@ void CriticalCurves::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
                     path.lineTo(points[i].first, points[i].second);
                 }
                 painter->drawPath(path);
-                /*
+                /* Temporarily commented.
                 // Draw its endpoints.
                 QPointF p3 = QPointF(points[0].first, points[0].second);
                 QPointF p4 = QPointF(points[n].first, points[n].second);
@@ -223,5 +236,5 @@ CriticalCurves::~CriticalCurves()
 void CriticalCurves::updateBoundingRect()
 {
     // TODO: improve.
-    this->bounding_rect = QRectF(-300.0, -300.0, 500.0, 500.0);
+    this->bounding_rect = QRectF(-300.0, -300.0, 600.0, 600.0);
 }

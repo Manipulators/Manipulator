@@ -6,8 +6,10 @@
 #include <CGAL/Arr_conic_traits_2.h>
 #include <CGAL/Gps_traits_2.h>
 #include <CGAL/Polygon_2.h>
+#include <CGAL/Arr_extended_dcel.h>
 #include <CGAL/Arrangement_2.h>
 #include <CGAL/Qt/GraphicsItem.h>
+#include "noncriticalregion.h"
 
 typedef CGAL::CORE_algebraic_number_traits Nt_traits;
 typedef Nt_traits::Rational Rational;
@@ -19,7 +21,8 @@ typedef CGAL::Gps_traits_2<Conic_traits_2> Gps_traits_2;
 typedef Gps_traits_2::Polygon_2 Inset_polygon_2;
 typedef std::list<Inset_polygon_2> Inset_polygons_2;
 typedef CGAL::Polygon_2<Rat_kernel> Polygon_2;
-typedef CGAL::Arrangement_2<Conic_traits_2> Arrangement_2;
+typedef CGAL::Arr_extended_dcel<Conic_traits_2, int, int, NonCriticalRegion*> Dcel;
+typedef CGAL::Arrangement_2<Conic_traits_2, Dcel> Arrangement_2;
 typedef std::list<Arrangement_2> Arrangements_2;
 
 
@@ -33,8 +36,8 @@ public:
     // Constructor.
     Inset();
     // Add the inner offset of the polygon P in arr.
-    void setParameters(Polygon_2 polygon, double radius_1, double radius_2);
-    // Get the arrangement representing the inset polygons.
+    void setParameters(Polygon_2 polygon, double radius);
+    // Get the arrangements representing the inset polygons.
     Arrangements_2 getArrangements();
     // Clear the inset polygons.
     void clear();

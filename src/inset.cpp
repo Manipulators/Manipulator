@@ -14,16 +14,17 @@ Inset::Inset()
     QObject::connect(this, SIGNAL(insetChanged()), this, SLOT(modelChanged()));
 }
 
-void Inset::setParameters(Polygon_2 polygon, double radius_1, double radius_2)
+void Inset::setParameters(Polygon_2 polygon, double radius)
 {
     Conic_traits_2 traits;
-    inset_polygon_2(polygon, radius_2, traits, std::back_inserter(this->inset_polygons));
+    inset_polygon_2(polygon, radius, traits, std::back_inserter(this->inset_polygons));
     emit(insetChanged());
     return;
 }
 
 Arrangements_2 Inset::getArrangements()
 {
+    int id = 1;
     Arrangements_2 arrangements;
     for (Inset_polygons_iterator inset_polygon = this->inset_polygons.begin(); inset_polygon != this->inset_polygons.end(); ++inset_polygon)
     {
@@ -31,6 +32,11 @@ Arrangements_2 Inset::getArrangements()
         for (X_monotone_curve_2_iterator curve = inset_polygon->curves_begin(); curve != inset_polygon->curves_end(); ++curve)
         {
             insert(arrangement, *curve);
+        }
+        for (Arrangement_2::Edge_iterator edge = arrangement.edges_begin(); edge != arrangement.edges_end(); ++edge)
+        {
+            // TODO: check if the labeling is correct (for successive x-monotone circle arcs or successive collinear segments).
+            edge->set_data(id++);
         }
         arrangements.push_back(arrangement);
     }
@@ -91,5 +97,5 @@ Inset::~Inset()
 void Inset::updateBoundingRect()
 {
     // TODO: improve.
-    this->bounding_rect = QRectF(-200.0, -200.0, 400.0, 400.0);
+    this->bounding_rect = QRectF(-300.0, -300.0, 600.0, 600.0);
 }

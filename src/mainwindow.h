@@ -6,6 +6,7 @@
 #include "bodie.h"
 #include "inset.h"
 #include "criticalcurves.h"
+#include "manipulationgraph.h"
 #include "ui_mainwindow.h"
 
 
@@ -24,8 +25,10 @@ private:
     Barriers* barriers;
     Bodie* bodie_1;
     Bodie* bodie_2;
-    Inset* inset;
+    Inset* inset_1;
+    Inset* inset_2;
     CriticalCurves* critical_curves;
+    ManipulationGraph* manipulation_graph;
 
 public:
     // Constructor.
@@ -62,8 +65,10 @@ private slots:
     void on_doubleSpinBoxFinalConfigurationSecondBodieX_valueChanged(double x);
     void on_doubleSpinBoxFinalConfigurationSecondBodieY_valueChanged(double y);
     void on_pushButtonSolve_clicked();
-    void on_checkBoxShowBodie_stateChanged(int state);
-    void on_checkBoxShowInset_stateChanged(int state);
+    void on_checkBoxShowFirstBodie_stateChanged(int state);
+    void on_checkBoxShowSecondBodie_stateChanged(int state);
+    void on_checkBoxShowFirstInset_stateChanged(int state);
+    void on_checkBoxShowSecondInset_stateChanged(int state);
     void on_checkBoxShowCriticalCurves_stateChanged(int state);
 };
 

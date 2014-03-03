@@ -355,22 +355,30 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QCheckBox" name="checkBoxShowBodie">
+            <widget class="QCheckBox" name="checkBoxShowFirstBodie">
              <property name="text">
-              <string>Show bodie</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
+              <string>Show first bodie</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBoxShowInset">
+            <widget class="QCheckBox" name="checkBoxShowSecondBodie">
              <property name="text">
-              <string>Show inset</string>
+              <string>Show second bodie</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxShowFirstInset">
+             <property name="text">
+              <string>Show first inset</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxShowSecondInset">
+             <property name="text">
+              <string>Show second inset</string>
              </property>
             </widget>
            </item>

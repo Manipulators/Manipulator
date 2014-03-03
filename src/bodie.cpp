@@ -74,6 +74,7 @@ void Bodie::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
     painter->setPen(Qt::black);
     painter->setBrush(Qt::darkBlue);
     painter->drawEllipse(-r, -r, d, d);
+    painter->drawPoint(0, 0);
     return;
 }
 
