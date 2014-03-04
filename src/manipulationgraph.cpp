@@ -227,8 +227,6 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                 Conic_point_2 point_3(x_point_3, y_point_3);
 
                 face->data()->setPoint(point_3);
-
-                this->points.push_back(point_3);
             }
         }
     }
@@ -285,28 +283,33 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                     }
                 }
 
-                // TODO: remove.
-                this->test = Arrangement_2(difference);
-
-                std::cout << (difference.number_of_faces() - 1) << " cells:" << std::endl;
+                Admissible_configuration_space_cells admissible_configuration_space_cells;
                 for (Arrangement_2::Face_handle cell = difference.faces_begin(); cell != difference.faces_end(); ++cell)
                 {
                     if (!cell->is_unbounded())
                     {
+                        Admissible_configuration_space_cell admissible_configuration_space_cell;
+
                         Arrangement_2::Ccb_halfedge_circulator first_outer_ccb = cell->outer_ccb();
                         Arrangement_2::Ccb_halfedge_circulator outer_ccb = cell->outer_ccb();
 
                         do
                         {
-                            std::cout << outer_ccb->data() << " ";
+                            admissible_configuration_space_cell.push_back(outer_ccb->data());
                             ++outer_ccb;
                         } while (outer_ccb != first_outer_ccb);
-                        std::cout << std::endl;
+
+                        admissible_configuration_space_cells.push_back(admissible_configuration_space_cell);
                     }
                 }
-                std::cout << std::endl;
+
+                face->data()->setAdmissibleConfigurationSpaceCells(admissible_configuration_space_cells);
             }
+
         }
+
+        // Set a list of symbolic descriptions of the cells of the set of grasp configurations for each non-critical region.
+        // TODO: complete.
 
         ++arrangement;
         ++inset_2;
@@ -329,49 +332,6 @@ QRectF ManipulationGraph::boundingRect() const
 
 void ManipulationGraph::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    for (std::list<Conic_point_2>::iterator i = this->points.begin(); i != this->points.end(); ++i)
-    {
-        double x = CGAL::to_double(i->x());
-        double y = CGAL::to_double(i->y());
-        QPointF point(x, y);
-        painter->setPen(QPen(Qt::red));
-        painter->drawPoint(point);
-        painter->setPen(QPen(Qt::black));
-    }
-
-    // TODO: remove.
-    for (Arrangement_2::Edge_iterator edge = this->test.edges_begin(); edge != this->test.edges_end(); ++edge)
-    {
-        typedef std::pair<double, double> approximated_point_2;
-        // TODO: improve the number of points used for the approximation..
-        int n = 25;
-        approximated_point_2* points = new approximated_point_2[n + 1];
-        edge->curve().polyline_approximation(n, points);
-        if (edge->data() == -1)
-        {
-            painter->setPen(QPen(Qt::blue));
-        }
-        if (CGAL::COLLINEAR == edge->curve().orientation())
-        {
-            // Draw a segment.
-            QPointF p1 = QPointF(points[0].first, points[0].second);
-            QPointF p2 = QPointF(points[1].first, points[1].second);
-            painter->drawLine(p1, p2);
-        }
-        else
-        {
-            // Draw an approximation of the conic arc.
-            QPainterPath path;
-            path.moveTo(points[0].first, points[0].second);
-            for (int i = 1; i < n + 1; ++i)
-            {
-                path.lineTo(points[i].first, points[i].second);
-            }
-            painter->drawPath(path);
-        }
-        painter->setPen(QPen(Qt::black));
-    }
-
     return;
 }
 

@@ -47,9 +47,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
     // Add the manipulation graph.
     this->manipulation_graph = new ManipulationGraph();
+    this->manipulation_graph->hide();
     // TODO: uncomment.
-    //this->manipulation_graph->hide();
-    this->scene->addItem(this->manipulation_graph);
+    //this->scene->addItem(this->manipulation_graph);
 
     // Setup the graphics view.
     this->ui->graphicsView->setScene(scene);

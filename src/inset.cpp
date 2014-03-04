@@ -36,7 +36,8 @@ Arrangements_2 Inset::getArrangements()
         for (Arrangement_2::Edge_iterator edge = arrangement.edges_begin(); edge != arrangement.edges_end(); ++edge)
         {
             // TODO: check if the labeling is correct (for successive x-monotone circle arcs or successive collinear segments).
-            edge->set_data(id++);
+            edge->set_data(id);
+            edge->twin()->set_data(id++);
         }
         arrangements.push_back(arrangement);
     }

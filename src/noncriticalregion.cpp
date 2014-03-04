@@ -31,6 +31,17 @@ void NonCriticalRegion::setPoint(Conic_point_2 point)
     return;
 }
 
+Admissible_configuration_space_cells NonCriticalRegion::getAdmissibleConfigurationSpaceCells()
+{
+    return this->admissible_configuration_space_cells;
+}
+
+void NonCriticalRegion::setAdmissibleConfigurationSpaceCells(Admissible_configuration_space_cells admissible_configuration_space_cells)
+{
+    this->admissible_configuration_space_cells = admissible_configuration_space_cells;
+    return;
+}
+
 NonCriticalRegion::~NonCriticalRegion()
 {
 }

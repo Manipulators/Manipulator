@@ -47,8 +47,6 @@ class ManipulationGraph : public CGAL::Qt::GraphicsItem
     Q_OBJECT
 
 public:
-    std::list<Conic_point_2> points;
-    Arrangement_2 test;
     ManipulationGraph();
     void setParameters(double radius_1, double radius_2, Arrangements_2 inset_1, Arrangements_2 inset_2, Arrangements_2 critical_curves);
     void modelChanged();

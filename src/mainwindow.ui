@@ -389,6 +389,15 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxNonCriticalRegion"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxAdmissibleConfigurationSpaceCell"/>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxGraspConfigurationSpaceCell"/>
+           </item>
           </layout>
          </widget>
         </item>
