@@ -22,6 +22,8 @@ Computing a solution for the "Manipulation Planning Problem".
   sudo apt-get install qt-sdk libcgal-dev
   ```
 
+- Install LEMON (graph library): https://lemon.cs.elte.hu/trac/lemon/wiki/InstallLinux
+
 - Change your current directory to clone Manipulator
   
   ```console
