@@ -27,7 +27,8 @@ set(SOURCES
     noncriticalregion.cpp
     admissibleconfigurationspacecell.cpp
     graspconfigurationspacecell.cpp
-    manipulationgraph.cpp)
+    manipulationgraph.cpp
+    roadmap.cpp)
 set(HEADERS
     mainwindow.h
     barriers.h
@@ -37,7 +38,8 @@ set(HEADERS
     noncriticalregion.h
     admissibleconfigurationspacecell.h
     graspconfigurationspacecell.h
-    manipulationgraph.h)
+    manipulationgraph.h
+    roadmap.h)
 qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})
 qt4_add_resources(RESSOURCES mainwindow.qrc)
