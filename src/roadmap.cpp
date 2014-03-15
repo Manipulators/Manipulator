@@ -10,9 +10,28 @@
 typedef lemon::SmartDigraph SmartDigraph;
 typedef lemon::Dijkstra<SmartDigraph> Dijkstra;
 
-RoadMap::RoadMap(Arrangement_2 Admissible, double xrmin, double xrmax, double yrmin, double yrmax, Arrangement_2 Obstacles, double sx, double sy, double tx, double ty)
+RoadMap::RoadMap(Arrangement_2 Admissible, Arrangement_2 Obstacles, double sx, double sy, double tx, double ty)
 {
     /* Build a path from (sx,sy) to (tx,ty) inside Admissible and outside Obstacles */
+
+    double xrmin, xrmax, yrmin, yrmax;
+
+    Arrangement_2::Vertex_iterator        curr_v;
+    curr_v = Admissible.vertices_begin();
+    xrmin = CGAL::to_double(curr_v->point().x());
+    xrmax = CGAL::to_double(curr_v->point().x());
+    yrmin = CGAL::to_double(curr_v->point().y());
+    yrmax = CGAL::to_double(curr_v->point().y());
+
+    for (curr_v = Admissible.vertices_begin();curr_v != Admissible.vertices_end(); ++curr_v)
+    {
+        double xc = CGAL::to_double(curr_v->point().x());
+        double yc = CGAL::to_double(curr_v->point().y());
+        if(xc < xrmin){xrmin = xc;};
+        if(xc > xrmax){xrmax = xc;};
+        if(yc < yrmin){yrmin = yc;};
+        if(yc > yrmax){yrmax = yc;};
+    };
 
     std::list< Conic_point_2 > (this->path);
     srand(time(NULL));

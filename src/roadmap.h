@@ -24,7 +24,7 @@ class RoadMap
 {
 public:
     // Constructor
-    RoadMap(Arrangement_2, double, double, double, double, Arrangement_2, double, double, double, double);
+    RoadMap(Arrangement_2, Arrangement_2, double, double, double, double);
     // path = [source; x1; x2; ...; target]
     std::list< Conic_point_2 > path;
     // Destructor.
