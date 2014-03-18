@@ -18,38 +18,44 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     this->barriers = new Barriers();
     QObject::connect(this->barriers, SIGNAL(barriersChanged()), this, SLOT(viewChanged()));
     this->scene->addItem(this->barriers);
+
     // Add the first bodie to the graphics scene.
     this->bodie_1 = new Bodie();
-    this->bodie_1->hide();
+    //this->bodie_1->hide();
     QObject::connect(this->bodie_1, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
     this->scene->addItem(this->bodie_1);
 
     // Add the second bodie to the graphics scene.
     this->bodie_2 = new Bodie();
-    this->bodie_2->hide();
+    //this->bodie_2->hide();
     QObject::connect(this->bodie_2, SIGNAL(bodieChanged()), this, SLOT(tabWidgetChanged()));
     this->scene->addItem(this->bodie_2);
 
     // Add the first inset to the graphics scene.
     this->inset_1 = new Inset();
-    this->inset_1->hide();
+    //this->inset_1->hide();
     this->scene->addItem(this->inset_1);
 
     // Add the second inset to the graphics scene.
     this->inset_2 = new Inset();
-    this->inset_2->hide();
+    //this->inset_2->hide();
     this->scene->addItem(this->inset_2);
 
     // Add the critical curves to the graphics scene.
     this->critical_curves = new CriticalCurves();
-    this->critical_curves->hide();
+    //this->critical_curves->hide();
     this->scene->addItem(this->critical_curves);
 
     // Add the manipulation graph.
     this->manipulation_graph = new ManipulationGraph();
-    this->manipulation_graph->hide();
+    //this->manipulation_graph->hide();
     // TODO: uncomment.
     //this->scene->addItem(this->manipulation_graph);
+
+    // Add path
+    this->path = new RoadMap();
+    this->path->hide();
+    //this->scene->addItem(this->path);
 
     // Setup the graphics view.
     this->ui->graphicsView->setScene(scene);
@@ -69,6 +75,7 @@ MainWindow::~MainWindow()
     delete this->inset_2;
     delete this->critical_curves;
     delete this->manipulation_graph;
+    delete this->path;
 }
 
 
@@ -131,6 +138,7 @@ void MainWindow::tabWidgetChanged()
 void MainWindow::open(QString name)
 {
     // Read the new barriers and bodies from the input file.
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
     std::ifstream stream(name.toStdString().c_str());
     stream >> this->barriers;
@@ -284,7 +292,7 @@ void MainWindow::on_pushButtonSolve_clicked()
     this->inset_1->setParameters(this->barriers->getPolygon(), r1);
     this->inset_2->setParameters(this->barriers->getPolygon(), r2);
     this->critical_curves->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements());
-    this->manipulation_graph->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements());
+    //this->manipulation_graph->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements());
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);

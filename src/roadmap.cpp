@@ -3,14 +3,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <QPainter>
 #include "roadmap.h"
+
 
 #include <math.h>
 
 typedef lemon::SmartDigraph SmartDigraph;
 typedef lemon::Dijkstra<SmartDigraph> Dijkstra;
 
-RoadMap::RoadMap(Arrangement_2 Admissible, Arrangement_2 Obstacles, double sx, double sy, double tx, double ty)
+RoadMap::RoadMap()
+{
+
+}
+
+void RoadMap::set(Arrangement_2 Admissible, Arrangement_2 Obstacles, double sx, double sy, double tx, double ty)
 {
     /* Build a path from (sx,sy) to (tx,ty) inside Admissible and outside Obstacles */
 
@@ -153,4 +160,44 @@ int isOutside (Arrangement_2 Obstacles,double x1,double y1,double x2,double y2)
 double frand(double fmin, double fmax)
 {
     return fmin + ((double)rand()/RAND_MAX) * (fmax-fmin);
+}
+
+
+void RoadMap::modelChanged()
+{
+    updateBoundingRect();
+    update(this->boundingRect());
+    return;
+}
+
+QRectF RoadMap::boundingRect() const
+{
+    return this->bounding_rect;
+}
+
+void RoadMap::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+    std::list<Conic_point_2 >::const_iterator lit ((this->path).begin()),lend((this->path).end());
+
+    for(;lit!=lend;)
+    {
+       QPointF p1 = QPointF(CGAL::to_double(lit->x()), CGAL::to_double(lit->y()));
+       ++lit;
+
+       if(lit!=lend){
+           QPointF p2 = QPointF(CGAL::to_double(lit->x()), CGAL::to_double(lit->y()));
+           painter->drawLine(p1,p2);};
+    }
+
+    return;
+}
+
+RoadMap::~RoadMap()
+{
+}
+
+void RoadMap::updateBoundingRect()
+{
+    // TODO: improve.
+    this->bounding_rect = QRectF(-300.0, -300.0, 600.0, 600.0);
 }

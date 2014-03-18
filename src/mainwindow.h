@@ -8,6 +8,7 @@
 #include "criticalcurves.h"
 #include "manipulationgraph.h"
 #include "ui_mainwindow.h"
+#include "roadmap.h"
 
 
 namespace Ui
@@ -29,6 +30,7 @@ private:
     Inset* inset_2;
     CriticalCurves* critical_curves;
     ManipulationGraph* manipulation_graph;
+    RoadMap* path;
 
 public:
     // Constructor.

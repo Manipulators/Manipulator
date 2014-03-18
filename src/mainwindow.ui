@@ -33,7 +33,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabProblem">
        <attribute name="title">
@@ -386,6 +386,13 @@
             <widget class="QCheckBox" name="checkBoxShowCriticalCurves">
              <property name="text">
               <string>Show critical curves</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxShowPath">
+             <property name="text">
+              <string>Show path</string>
              </property>
             </widget>
            </item>
