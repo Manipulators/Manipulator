@@ -292,12 +292,6 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
 
                         Arrangement_2::Ccb_halfedge_circulator first_outer_ccb = cell->outer_ccb();
                         Arrangement_2::Ccb_halfedge_circulator outer_ccb = cell->outer_ccb();
-                        /*
-                        typedef std::pair<int,int> GRASP_cell;
-                        typedef std::list<GRASP_cell> GRASP_cells;
-
-                        typedef std::pair<std::list<int>,GRASP_cells> Admissible_configuration_space_cell;
-                          */
 
                         // Find a integer not equal to 0
                         while (cell->outer_ccb() == 0) {outer_ccb++;};
