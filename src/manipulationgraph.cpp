@@ -288,18 +288,50 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                 {
                     if (!cell->is_unbounded())
                     {
-                        Admissible_configuration_space_cell admissible_configuration_space_cell;
+                        std::list<int> admissible_configuration_space_cell;
 
                         Arrangement_2::Ccb_halfedge_circulator first_outer_ccb = cell->outer_ccb();
                         Arrangement_2::Ccb_halfedge_circulator outer_ccb = cell->outer_ccb();
+                        /*
+                        typedef std::pair<int,int> GRASP_cell;
+                        typedef std::list<GRASP_cell> GRASP_cells;
 
+                        typedef std::pair<std::list<int>,GRASP_cells> Admissible_configuration_space_cell;
+                          */
+
+                        // Find a integer not equal to 0
+                        while (cell->outer_ccb() == 0) {outer_ccb++;};
+                        first_outer_ccb = cell->outer_ccb();
+                        outer_ccb = cell->outer_ccb();
+                        // Zero flag
+                        int read_zero = 0;
                         do
                         {
-                            admissible_configuration_space_cell.push_back(outer_ccb->data());
+                            if (!read_zero || (outer_ccb->data() != 0))
+                            {
+                                admissible_configuration_space_cell.push_back(outer_ccb->data());
+                            };
+
+                            if (outer_ccb->data() == 0) {read_zero = 1;} else {read_zero = 0;};
                             ++outer_ccb;
                         } while (outer_ccb != first_outer_ccb);
 
-                        admissible_configuration_space_cells.push_back(admissible_configuration_space_cell);
+                        std::list<int>::const_iterator lit (admissible_configuration_space_cell.begin()),lend(admissible_configuration_space_cell.end());
+                        int previous = *lend;
+                        // Set a list of symbolic descriptions of the cells of the set of grasp configurations for each non-critical region.
+                        GRASP_cells grasp_cells;
+                        for(;lit!=lend;)
+                        {
+                            if (*lit == 0)
+                            {
+                                lit++;
+                                grasp_cells.push_back(GRASP_cell(previous,*lit));
+                                previous = *lit;
+                            }
+                            else {lit++;};
+                        };
+
+                        admissible_configuration_space_cells.push_back( Admissible_configuration_space_cell(admissible_configuration_space_cell, grasp_cells) );
                     }
                 }
 
@@ -307,9 +339,6 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
             }
 
         }
-
-        // Set a list of symbolic descriptions of the cells of the set of grasp configurations for each non-critical region.
-        // TODO: complete.
 
         ++arrangement;
         ++inset_2;

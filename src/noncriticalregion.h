@@ -15,7 +15,11 @@ typedef CGAL::Cartesian<Rational> Rat_kernel;
 typedef CGAL::Cartesian<Algebraic> Alg_kernel;
 typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Conic_traits_2;
 typedef Conic_traits_2::Point_2 Conic_point_2;
-typedef std::list<int> Admissible_configuration_space_cell;
+
+typedef std::pair<int,int> GRASP_cell;
+typedef std::list<GRASP_cell> GRASP_cells;
+
+typedef std::pair<std::list<int>,GRASP_cells> Admissible_configuration_space_cell;
 typedef std::list<Admissible_configuration_space_cell> Admissible_configuration_space_cells;
 
 
