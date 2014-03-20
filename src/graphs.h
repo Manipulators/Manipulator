@@ -13,14 +13,20 @@
 typedef lemon::SmartDigraph SmartDigraph;
 typedef lemon::Dijkstra<SmartDigraph> Dijkstra;
 
+int link(int, int, int, int);
 
 class Graphs
 {
 public:
     Graphs();
     void setParameters(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves);
+    // Build non-critical regions graph
     void buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves);
+    // Build manipulation graph
     void buildManipG();
+    // 3.4.2
+    int searchPath(ACSCell, ACSCell);
+    std::list<GraspCell> path;
     // Non-critical regions associated graph
     SmartDigraph NCRg;
     // Non-critical regions associated to a node
@@ -28,8 +34,10 @@ public:
 
     // Manipulation Graph
     SmartDigraph ManipG;
-    // Non-critical regions associated to a node
+    // is it a transit arc
     std::map< SmartDigraph::Arc,int> istransit;
+    // Graspcell associated to a node
+    std::map< SmartDigraph::Node,GraspCell> graspcell_map;
 
     void exportEPS();
 

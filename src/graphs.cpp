@@ -359,8 +359,6 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                         (noncriticalregion[face->data()]).acscells.push_back(acscell);
                     }
                 }
-
-                //face->data()->setAdmissibleConfigurationSpaceCells(admissible_configuration_space_cells);
             }
 
         }
@@ -374,8 +372,80 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
 
 void Graphs::buildManipG()
 {
-    //Create grasp nodes
+    //Create grasp nodes and transit path
+    for (SmartDigraph::NodeIt n(this->NCRg); n != lemon::INVALID; ++n)
+    {
+        std::list<ACSCell> acscells = (noncriticalregion[n]).acscells;
+        std::list<ACSCell>::const_iterator lit (acscells.begin()),lend(acscells.end());
 
+        for(;lit!=lend;++lit)
+        {
+            ACSCell acscell = *lit;
+            std::list<GraspCell> graspcells = acscell.graspcells;
+            std::list<GraspCell>::const_iterator lgit (graspcells.begin()),lgend(graspcells.end());
+
+            // add node
+            SmartDigraph::Node a = (this->ManipG).addNode();
+            graspcell_map[a] = *lgit;
+            ++lgit;
+            SmartDigraph::Node previous = a;
+            // add transit arc
+            for(;lgit!=lgend;++lgit)
+            {
+                SmartDigraph::Node a = (this->ManipG).addNode();
+                GraspCell gras = *lgit;
+                graspcell_map[a] = gras;
+                gras.node = a;
+                istransit[(this->ManipG).addArc(previous,a)] = 1;
+                istransit[(this->ManipG).addArc(a,previous)] = 1;
+                previous = a;
+            };
+        };
+    };
+    for (SmartDigraph::ArcIt arc(this->NCRg); arc != lemon::INVALID; ++arc)
+    {
+        NonCriticalRegion a = noncriticalregion[(this->NCRg).source(arc)];
+        NonCriticalRegion b = noncriticalregion[(this->NCRg).target(arc)];
+
+        std::list<ACSCell> acscellsA = a.acscells;
+        std::list<ACSCell> acscellsB = b.acscells;
+
+        std::list<ACSCell>::const_iterator la (acscellsA.begin()),laend(acscellsA.end());
+        std::list<ACSCell>::const_iterator lb (acscellsB.begin()),lbend(acscellsB.end());
+
+        for(;la!=laend;++la)
+        {
+            ACSCell acscellA = *la;
+            std::list<GraspCell> graspcellsA = acscellA.graspcells;
+            std::list<GraspCell>::const_iterator lga (graspcellsA.begin()),lgaend(graspcellsA.end());
+
+            for(;lga!=lgaend;++lga)
+            {
+                GraspCell ga = *lga;
+                // for b
+                for(;lb!=lbend;++lb)
+                {
+                    ACSCell acscellB = *lb;
+                    std::list<GraspCell> graspcellsB = acscellB.graspcells;
+                    std::list<GraspCell>::const_iterator lgb (graspcellsB.begin()),lgbend(graspcellsB.end());
+
+                    for(;lgb!=lgbend;++lgb)
+                    {
+                        GraspCell gb = *lgb;
+                        if(link(ga.label1,ga.label2,gb.label1,gb.label2))
+                        {
+                            istransit[(this->ManipG).addArc(ga.node,gb.node)] = 0;
+                            istransit[(this->ManipG).addArc(gb.node,ga.node)] = 0;
+                        };
+
+                    };
+                };
+            };
+        };
+
+    };
+    std::cout << "Manipulation graph: Nodes: " << lemon::countNodes(this->ManipG)<<", Edges: "<< (lemon::countArcs(this->ManipG)) <<"\n";
+    std::cout.flush();
 }
 
 void Graphs::exportEPS()
@@ -385,4 +455,45 @@ void Graphs::exportEPS()
 
 Graphs::~Graphs()
 {
+}
+
+int Graphs::searchPath(ACSCell ci, ACSCell cf)
+{
+    SmartDigraph::ArcMap<int> length(this->ManipG);
+    SmartDigraph::NodeMap<int> dist(this->ManipG);
+
+    for (SmartDigraph::ArcIt arc(this->ManipG); arc != lemon::INVALID; ++arc)
+    {
+        length[arc] = 1;
+    };
+
+    GraspCell s = *(ci.graspcells.begin());
+    GraspCell t = *(ci.graspcells.begin());
+
+    Dijkstra dijkstra(this->ManipG, length);
+    dijkstra.distMap(dist);
+    dijkstra.run(s.node);
+
+    if(dijkstra.reached(t.node))
+    {
+        SmartDigraph::Node i = t.node;
+        (this->path).push_back(graspcell_map[i]);
+        while (i != s.node)
+        {
+            i = dijkstra.predNode (i);
+            (this->path).push_back(graspcell_map[i]);
+        };
+        return 1;
+    }
+    else
+    {
+        return 0;
+    };
+}
+
+int link(int a, int b, int c, int d)
+{
+    if (a == c)
+    {return b!=d;}
+    else {return b==d;};
 }

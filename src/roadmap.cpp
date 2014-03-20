@@ -44,7 +44,7 @@ void RoadMap::set(Arrangement_2 Admissible, Arrangement_2 Obstacles, double sx, 
     srand(time(NULL));
 
     SmartDigraph g;
-    SmartDigraph::ArcMap<int> length(g);
+    SmartDigraph::ArcMap<int> length(g);//double don't work with dij..
     SmartDigraph::NodeMap<int> dist(g);
     SmartDigraph::NodeMap<double> x(g);
     SmartDigraph::NodeMap<double> y(g);

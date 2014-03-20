@@ -5,6 +5,9 @@
 #include <CGAL/CORE_algebraic_number_traits.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/Arr_conic_traits_2.h>
+#include <lemon/smart_graph.h>
+
+typedef lemon::SmartDigraph SmartDigraph;
 
 typedef CGAL::CORE_algebraic_number_traits Nt_traits;
 typedef Nt_traits::Rational Rational;
@@ -21,6 +24,7 @@ public:
 
     int label1;
     int label2;
+    SmartDigraph::Node node;
     // Point for robot
     Conic_point_2 point;
 
