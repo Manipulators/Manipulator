@@ -2,8 +2,7 @@
 #include <QPainter>
 #include "criticalcurves.h"
 
-typedef Arrangements_2::iterator Arrangement_2_iterator;
-typedef Arrangement_2::Edge_iterator Edge_iterator;
+
 typedef Conic_traits_2::Point_2 Conic_point_2;
 typedef Rat_kernel::Point_2 Rat_point_2;
 typedef Conic_traits_2::Curve_2 Conic_arc_2;
@@ -12,7 +11,7 @@ typedef Alg_kernel::FT Algebraic_ft;
 typedef Rat_kernel::Circle_2 Rat_circle_2;
 typedef std::list<CGAL::Object> Objects;
 typedef Objects::iterator Object_iterator;
-typedef Arrangement_2::Face_handle Face_handle;
+
 typedef std::pair<double, double> approximated_point_2;
 
 

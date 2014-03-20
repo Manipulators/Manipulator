@@ -1,11 +1,10 @@
-#ifndef NONCRITICALREGION_H
-#define NONCRITICALREGION_H
+#ifndef GRASPCELL_H
+#define GRASPCELL_H
 
-#include <list>
+#include <utility>
 #include <CGAL/CORE_algebraic_number_traits.h>
 #include <CGAL/Cartesian.h>
 #include <CGAL/Arr_conic_traits_2.h>
-#include "acscell.h"
 
 typedef CGAL::CORE_algebraic_number_traits Nt_traits;
 typedef Nt_traits::Rational Rational;
@@ -15,16 +14,17 @@ typedef CGAL::Cartesian<Algebraic> Alg_kernel;
 typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Conic_traits_2;
 typedef Conic_traits_2::Point_2 Conic_point_2;
 
-
-class NonCriticalRegion
+class GraspCell
 {
 public:
-    NonCriticalRegion();
+    GraspCell();
 
+    int label1;
+    int label2;
+    // Point for robot
     Conic_point_2 point;
-    std::list<ACSCell> acscells;
 
-    ~NonCriticalRegion();
+    ~GraspCell();
 };
 
-#endif // NONCRITICALREGION_H
+#endif // GRASPCELL_H

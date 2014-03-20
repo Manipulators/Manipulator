@@ -10,20 +10,12 @@
 #include <CGAL/Arrangement_2.h>
 #include <CGAL/Qt/GraphicsItem.h>
 #include "noncriticalregion.h"
+#include "criticalcurves.h"
 
-typedef CGAL::CORE_algebraic_number_traits Nt_traits;
-typedef Nt_traits::Rational Rational;
-typedef Nt_traits::Algebraic Algebraic;
-typedef CGAL::Cartesian<Rational> Rat_kernel;
-typedef CGAL::Cartesian<Algebraic> Alg_kernel;
-typedef CGAL::Arr_conic_traits_2<Rat_kernel, Alg_kernel, Nt_traits> Conic_traits_2;
 typedef CGAL::Gps_traits_2<Conic_traits_2> Gps_traits_2;
 typedef Gps_traits_2::Polygon_2 Inset_polygon_2;
 typedef std::list<Inset_polygon_2> Inset_polygons_2;
 typedef CGAL::Polygon_2<Rat_kernel> Polygon_2;
-typedef CGAL::Arr_extended_dcel<Conic_traits_2, int, int, NonCriticalRegion*> Dcel;
-typedef CGAL::Arrangement_2<Conic_traits_2, Dcel> Arrangement_2;
-typedef std::list<Arrangement_2> Arrangements_2;
 
 
 class Inset : public CGAL::Qt::GraphicsItem

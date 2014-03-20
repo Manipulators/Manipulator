@@ -1,5 +1,4 @@
-#include <QPainter>
-#include "manipulationgraph.h"
+#include "graphs.h"
 
 typedef Arrangements_2::iterator Arrangement_2_iterator;
 typedef Conic_traits_2::Point_2 Conic_point_2;
@@ -12,27 +11,53 @@ typedef Conic_traits_2::Curve_2 Conic_arc_2;
 typedef Rat_kernel::Circle_2 Rat_circle_2;
 
 
-ManipulationGraph::ManipulationGraph()
+class Arrangement_2_observer : public CGAL::Arr_observer<Arrangement_2>
 {
-    QObject::connect(this, SIGNAL(manipulationGraphChanged()), this, SLOT(modelChanged()));
+public:
+    Arrangement_2_observer (Arrangement_2& arr) : CGAL::Arr_observer<Arrangement_2> (arr)
+    {
+    }
+
+    virtual void after_split_edge (Halfedge_handle halfedge_1, Halfedge_handle halfedge_2)
+    {
+        int id_1 = halfedge_1->data();
+        int id_2 = halfedge_2->data();
+        int id_3 = halfedge_1->twin()->data();
+        int id_4 = halfedge_2->twin()->data();
+        int id = std::max(std::max(std::max(id_1, id_2), id_3), id_4);
+        halfedge_1->set_data(id);
+        halfedge_2->set_data(id);
+        halfedge_1->twin()->set_data(id);
+        halfedge_2->twin()->set_data(id);
+    }
+};
+
+Graphs::Graphs()
+{
 }
 
-void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves)
+void Graphs::setParameters(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves)
 {
+    this->buildNCRg(radius_1, radius_2, insets_1,insets_2,critical_curves);
+    this->buildManipG();
+}
+
+void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves)
+{
+
     for (Arrangement_2_iterator arrangement = critical_curves.begin(); arrangement != critical_curves.end(); ++arrangement)
     {
-        // Set an id for each non-critical region.
-        Region_id region_id = 0;
+
+        // Associate a node to each face
         for (Arrangement_2::Face_iterator face = arrangement->faces_begin(); face != arrangement->faces_end(); ++face)
         {
             if (!face->is_unbounded())
             {
-                face->set_data(new NonCriticalRegion());
-                face->data()->setRegionId(region_id++);
+                face->set_data((this->NCRg).addNode());
             }
-        }
+        };
 
-        // Set a list of adjacent non-critical regions for each non-critical region.
+        // Build non-critical regions graph
         for (Arrangement_2::Face_iterator face = arrangement->faces_begin(); face != arrangement->faces_end(); ++face)
         {
             if (!face->is_unbounded())
@@ -45,14 +70,14 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                     Arrangement_2::Face_handle adjacent_face = outer_ccb->twin()->face();
                     if (!adjacent_face->is_unbounded())
                     {
-                        Region_id adjacent_region_id = adjacent_face->data()->getRegionId();
-                        face->data()->addAdjacentRegion(adjacent_region_id);
+                        (this->NCRg).addArc(face->data(),adjacent_face->data());
                     }
                     ++outer_ccb;
                 } while (outer_ccb != first_outer_ccb);
             }
         }
-
+        std::cout << "Non-critical regions graph: Nodes: " << lemon::countNodes(this->NCRg)<<", Edges: "<< (lemon::countArcs(this->NCRg)) <<"\n";
+        std::cout.flush();
         // Set a interior point for each non critical region.
         for (Arrangement_2::Face_iterator face = arrangement->faces_begin(); face != arrangement->faces_end(); ++face)
         {
@@ -226,11 +251,13 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                 Algebraic_ft y_point_3 = (point_1.y() + point_2.y()) / nt_traits.convert(Rational(2));
                 Conic_point_2 point_3(x_point_3, y_point_3);
 
-                face->data()->setPoint(point_3);
+                (noncriticalregion[face->data()]).point = point_3;
+                //std::cout << CGAL::to_double(x_point_3) <<" "<< CGAL::to_double(y_point_3) << "\n";
             }
         }
-    }
+    };
 
+    std::cout.flush();
     Arrangement_2_iterator arrangement = critical_curves.begin();
     Arrangement_2_iterator inset_2 = insets_2.begin();
     while (arrangement != critical_curves.end() && inset_2 != insets_2.end())
@@ -240,7 +267,7 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
         {
             if (!face->is_unbounded())
             {
-                Conic_point_2 point = face->data()->getPoint();
+                Conic_point_2 point = (noncriticalregion[face->data()]).point;
                 double x = CGAL::to_double(point.x());
                 double y = CGAL::to_double(point.y());
                 double radius = radius_1 + radius_2;
@@ -251,7 +278,6 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                 Arrangement_2 difference = Arrangement_2(*inset_2);
                 Arrangement_2_observer observer(difference);
                 insert(difference, conic_arc);
-
                 for (Arrangement_2::Edge_iterator edge = difference.edges_begin();  edge != difference.edges_end(); ++edge)
                 {
                     Arrangement_2::Face_handle face_1 = edge->face();
@@ -271,7 +297,6 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                         }
                     }
                 }
-
                 Arrangement_2::Edge_iterator edge = difference.edges_end();
                 while (edge != difference.edges_begin())
                 {
@@ -283,53 +308,59 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
                     }
                 }
 
-                Admissible_configuration_space_cells admissible_configuration_space_cells;
                 for (Arrangement_2::Face_handle cell = difference.faces_begin(); cell != difference.faces_end(); ++cell)
                 {
                     if (!cell->is_unbounded())
                     {
-                        std::list<int> admissible_configuration_space_cell;
-
-                        Arrangement_2::Ccb_halfedge_circulator first_outer_ccb = cell->outer_ccb();
+                        ACSCell acscell;
                         Arrangement_2::Ccb_halfedge_circulator outer_ccb = cell->outer_ccb();
 
                         // Find a integer not equal to 0
-                        while (cell->outer_ccb() == 0) {outer_ccb++;};
-                        first_outer_ccb = cell->outer_ccb();
-                        outer_ccb = cell->outer_ccb();
+                        while (outer_ccb->data() == 0) {outer_ccb++;};
+                        int previous = outer_ccb->data();
+                        Arrangement_2::Ccb_halfedge_circulator first_outer_ccb = outer_ccb;
+
                         // Zero flag
                         int read_zero = 0;
+                        std::cout << "ACSCell label: ";
                         do
                         {
                             if (!read_zero || (outer_ccb->data() != 0))
                             {
-                                admissible_configuration_space_cell.push_back(outer_ccb->data());
+                                // clean label
+                                std::cout << outer_ccb->data() << ", ";
+                                acscell.label.push_back(outer_ccb->data());
+                                if (outer_ccb->data() == 0)
+                                {
+                                    GraspCell graspcell;
+                                    graspcell.label1 = previous;
+                                    // next
+                                    Arrangement_2::Ccb_halfedge_circulator temp = outer_ccb;
+                                    while (temp->data() == 0) {temp++;};
+                                    graspcell.label2 = temp->data();
+                                    acscell.graspcells.push_back(graspcell);
+                                    std::cout << "[GraspCell: "<< graspcell.label1 << "," << graspcell.label2 <<"] ";
+                                }
+                                else
+                                {
+                                    previous = outer_ccb->data();
+                                };
                             };
 
-                            if (outer_ccb->data() == 0) {read_zero = 1;} else {read_zero = 0;};
+                            if (outer_ccb->data() == 0)
+                            {
+                                read_zero = 1;
+                            }
+                            else
+                            {read_zero = 0;};
                             ++outer_ccb;
                         } while (outer_ccb != first_outer_ccb);
-
-                        std::list<int>::const_iterator lit (admissible_configuration_space_cell.begin()),lend(admissible_configuration_space_cell.end());
-                        int previous = *lend;
-                        // Set a list of symbolic descriptions of the cells of the set of grasp configurations for each non-critical region.
-                        GRASP_cells grasp_cells;
-                        for(;lit!=lend;)
-                        {
-                            if (*lit == 0)
-                            {
-                                lit++;
-                                grasp_cells.push_back(GRASP_cell(previous,*lit));
-                                previous = *lit;
-                            }
-                            else {lit++;};
-                        };
-
-                        admissible_configuration_space_cells.push_back( Admissible_configuration_space_cell(admissible_configuration_space_cell, grasp_cells) );
+                        std::cout << "\n";std::cout.flush();
+                        (noncriticalregion[face->data()]).acscells.push_back(acscell);
                     }
                 }
 
-                face->data()->setAdmissibleConfigurationSpaceCells(admissible_configuration_space_cells);
+                //face->data()->setAdmissibleConfigurationSpaceCells(admissible_configuration_space_cells);
             }
 
         }
@@ -341,30 +372,17 @@ void ManipulationGraph::setParameters(double radius_1, double radius_2, Arrangem
     return;
 }
 
-void ManipulationGraph::modelChanged()
+void Graphs::buildManipG()
 {
-    updateBoundingRect();
-    update(this->boundingRect());
-    return;
+    //Create grasp nodes
+
 }
 
-QRectF ManipulationGraph::boundingRect() const
-{
-    return this->bounding_rect;
-}
-
-void ManipulationGraph::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
-{
-    return;
-}
-
-ManipulationGraph::~ManipulationGraph()
+void Graphs::exportEPS()
 {
 
 }
 
-void ManipulationGraph::updateBoundingRect()
+Graphs::~Graphs()
 {
-    // TODO: improve.
-    this->bounding_rect = QRectF(-300.0, -300.0, 600.0, 600.0);
 }

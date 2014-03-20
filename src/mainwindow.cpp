@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     this->scene->addItem(this->critical_curves);
 
     // Add the manipulation graph.
-    this->manipulation_graph = new ManipulationGraph();
+    this->graphs = new Graphs();
     //this->manipulation_graph->hide();
     // TODO: uncomment.
     //this->scene->addItem(this->manipulation_graph);
@@ -74,7 +74,7 @@ MainWindow::~MainWindow()
     delete this->inset_1;
     delete this->inset_2;
     delete this->critical_curves;
-    delete this->manipulation_graph;
+    //delete this->manipulation_graph;
     delete this->path;
 }
 
@@ -292,7 +292,7 @@ void MainWindow::on_pushButtonSolve_clicked()
     this->inset_1->setParameters(this->barriers->getPolygon(), r1);
     this->inset_2->setParameters(this->barriers->getPolygon(), r2);
     this->critical_curves->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements());
-    //this->manipulation_graph->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements());
+    this->graphs->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements());
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);

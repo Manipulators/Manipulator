@@ -25,9 +25,9 @@ set(SOURCES
     inset.cpp
     criticalcurves.cpp
     noncriticalregion.cpp
-    admissibleconfigurationspacecell.cpp
-    graspconfigurationspacecell.cpp
-    manipulationgraph.cpp
+    acscell.cpp
+    graspcell.cpp
+    graphs.cpp
     roadmap.cpp)
 set(HEADERS
     mainwindow.h
@@ -36,9 +36,9 @@ set(HEADERS
     inset.h
     criticalcurves.h
     noncriticalregion.h
-    admissibleconfigurationspacecell.h
-    graspconfigurationspacecell.h
-    manipulationgraph.h
+    acscell.h
+    graspcell.h
+    graphs.h
     roadmap.h)
 qt4_wrap_ui(UIS mainwindow.ui)
 qt4_wrap_cpp(MOCS ${HEADERS})
