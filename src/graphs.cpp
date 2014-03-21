@@ -339,6 +339,9 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                                     while (temp->data() == 0) {temp++;};
                                     graspcell.label2 = temp->data();
                                     acscell.graspcells.push_back(graspcell);
+                                    // for the manip graph
+                                    graspcell.node = (this->ManipG).addNode();
+                                    graspcell_map[graspcell.node] = graspcell;
                                     std::cout << "[GraspCell: "<< graspcell.label1 << "," << graspcell.label2 <<"] ";
                                 }
                                 else
@@ -384,26 +387,23 @@ void Graphs::buildManipG()
             std::list<GraspCell> graspcells = acscell.graspcells;
             std::list<GraspCell>::const_iterator lgit (graspcells.begin()),lgend(graspcells.end());
 
-            // add node
-            SmartDigraph::Node a = (this->ManipG).addNode();
-            graspcell_map[a] = *lgit;
+
+            SmartDigraph::Node previous = lgit->node;
             ++lgit;
-            SmartDigraph::Node previous = a;
             // add transit arc
             for(;lgit!=lgend;++lgit)
             {
-                SmartDigraph::Node a = (this->ManipG).addNode();
-                GraspCell gras = *lgit;
-                graspcell_map[a] = gras;
-                gras.node = a;
-                istransit[(this->ManipG).addArc(previous,a)] = 1;
-                istransit[(this->ManipG).addArc(a,previous)] = 1;
-                previous = a;
+                //SmartDigraph::Node a = (this->ManipG).addNode();
+                istransit[(this->ManipG).addArc(previous,lgit->node)] = 1;
+                istransit[(this->ManipG).addArc(lgit->node,previous)] = 1;
+                previous = lgit->node;
             };
         };
     };
+    int count = 0;
     for (SmartDigraph::ArcIt arc(this->NCRg); arc != lemon::INVALID; ++arc)
     {
+        count++;
         NonCriticalRegion a = noncriticalregion[(this->NCRg).source(arc)];
         NonCriticalRegion b = noncriticalregion[(this->NCRg).target(arc)];
 
@@ -437,12 +437,10 @@ void Graphs::buildManipG()
                             istransit[(this->ManipG).addArc(ga.node,gb.node)] = 0;
                             istransit[(this->ManipG).addArc(gb.node,ga.node)] = 0;
                         };
-
                     };
                 };
             };
         };
-
     };
     std::cout << "Manipulation graph: Nodes: " << lemon::countNodes(this->ManipG)<<", Edges: "<< (lemon::countArcs(this->ManipG)) <<"\n";
     std::cout.flush();
