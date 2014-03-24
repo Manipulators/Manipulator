@@ -40,6 +40,7 @@ void Graphs::setParameters(double radius_1, double radius_2, Arrangements_2 inse
 {
     this->buildNCRg(radius_1, radius_2, insets_1,insets_2,critical_curves);
     this->buildManipG();
+    this->print();
 }
 
 void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves)
@@ -322,13 +323,11 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
 
                         // Zero flag
                         int read_zero = 0;
-                        std::cout << "ACSCell label: ";
                         do
                         {
                             if (!read_zero || (outer_ccb->data() != 0))
                             {
                                 // clean label
-                                std::cout << outer_ccb->data() << ", ";
                                 acscell.label.push_back(outer_ccb->data());
                                 if (outer_ccb->data() == 0)
                                 {
@@ -342,7 +341,6 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                                     // for the manip graph
                                     graspcell.node = (this->ManipG).addNode();
                                     graspcell_map[graspcell.node] = graspcell;
-                                    std::cout << "[GraspCell: "<< graspcell.label1 << "," << graspcell.label2 <<"] ";
                                 }
                                 else
                                 {
@@ -358,7 +356,7 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                             {read_zero = 0;};
                             ++outer_ccb;
                         } while (outer_ccb != first_outer_ccb);
-                        std::cout << "\n";std::cout.flush();
+
                         (noncriticalregion[face->data()]).acscells.push_back(acscell);
                     }
                 }
@@ -371,6 +369,36 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
     }
 
     return;
+}
+
+void Graphs::print()
+{
+    std::cout << "Manipulation graph: Nodes: " << lemon::countNodes(this->ManipG)<<", Edges: "<< (lemon::countArcs(this->ManipG));
+    std::cout.flush();
+    for (SmartDigraph::NodeIt n(this->NCRg); n != lemon::INVALID; ++n)
+    {
+        std::cout << "\nNon-critical region:";
+        std::list<ACSCell> acscells = (noncriticalregion[n]).acscells;
+        std::list<ACSCell>::const_iterator lit (acscells.begin()),lend(acscells.end());
+        for(;lit!=lend;++lit)
+        {
+            std::cout << "\n   - ACS cell: ";
+            std::list<int> label = lit->label;
+            std::list<int>::const_iterator lp (label.begin()),lpend(label.end());
+            for(;lp!=lpend;++lp)
+            {
+                std::cout << *lp << " ";
+            };
+
+            std::list<GraspCell> graspcells = lit->graspcells;
+            std::list<GraspCell>::const_iterator gp (graspcells.begin()),gpend(graspcells.end());
+            for(;gp!=gpend;++gp)
+            {
+                std::cout << "\n      - GRASP cell: " << gp->label1 << ", " <<gp->label2;
+            };
+        };
+    };
+    std::cout.flush();
 }
 
 void Graphs::buildManipG()
@@ -442,8 +470,7 @@ void Graphs::buildManipG()
             };
         };
     };
-    std::cout << "Manipulation graph: Nodes: " << lemon::countNodes(this->ManipG)<<", Edges: "<< (lemon::countArcs(this->ManipG)) <<"\n";
-    std::cout.flush();
+
 }
 
 void Graphs::exportEPS()

@@ -25,6 +25,8 @@ public:
     // Build manipulation graph
     void buildManipG();
     // 3.4.2
+    void print();
+
     int searchPath(ACSCell, ACSCell);
     std::list<GraspCell> path;
     // Non-critical regions associated graph
