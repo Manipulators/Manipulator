@@ -20,14 +20,20 @@ typedef Conic_traits_2::Point_2 Conic_point_2;
 class GraspCell
 {
 public:
+    // Constructor
     GraspCell();
 
+    // Grasp cell label
     int label1;
     int label2;
+
+    // Associated node in the Manipulation graph
     SmartDigraph::Node node;
+
     // Point for robot
     Conic_point_2 point;
 
+    // Destructor
     ~GraspCell();
 };
 

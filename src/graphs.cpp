@@ -159,7 +159,6 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                 Arrangement_2::Vertex_handle vertex_handle;
                 Arrangement_2::Halfedge_handle halfedge_handle;
                 Arrangement_2::Face_handle face_handle;
-
                 /*
                 std::cout << "# ";
                 for (object = objects.begin(); object != objects.end(); ++object)
@@ -220,7 +219,6 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                     //std::cout << "Face." << std::endl;
                 }
                 //std::cout << "Fin 1." << std::endl;
-
                 Conic_point_2 point_2;
                 ++object;
                 ++object;
@@ -250,11 +248,9 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                     //std::cout << "Face." << std::endl;
                 }
                 //std::cout << "Fin 2." << std::endl;
-
                 Algebraic_ft x_point_3 = (point_1.x() + point_2.x()) / nt_traits.convert(Rational(2));
                 Algebraic_ft y_point_3 = (point_1.y() + point_2.y()) / nt_traits.convert(Rational(2));
                 Conic_point_2 point_3(x_point_3, y_point_3);
-
                 (noncriticalregion[face->data()]).point = point_3;
                 //std::cout << CGAL::to_double(x_point_3) <<" "<< CGAL::to_double(y_point_3) << "\n";
             }
@@ -264,6 +260,7 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
     std::cout.flush();
     Arrangement_2_iterator arrangement = critical_curves.begin();
     Arrangement_2_iterator inset_2 = insets_2.begin();
+
     while (arrangement != critical_curves.end() && inset_2 != insets_2.end())
     {
         // Set a list of symbolic descriptions of the cells of the set of admissible configurations for each non-critical region.
@@ -272,13 +269,13 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
             if (!face->is_unbounded())
             {
                 Conic_point_2 point = (noncriticalregion[face->data()]).point;
+
                 double x = CGAL::to_double(point.x());
                 double y = CGAL::to_double(point.y());
                 double radius = radius_1 + radius_2;
                 Rat_point_2 center(x, y);
                 Rat_circle_2 circle(center, radius * radius);
                 Conic_arc_2 conic_arc(circle);
-
                 Arrangement_2 difference = Arrangement_2(*inset_2);
                 Arrangement_2_observer observer(difference);
                 insert(difference, conic_arc);
@@ -311,7 +308,6 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                         remove_edge(difference, edge);
                     }
                 }
-
                 for (Arrangement_2::Face_handle cell = difference.faces_begin(); cell != difference.faces_end(); ++cell)
                 {
                     if (!cell->is_unbounded())
@@ -383,13 +379,25 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
     {
         // Compute Region initial and final
 
-        Landmarks_pl landmarks_pl;
-        landmarks_pl.attach(*arrangement2);
+        /*Landmarks_pl landmarks_pl;
+        landmarks_pl.attach(*arrangement2);*/
+        Naive_pl naive_pl(*arrangement2);
 
-        CGAL::Object obj = landmarks_pl.locate (Conic_point_2(xoi, yoi));
-        CGAL::Object obj2 = landmarks_pl.locate (Conic_point_2(xof, yof));
+        //std::cout << "Test" << std::endl;
+        //std::cout<< "Valeur :" << xof <<" " <<yof<<"\n";std::cout.flush();
+        CGAL::Object obj = naive_pl.locate (Conic_point_2(xoi, yoi));
+
+        /*std::cout << "Arrangement:" << std::endl;
+        std::cout << "  Number of vertices: " << arrangement2->number_of_vertices() << std::endl;
+        std::cout << "  Number of edges   : " << arrangement2->number_of_edges() << std::endl;
+        std::cout << "  Number of face    : " << arrangement2->number_of_faces() << std::endl;
+        std::cout<< "Test debut\n";std::cout.flush();
+
+        std::cout<< "Valeur :" << xof <<" " <<yof<<"\n";std::cout.flush();*/
+        CGAL::Object obj2 = naive_pl.locate (Conic_point_2(xof, yof));
+        //std::cout<< "Test fin\n";std::cout.flush();
         int flag = 0;
-        typename Arrangement_2::Face_const_handle      f;
+        typename Arrangement_2::Face_const_handle f;
 
         if (CGAL::assign (f, obj))
         {
@@ -401,14 +409,13 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                 std::list<ACSCell>::const_iterator lit (acscells.begin()),lend(acscells.end());
                 for(;lit!=lend;++lit)
                 {
-                    if(isInside(lit->arrangement,xri,yri,xri,yri)){ this->ACSCellinitial = *lit;};
+                    if(isInside(lit->arrangement,xri,yri,xri,yri)){ flag = 1;this->ACSCellinitial = *lit;};
                 };
 
-                /*std::cout <<"Coucou\n";
-                std::cout << xof<< " " << yof <<"\n";
-                std::cout << CGAL::to_double(this->initial.point.x()) <<"\n"; std::cout.flush();*/
             }
         };
+        if (!flag){std::cout<< "\nBad input\n";std::cout.flush();};
+        flag = 0;
         if (CGAL::assign (f, obj2))
         {
             if (!(f->is_unbounded()))
@@ -418,12 +425,11 @@ void Graphs::buildNCRg(double radius_1, double radius_2, Arrangements_2 insets_1
                 std::list<ACSCell>::const_iterator lit (acscells.begin()),lend(acscells.end());
                 for(;lit!=lend;++lit)
                 {
-                    if(isInside(lit->arrangement,xrf,yrf,xrf,yrf)){ this->ACSCellfinal = *lit;};
+                    if(isInside(lit->arrangement,xrf,yrf,xrf,yrf)){flag = 1; this->ACSCellfinal = *lit;};
                 };
-                /*std::cout <<"Coucou\n";
-                std::cout << CGAL::to_double(this->final.point.x()) <<"\n"; std::cout.flush();*/
             }
         };
+        if (!flag){std::cout<< "\nBad input\n";std::cout.flush();};
     };
 
     return;
@@ -462,6 +468,7 @@ void Graphs::print()
 void Graphs::buildManipG()
 {
     //Create grasp nodes and transit path
+    std::cout<< "Begin Mannipulation Graph\n";std::cout.flush();
     for (SmartDigraph::NodeIt n(this->NCRg); n != lemon::INVALID; ++n)
     {
         std::list<ACSCell> acscells = (noncriticalregion[n]).acscells;
@@ -479,7 +486,6 @@ void Graphs::buildManipG()
             // add transit arc
             for(;lgit!=lgend;++lgit)
             {
-                //SmartDigraph::Node a = (this->ManipG).addNode();
                 istransit[(this->ManipG).addArc(previous,lgit->node)] = 1;
                 istransit[(this->ManipG).addArc(lgit->node,previous)] = 1;
                 previous = lgit->node;
@@ -528,13 +534,9 @@ void Graphs::buildManipG()
             };
         };
     };
-
+    std::cout<< "End Mannipulation Graph\n";std::cout.flush();
 }
 
-void Graphs::exportEPS()
-{
-
-}
 
 Graphs::~Graphs()
 {

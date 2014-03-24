@@ -26,17 +26,19 @@ typedef Arrangement_2::Face_handle Face_handle;
 class ACSCell
 {
 public:
+    // Constructor
     ACSCell();
 
+    // The ACS cell label
     std::list<int> label;
 
+    // Arrangement containing the ACS cell
     Arrangement_2 arrangement;
 
-
-    // Grasp Cells
+    // Grasp Cells associated to a ACE cell
     std::list<GraspCell> graspcells;
 
-
+    // Destructor
     ~ACSCell();
 };
 

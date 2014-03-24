@@ -19,11 +19,15 @@ typedef Conic_traits_2::Point_2 Conic_point_2;
 class NonCriticalRegion
 {
 public:
+    // Constructor
     NonCriticalRegion();
 
+    // Point inside the non-critical region
     Conic_point_2 point;
+    // ACS cells associated to the non-critical region
     std::list<ACSCell> acscells;
 
+    // Destructor
     ~NonCriticalRegion();
 };
 
