@@ -292,7 +292,8 @@ void MainWindow::on_pushButtonSolve_clicked()
     this->inset_1->setParameters(this->barriers->getPolygon(), r1);
     this->inset_2->setParameters(this->barriers->getPolygon(), r2);
     this->critical_curves->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements());
-    this->graphs->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements());
+    this->graphs->setParameters(r1, r2, this->inset_1->getArrangements(), this->inset_2->getArrangements(), this->critical_curves->getArrangements(), this->bodie_1->getX(), this->bodie_1->getY(), this->bodie_2->getX(), this->bodie_2->getY() , this->bodie_1->xf, this->bodie_1->yf, this->bodie_2->xf, this->bodie_2->yf );
+    //this->graphs->searchPath();
     this->ui->groupBoxInitialConfiguration->setDisabled(true);
     this->ui->groupBoxFinalConfiguration->setDisabled(true);
     this->ui->groupBoxDisplay->setEnabled(true);

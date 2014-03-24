@@ -104,6 +104,8 @@ std::istream& operator >>(std::istream& istream, Bodie* bodie)
         bodie->setR(r);
         bodie->setX(xi);
         bodie->setY(yi);
+        bodie->xf=xf;
+        bodie->yf=yf;
     }
     return istream;
 }
