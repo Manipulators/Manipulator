@@ -33,7 +33,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabProblem">
        <attribute name="title">
@@ -390,20 +390,18 @@
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="checkBoxShowGraphs">
+             <property name="text">
+              <string>Show manipulation graph</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QCheckBox" name="checkBoxShowPath">
              <property name="text">
               <string>Show path</string>
              </property>
             </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBoxNonCriticalRegion"/>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBoxAdmissibleConfigurationSpaceCell"/>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBoxGraspConfigurationSpaceCell"/>
            </item>
           </layout>
          </widget>

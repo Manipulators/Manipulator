@@ -25,8 +25,10 @@ typedef lemon::Dijkstra<SmartDigraph> Dijkstra;
 // Condition on adjacent nodes in the manipulation graph
 int link(int, int, int, int);
 
-class Graphs
+class Graphs : public CGAL::Qt::GraphicsItem
 {
+    Q_OBJECT
+
 public:
     // Constructor
     Graphs();
@@ -62,8 +64,22 @@ public:
     // Graspcell associated to a node
     std::map< SmartDigraph::Node,GraspCell> graspcell_map;
 
+    // Receive changed signals from the graphs instance.
+    void modelChanged();
+    // Get the bounding rectangle of the graphs on the graphics scene.
+    QRectF boundingRect() const;
+    // Paint the graphs on the graphics scene.
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+
     // Destructor
     ~Graphs();
+
+protected:
+    QRectF bounding_rect;
+    void updateBoundingRect();
+
+signals:
+    void graphsChanged();
 };
 
 #endif // GRAPHS_H

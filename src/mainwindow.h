@@ -72,6 +72,7 @@ private slots:
     void on_checkBoxShowFirstInset_stateChanged(int state);
     void on_checkBoxShowSecondInset_stateChanged(int state);
     void on_checkBoxShowCriticalCurves_stateChanged(int state);
+    void on_checkBoxShowGraphs_stateChanged(int state);
 };
 
 #endif // MAINWINDOW_H

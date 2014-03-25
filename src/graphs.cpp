@@ -1,3 +1,4 @@
+#include <QPainter>
 #include "graphs.h"
 
 typedef Arrangements_2::iterator Arrangement_2_iterator;
@@ -36,6 +37,7 @@ public:
 
 Graphs::Graphs()
 {
+    QObject::connect(this, SIGNAL(graphsChanged()), this, SLOT(modelChanged()));
 }
 
 void Graphs::setParameters(double radius_1, double radius_2, Arrangements_2 insets_1, Arrangements_2 insets_2, Arrangements_2 critical_curves, double xri, double yri, double xoi, double yoi, double xrf, double yrf, double xof, double yof)
@@ -44,6 +46,7 @@ void Graphs::setParameters(double radius_1, double radius_2, Arrangements_2 inse
     this->buildManipG();
     this->print();
     if (this->searchPath()) {std::cout << "\nThere is a solution\n";} else {std::cout << "\nThere is no solution\n";};std::cout.flush();
+    emit(graphsChanged());
 }
 
 
@@ -472,18 +475,22 @@ void Graphs::buildManipG()
     for (SmartDigraph::NodeIt n(this->NCRg); n != lemon::INVALID; ++n)
     {
         std::list<ACSCell> acscells = (noncriticalregion[n]).acscells;
-        std::list<ACSCell>::const_iterator lit (acscells.begin()),lend(acscells.end());
+        std::list<ACSCell>::const_iterator lit(acscells.begin());
+        std::list<ACSCell>::const_iterator lend(acscells.end());
 
         for(;lit!=lend;++lit)
         {
             ACSCell acscell = *lit;
             std::list<GraspCell> graspcells = acscell.graspcells;
-            std::list<GraspCell>::const_iterator lgit (graspcells.begin()),lgend(graspcells.end());
+            std::list<GraspCell>::const_iterator lgit(graspcells.begin());
+            std::list<GraspCell>::const_iterator lgend(graspcells.end());
 
 
             SmartDigraph::Node previous = lgit->node;
             ++lgit;
             // add transit arc
+            // TODO: correct transit arcs, the subgraph composed of the GRASP
+            //   cells of one ACS cell must be fully connected.
             for(;lgit!=lgend;++lgit)
             {
                 istransit[(this->ManipG).addArc(previous,lgit->node)] = 1;
@@ -502,14 +509,17 @@ void Graphs::buildManipG()
         std::list<ACSCell> acscellsA = a.acscells;
         std::list<ACSCell> acscellsB = b.acscells;
 
-        std::list<ACSCell>::const_iterator la (acscellsA.begin()),laend(acscellsA.end());
-        std::list<ACSCell>::const_iterator lb (acscellsB.begin()),lbend(acscellsB.end());
+        std::list<ACSCell>::const_iterator la(acscellsA.begin());
+        std::list<ACSCell>::const_iterator laend(acscellsA.end());
+        std::list<ACSCell>::const_iterator lb(acscellsB.begin());
+        std::list<ACSCell>::const_iterator lbend(acscellsB.end());
 
         for(;la!=laend;++la)
         {
             ACSCell acscellA = *la;
             std::list<GraspCell> graspcellsA = acscellA.graspcells;
-            std::list<GraspCell>::const_iterator lga (graspcellsA.begin()),lgaend(graspcellsA.end());
+            std::list<GraspCell>::const_iterator lga(graspcellsA.begin());
+            std::list<GraspCell>::const_iterator lgaend(graspcellsA.end());
 
             for(;lga!=lgaend;++lga)
             {
@@ -519,15 +529,16 @@ void Graphs::buildManipG()
                 {
                     ACSCell acscellB = *lb;
                     std::list<GraspCell> graspcellsB = acscellB.graspcells;
-                    std::list<GraspCell>::const_iterator lgb (graspcellsB.begin()),lgbend(graspcellsB.end());
+                    std::list<GraspCell>::const_iterator lgb(graspcellsB.begin());
+                    std::list<GraspCell>::const_iterator lgbend(graspcellsB.end());
 
                     for(;lgb!=lgbend;++lgb)
                     {
                         GraspCell gb = *lgb;
-                        if(link(ga.label1,ga.label2,gb.label1,gb.label2))
+                        if(link(ga.label1, ga.label2, gb.label1, gb.label2))
                         {
-                            istransit[(this->ManipG).addArc(ga.node,gb.node)] = 0;
-                            istransit[(this->ManipG).addArc(gb.node,ga.node)] = 0;
+                            istransit[(this->ManipG).addArc(ga.node, gb.node)] = 0;
+                            istransit[(this->ManipG).addArc(gb.node, ga.node)] = 0;
                         };
                     };
                 };
@@ -537,9 +548,41 @@ void Graphs::buildManipG()
     std::cout<< "End Mannipulation Graph\n";std::cout.flush();
 }
 
+void Graphs::modelChanged()
+{
+    updateBoundingRect();
+    update(this->boundingRect());
+    return;
+}
+
+QRectF Graphs::boundingRect() const
+{
+    return this->bounding_rect;
+}
+
+void Graphs::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+    // Paint the graphs.
+    for (SmartDigraph::ArcIt arc(this->ManipG); arc != lemon::INVALID; ++arc)
+    {
+        SmartDigraph::Node source = (this->ManipG).source(arc);
+        SmartDigraph::Node target = (this->ManipG).target(arc);
+        GraspCell source_grasp_cell = graspcell_map[source];
+        GraspCell target_grasp_cell = graspcell_map[target];
+        // TODO: complete.
+    };
+    painter->drawEllipse(0, 0, 100, 200);
+    return;
+}
 
 Graphs::~Graphs()
 {
+}
+
+void Graphs::updateBoundingRect()
+{
+    // TODO: improve.
+    this->bounding_rect = QRectF(-300.0, -300.0, 600.0, 600.0);
 }
 
 int Graphs::searchPath()

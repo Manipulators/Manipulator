@@ -46,11 +46,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     //this->critical_curves->hide();
     this->scene->addItem(this->critical_curves);
 
-    // Add the manipulation graph.
+    // Add the graphs.
     this->graphs = new Graphs();
-    //this->manipulation_graph->hide();
-    // TODO: uncomment.
-    //this->scene->addItem(this->manipulation_graph);
+    //this->graphs->hide();
+    this->scene->addItem(this->graphs);
 
     // Add path
     this->path = new RoadMap();
@@ -74,7 +73,7 @@ MainWindow::~MainWindow()
     delete this->inset_1;
     delete this->inset_2;
     delete this->critical_curves;
-    //delete this->manipulation_graph;
+    delete this->graphs;
     delete this->path;
 }
 
@@ -301,6 +300,7 @@ void MainWindow::on_pushButtonSolve_clicked()
     this->ui->checkBoxShowFirstInset->setChecked(false);
     this->ui->checkBoxShowSecondInset->setChecked(false);
     this->ui->checkBoxShowCriticalCurves->setChecked(true);
+    this->ui->checkBoxShowGraphs->setChecked(true);
     this->ui->pushButtonSolve->setDisabled(true);
     return;
 }
@@ -393,6 +393,23 @@ void MainWindow::on_checkBoxShowCriticalCurves_stateChanged(int state)
             break;
     }
     return;
+}
+
+void MainWindow::on_checkBoxShowGraphs_stateChanged(int state)
+{
+    switch (state)
+    {
+        case Qt::Checked:
+            this->graphs->show();
+            break;
+        case Qt::Unchecked:
+            this->graphs->hide();
+            break;
+        case Qt::PartiallyChecked:
+            break;
+        default:
+            break;
+    }
 }
 
 
